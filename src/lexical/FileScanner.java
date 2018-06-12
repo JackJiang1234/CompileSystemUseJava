@@ -27,6 +27,8 @@ public class FileScanner implements Closeable {
 		if (charAtLine >= curLine.length()) {
 			this.readNewLine();
 		}
+		
+		//skip empty line
 		while (curLine != null && curLine.trim().isEmpty()) {
 			this.readNewLine();
 		}
@@ -45,6 +47,10 @@ public class FileScanner implements Closeable {
 
 	public int getLineNum() {
 		return this.lineNum;
+	}
+	
+	public int getOldChar(){
+		return this.oldCh;
 	}
 
 	private void readNewLine() throws IOException {

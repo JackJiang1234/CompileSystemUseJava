@@ -7,15 +7,12 @@ import java.io.*;
  * 
  * @author jack
  */
-public class Lexer {
-
+public class Lexer implements Closeable{
+	
+	private FileScanner fileScanner; 
+	
 	public Lexer(String filePath) throws IOException {
-		try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-			String buff = null;
-			while ((buff = br.readLine()) != null) {
-				System.out.println(buff);
-			}
-		}
+		this.fileScanner = new FileScanner(filePath);
 	}
 
 	/**
@@ -30,6 +27,13 @@ public class Lexer {
 	 */
 	public static void main(String[] args) {
 
+	}
+
+	@Override
+	public void close() throws IOException {
+		if (this.fileScanner != null){
+			this.fileScanner.close();
+		}
 	}
 
 }
