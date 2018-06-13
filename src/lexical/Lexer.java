@@ -16,17 +16,17 @@ public class Lexer implements Closeable{
 	}
 
 	/**
-	 * 获取下一个Token
+	 * 获取下一个Token, Token分为标识符，关键字， 数字，字符串， 字符， 界符， 特殊符号
+	 * 标识符关键字以 下划线_和字母开头， 后续非字母，数字，下划线结束
+	 * 数字  二进制，八进制， 十进制，十六进制  以0开头
+	 * 字符串   "内容"
+	 * 字符       'char'
+	 * 界符     与运算符号匹配
+	 * 特殊     Err和End
 	 */
 	public Token getNextToken() {
+		
 		return null;
-	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-
 	}
 
 	@Override
@@ -36,4 +36,10 @@ public class Lexer implements Closeable{
 		}
 	}
 
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+
+	}
 }

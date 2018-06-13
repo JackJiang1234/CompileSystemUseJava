@@ -15,4 +15,7 @@ public class Token {
 	public TagEnum tag(){
 		return this.tag;
 	}
+	
+	public final static Token End = new Token(TagEnum.END);
+	public final static Token Err = new Token(TagEnum.ERR);
 }
