@@ -1,6 +1,7 @@
 package lexical;
 
 import java.io.*;
+import java.nio.file.Paths;
 
 /**
  * 表示文件扫描器，按顺序读取文件中每一个字符, 返回-1表示文件结束
@@ -13,22 +14,24 @@ public class FileScanner implements Closeable {
 	private int lineNum = 0;
 	private int charAtLine = 0;
 	private String curLine = "";
+	private String filePath = "";
 
 	private BufferedReader bufReader;
 
-	public FileScanner(String filePath) throws IOException {
+	public FileScanner(String filePath) throws FileNotFoundException {
 		if (filePath == null) {
 			throw new IllegalArgumentException("filePath");
 		}
+		this.filePath = filePath;
 		bufReader = new BufferedReader(new FileReader(filePath));
 	}
 
-	public int getNextChar() throws IOException {
+	public int getNextChar() {
 		if (charAtLine >= curLine.length()) {
 			this.readNewLine();
 		}
-		
-		//skip empty line
+
+		// skip empty line
 		while (curLine != null && curLine.trim().isEmpty()) {
 			this.readNewLine();
 		}
@@ -48,13 +51,25 @@ public class FileScanner implements Closeable {
 	public int getLineNum() {
 		return this.lineNum;
 	}
-	
-	public int getOldChar(){
+
+	public int getOldChar() {
 		return this.oldCh;
 	}
 
-	private void readNewLine() throws IOException {
-		curLine = bufReader.readLine();
+	public String getFile() {
+		return this.filePath;
+	}
+
+	public int getCol() {
+		return this.charAtLine;
+	}
+
+	private void readNewLine() {
+		try {
+			curLine = bufReader.readLine();
+		} catch (IOException ex) {
+			curLine = null;
+		}
 		charAtLine = 0;
 		lineNum++;
 	}
