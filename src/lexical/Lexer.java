@@ -13,7 +13,7 @@ public class Lexer implements Closeable {
 	private FileScanner fileScanner;
 	private int ch;
 	private StringBuilder content;
-	
+
 	public Lexer(String filePath) throws IOException {
 		this.fileScanner = new FileScanner(filePath);
 		this.ch = ' ';
@@ -39,10 +39,23 @@ public class Lexer implements Closeable {
 				t = recognizeIdOrKeyword();
 			} else if (isStr()) {
 				t = recognizeStr();
+			} else if (isNumber()) {
+				t = recognizeNumber();
+			} else if (isChar()){
+				t = recognizeChar();
+			} else {
+				t = recognizeOperator();
+			}
+			
+			if (t.isErr()){
+				//忽略错误词法记号
+				continue;
+			}else{
+				return t;
 			}
 		}
-
-		return t;
+		
+		return Token.End;
 	}
 
 	private boolean scan(char need) {
@@ -58,18 +71,18 @@ public class Lexer implements Closeable {
 		ch = this.fileScanner.getNextChar();
 		return true;
 	}
-	
+
 	/**
 	 * 是否标识行，关键字 ，以字母或下划线开始
-	 * */
-	private boolean isIdOrKeyword(){
+	 */
+	private boolean isIdOrKeyword() {
 		return Character.isLetter(ch) || ch == '_';
 	}
-	
+
 	/**
 	 * 标识符，关键字识别， 非字母，数字或下划线结束
-	 * */
-	private Token recognizeIdOrKeyword(){
+	 */
+	private Token recognizeIdOrKeyword() {
 		content.setLength(0);
 		do {
 			content.append(ch);
@@ -83,18 +96,18 @@ public class Lexer implements Closeable {
 			return new Token(tag);
 		}
 	}
-	
+
 	/**
 	 * 是否字符串 以双引号"开始
-	 * */
-	private boolean isStr(){
+	 */
+	private boolean isStr() {
 		return ch == '"';
 	}
-	
+
 	/**
-	 * 识别字符串  支持\\, \n, \t, \", \0转义，中间可以是任何其它符， 遇到双引号"结束
-	 * */
-	private Token recognizeStr(){
+	 * 识别字符串 支持\\, \n, \t, \", \0转义，中间可以是任何其它符， 遇到双引号"结束
+	 */
+	private Token recognizeStr() {
 		Token t = null;
 		content.setLength(0);
 		while (!scan('"')) {
@@ -114,14 +127,14 @@ public class Lexer implements Closeable {
 
 				} else if (ch == -1) {
 					// LEXERROR(STR_NO_R_QUTION);
-					t = new Token(TagEnum.ERR);
+					t = Token.Err;
 					break;
 				} else {
 					content.append(ch);
 				}
 			} else if (ch == -1) {
 				// LEXERROR(STR_NO_R_QUTION);
-				t = new Token(TagEnum.ERR);
+				t = Token.Err;
 				break;
 			} else {
 				content.append(ch);
@@ -131,6 +144,41 @@ public class Lexer implements Closeable {
 			t = new Str(content.toString());
 		}
 		return t;
+	}
+
+	/**
+	 * 是否数字 0-9开头
+	 */
+	private boolean isNumber() {
+		return Character.isDigit(ch);
+	}
+
+	/**
+	 * 
+	 * */
+	private Token recognizeNumber() {
+		return null;
+	}
+	
+	/**
+	 * 是否字符  以单引号'开始
+	 * */
+	private boolean isChar(){
+		return ch == '\''; 
+	}
+
+	/**
+	 * 识别字符
+	 */
+	private Token recognizeChar() {
+		return null;
+	}
+	
+	/**
+	 * 识别运算符
+	 * */
+	private Token recognizeOperator(){
+		return null;
 	}
 
 	@Override

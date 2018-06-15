@@ -16,6 +16,10 @@ public class Token {
 		return this.tag;
 	}
 	
+	public boolean isErr(){
+		return this.tag == TagEnum.ERR;
+	}
+	
 	public final static Token End = new Token(TagEnum.END);
 	public final static Token Err = new Token(TagEnum.ERR);
 }
