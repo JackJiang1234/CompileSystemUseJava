@@ -154,9 +154,27 @@ public class Lexer implements Closeable {
 	}
 
 	/**
-	 * 
+	 * 十进制      非0开始的数字
+	 * 十六进制  0x开始
+	 * 二进制      0b
+	 * 八进制      0开头0-7之间的数字
 	 * */
 	private Token recognizeNumber() {
+		int val = 0;
+		if (ch != '0'){//10进制
+			do {
+				val = val * 10 + (ch - '0');
+			}while(Character.isDigit(ch));
+		}else {
+			scan();
+			if (ch == 'x'){
+				
+			}else if (ch == 'b'){
+				
+			}else if (ch > '0' && ch <= '7'){
+				
+			}
+		}
 		return null;
 	}
 	
