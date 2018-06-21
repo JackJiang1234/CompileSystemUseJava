@@ -167,11 +167,27 @@ public class Lexer implements Closeable {
 			}while(Character.isDigit(ch));
 		}else {
 			scan();
-			if (ch == 'x'){
+			if (ch == 'x'){ //十六进制
+				scan();
+				if (this.isHexSymbol()){
+					do {
+						val = val * 16 + ch;
+						if (Character.isDigit(ch)){
+							val -= '0';
+						}else if (this.isHexLower()){
+							val += 10 - 'a';
+						}else if (this.isHexUpper()){
+							val += 10 - 'A';
+						}
+						scan();
+					}while(this.isHexSymbol());
+				}else{
+					//LEXERROR(NUM_HEX_TYPE);//0x后无数据
+					//t=new Token(ERR);
+				}
+			}else if (ch == 'b'){ //二进制
 				
-			}else if (ch == 'b'){
-				
-			}else if (ch > '0' && ch <= '7'){
+			}else if (ch > '0' && ch <= '7'){ //八进制
 				
 			}
 		}
@@ -197,6 +213,21 @@ public class Lexer implements Closeable {
 	 * */
 	private Token recognizeOperator(){
 		return null;
+	}
+	
+	/**
+	 * 是否十六进制数字符号0-9, a-f, A-F
+	 * */
+	private boolean isHexSymbol(){
+		return Character.isDigit(ch) || this.isHexLower() || this.isHexUpper();
+	}
+	
+	private boolean isHexLower(){
+		return ch >= 'a' && ch <= 'f';
+	}
+	
+	private boolean isHexUpper(){
+		return ch >= 'A' && ch <= 'F';
 	}
 
 	@Override
