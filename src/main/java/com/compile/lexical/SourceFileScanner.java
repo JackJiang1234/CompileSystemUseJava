@@ -1,15 +1,16 @@
 package com.compile.lexical;
 
+import sun.plugin.dom.exception.InvalidStateException;
+
 import java.io.*;
-import java.util.Objects;
 
 /**
- *  represents source file scanner
+ * represents source file scanner
  *
- * @author jack
+ * @author jianyong.jiang
  * @date 2019/03/12
- * */
-public class SourceFileScanner implements Scanner {
+ */
+public class SourceFileScanner extends BaseScanner {
     private InputStreamReader fileReader;
     private int readChar;
 
@@ -17,12 +18,18 @@ public class SourceFileScanner implements Scanner {
         this(new FileInputStream(name));
     }
 
-    public SourceFileScanner(InputStream inputStream){
+    public SourceFileScanner(InputStream inputStream) {
         this.fileReader = new InputStreamReader(inputStream);
+        this.readChar = -1;
     }
 
     @Override
-    public boolean hasNext() {
+    public void close() throws Exception {
+        this.fileReader.close();
+    }
+
+    @Override
+    protected boolean subHasNext() {
         try {
             return (this.readChar = this.fileReader.read()) != -1;
         } catch (IOException e) {
@@ -31,12 +38,11 @@ public class SourceFileScanner implements Scanner {
     }
 
     @Override
-    public char next() {
-        return (char) this.readChar;
-    }
-
-    @Override
-    public void close() throws Exception {
-        this.fileReader.close();
+    protected char subNext() {
+        if (this.readChar == -1) {
+            throw new InvalidStateException("please invoke hasNext test method first.");
+        } else {
+            return (char) this.readChar;
+        }
     }
 }

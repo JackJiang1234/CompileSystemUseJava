@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
- * @author  jack
+ * @author  jianyong.jiang
  * @date 2019/03/12
  * */
 public class StringScannerTest extends ScannerTestBase {

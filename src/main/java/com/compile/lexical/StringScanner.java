@@ -3,20 +3,19 @@ package com.compile.lexical;
 import java.util.Objects;
 
 /**
- *
- * @author jack
+ * @author jianyong.jiang
  * @date 2019/03/12
- * */
-public class StringScanner implements Scanner {
+ */
+public class StringScanner extends BaseScanner {
     private String content;
     private int contentLength;
     private int readPosition;
 
-    public String getContent(){
+    public String getContent() {
         return this.content;
     }
 
-    public StringScanner(String content){
+    public StringScanner(String content) {
         Objects.requireNonNull(content);
         this.content = content;
         this.contentLength = content.length();
@@ -24,14 +23,14 @@ public class StringScanner implements Scanner {
     }
 
     @Override
-    public boolean hasNext() {
+    protected boolean subHasNext() {
         this.readPosition++;
         return this.readPosition < this.contentLength;
     }
 
     @Override
-    public char next() {
-        return this.content.charAt(this.readPosition < this.contentLength ? this.readPosition : this.contentLength - 1);
+    protected char subNext() {
+        return this.content.charAt(readPosition < this.contentLength ? readPosition : this.contentLength - 1);
     }
 
     @Override

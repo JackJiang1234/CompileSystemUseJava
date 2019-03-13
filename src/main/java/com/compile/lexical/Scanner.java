@@ -2,13 +2,18 @@ package com.compile.lexical;
 
 /**
  * the sanner for lexical analysis
- * @author jack
+ * @author jianyong.jiang
  * @date 2019/03/12
  * */
 public interface Scanner extends AutoCloseable {
 
     /**
-     * com if has next
+     * push back a char then invoke next will return the char
+     * */
+    void pushBack(char c);
+
+    /**
+     * test has next char for then scanner
      * */
     boolean hasNext();
 
