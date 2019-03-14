@@ -24,13 +24,14 @@ public class StringScanner extends BaseScanner {
 
     @Override
     protected boolean subHasNext() {
-        this.readPosition++;
-        return this.readPosition < this.contentLength;
+        return (this.readPosition + 1) < this.contentLength;
     }
 
     @Override
     protected char subNext() {
-        return this.content.charAt(readPosition < this.contentLength ? readPosition : this.contentLength - 1);
+        this.readPosition++;
+        this.readPosition  = this.readPosition < this.contentLength ? readPosition : this.contentLength - 1;
+        return this.content.charAt(this.readPosition);
     }
 
     @Override
