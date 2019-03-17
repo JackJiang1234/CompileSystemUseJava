@@ -18,6 +18,7 @@ public abstract class BaseScanner implements Scanner {
 
     public BaseScanner() {
         pushBackQueue = new ArrayDeque<>();
+        this.line = 0;
         this.col = 0;
     }
 
