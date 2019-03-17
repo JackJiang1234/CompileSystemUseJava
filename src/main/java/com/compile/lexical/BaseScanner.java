@@ -53,7 +53,7 @@ public abstract class BaseScanner implements Scanner {
 
     @Override
     public int getLine() {
-        return 0;
+        return this.line;
     }
 
     @Override

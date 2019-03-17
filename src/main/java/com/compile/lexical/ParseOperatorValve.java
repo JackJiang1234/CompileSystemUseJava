@@ -10,6 +10,6 @@ package com.compile.lexical;
 public class ParseOperatorValve extends BaseValve {
     @Override
     public void invoke(ValveContext context) {
-        
+
     }
 }
