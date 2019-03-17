@@ -2,7 +2,9 @@ package com.compile.lexical;
 
 import com.compile.lexical.token.Token;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * base sanner for lexical analysis
@@ -12,23 +14,33 @@ import java.util.Optional;
  */
 public class ParsePipeline {
 
-    public BaseValve getBasic(){
-        return  null;
+    private BaseValve baseValve;
+    private List<BaseValve> valves;
+
+    public ParsePipeline() {
+        this.valves = new ArrayList<>();
+        this.baseValve = new ReportExceptionValve();
     }
 
-    public void setBasic(){
-
+    public BaseValve getBasic() {
+        return this.baseValve;
     }
 
-    public void addValve(BaseValve ... valves){
-
+    public void setBasic(BaseValve basicValve) {
+        this.baseValve = basicValve;
     }
 
-    public BaseValve[] getValves(){
-        return null;
+    public void addValve(BaseValve... valves) {
+        Collections.addAll(this.valves, valves);
     }
 
-    public Optional<Token> invokeParse(Scanner scanner){
-        return null;
+    public BaseValve[] getValves() {
+        return this.valves.toArray(new BaseValve[this.valves.size()]);
+    }
+
+    public Token invokeParse(Scanner scanner) {
+        ValveContext context = new ValveContext(this, scanner);
+        context.invokeNext();
+        return context.getToken();
     }
 }
