@@ -11,15 +11,20 @@ import java.util.Queue;
  */
 public abstract class BaseScanner implements Scanner {
 
+    private int line;
+    private int col;
     private Queue<Character> pushBackQueue;
+    private final static String newLine = System.getProperty("line.separator");
 
     public BaseScanner() {
         pushBackQueue = new ArrayDeque<>();
+        this.col = 0;
     }
 
     @Override
     public void pushBack(char c){
         this.pushBackQueue.add(c);
+        this.col--;
     }
 
     @Override
@@ -29,11 +34,30 @@ public abstract class BaseScanner implements Scanner {
 
     @Override
     public char next() {
+        char ret;
         if (this.pushBackQueue.size() > 0) {
-            return this.pushBackQueue.remove();
+            ret = this.pushBackQueue.remove();
         } else {
-            return subNext();
+            ret = subNext();
         }
+
+        if (ret == '\r'){
+            this.line++;
+            this.col = 0;
+        }else{
+            this.col++;
+        }
+        return ret;
+    }
+
+    @Override
+    public int getLine() {
+        return 0;
+    }
+
+    @Override
+    public int getColumn() {
+        return this.col;
     }
 
     protected abstract boolean subHasNext();
