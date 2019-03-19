@@ -1,6 +1,6 @@
 package com.compile.lexical;
 
-import com.compile.lexical.token.Token;
+import com.compile.lexical.token.BaseToken;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,7 +38,7 @@ public class ParsePipeline {
         return this.valves.toArray(new BaseValve[this.valves.size()]);
     }
 
-    public Token invokeParse(Scanner scanner) {
+    public BaseToken invokeParse(Scanner scanner) {
         ValveContext context = new ValveContext(this, scanner);
         context.invokeNext();
         return context.getToken();

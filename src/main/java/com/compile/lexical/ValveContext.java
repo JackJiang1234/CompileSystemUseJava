@@ -1,17 +1,16 @@
 package com.compile.lexical;
 
-import com.compile.lexical.token.Token;
+import com.compile.lexical.token.BaseToken;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class ValveContext {
     private ParsePipeline pipeline;
     private Scanner scanner;
     private List<BaseValve> valves;
-    private Token token;
+    private BaseToken token;
     private int index;
 
     public ValveContext(ParsePipeline pipeline, Scanner scanner) {
@@ -26,11 +25,11 @@ public class ValveContext {
         return this.scanner;
     }
 
-    public void setToken(Token t) {
+    public void setToken(BaseToken t) {
         this.token = t;
     }
 
-    public Token getToken() {
+    public BaseToken getToken() {
         return this.token;
     }
 

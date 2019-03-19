@@ -1,5 +1,7 @@
 package com.compile.lexical.token;
 
-public class IdentifierToken extends Token {
-
+public class IdentifierToken extends BaseToken {
+    public IdentifierToken(String name){
+        super(name);
+    }
 }
