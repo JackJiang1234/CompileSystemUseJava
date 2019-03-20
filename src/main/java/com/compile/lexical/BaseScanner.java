@@ -13,8 +13,9 @@ public abstract class BaseScanner implements Scanner {
 
     private int line;
     private int col;
-    private Queue<Character> pushBackQueue;
-    private final static String newLine = System.getProperty("line.separator");
+    private Queue<Integer> pushBackQueue;
+
+    public final static int EOF = -1;
 
     public BaseScanner() {
         pushBackQueue = new ArrayDeque<>();
@@ -23,19 +24,14 @@ public abstract class BaseScanner implements Scanner {
     }
 
     @Override
-    public void pushBack(char c){
+    public void pushBack(int c){
         this.pushBackQueue.add(c);
         this.col--;
     }
 
     @Override
-    public boolean hasNext() {
-        return this.pushBackQueue.size() > 0 || subHasNext();
-    }
-
-    @Override
-    public char next() {
-        char ret;
+    public int next() {
+        int ret;
         if (this.pushBackQueue.size() > 0) {
             ret = this.pushBackQueue.remove();
         } else {
@@ -61,7 +57,10 @@ public abstract class BaseScanner implements Scanner {
         return this.col;
     }
 
-    protected abstract boolean subHasNext();
+    @Override
+    public void close() throws Exception {
 
-    protected abstract char subNext();
+    }
+
+    protected abstract int subNext();
 }

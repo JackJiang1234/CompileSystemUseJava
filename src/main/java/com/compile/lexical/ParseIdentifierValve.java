@@ -14,8 +14,7 @@ public class ParseIdentifierValve extends BaseValve {
     @Override
     public void invoke(ValveContext context) {
         Scanner scanner = context.getScanner();
-        char ch;
-
+        int ch;
         while (scanner.hasNext()) {
             ch = scanner.next();
             if (isValidIdentifierStart(ch)) {

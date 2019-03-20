@@ -20,7 +20,7 @@ public class StringScannerTest extends ScannerTestBase {
     @Test
     public void testEmpty() {
         StringScanner scanner = new StringScanner("");
-        assertFalse(scanner.hasNext());
+        assertEquals(BaseScanner.EOF, scanner.next());
     }
 
     @Test
@@ -34,8 +34,7 @@ public class StringScannerTest extends ScannerTestBase {
     @Test
     public void testLineCount() {
         StringScanner scanner = new StringScanner("aaaa\r\nbbbb\r\ncccc");
-        while (scanner.hasNext()) {
-            scanner.next();
+        while (scanner.next() != BaseScanner.EOF) {
         }
         assertEquals(2, scanner.getLine());
     }
@@ -44,8 +43,7 @@ public class StringScannerTest extends ScannerTestBase {
     public void testColCount(){
         StringScanner scanner = new StringScanner("aaaabbbbccc");
         int i = 0;
-        while (scanner.hasNext()) {
-            scanner.next();
+        while (scanner.next() != BaseScanner.EOF) {
             assertEquals(++i, scanner.getColumn());
         }
     }

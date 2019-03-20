@@ -14,11 +14,12 @@ public abstract class ScannerTestBase {
 
         try (Scanner scanner = factory.apply(content)) {
             int i = 0;
-            while (scanner.hasNext()) {
-                assertEquals(content.charAt(i), scanner.next());
+            int readChar;
+            while ((readChar = scanner.next()) != -1) {
+                assertEquals(content.charAt(i), readChar);
 
                 scanner.pushBack(content.charAt(i));
-                assertEquals(content.charAt(i), scanner.next());
+                assertEquals(content.charAt(i), readChar);
 
                 i++;
             }

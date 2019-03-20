@@ -1,9 +1,6 @@
 package com.compile.lexical;
 
-import sun.plugin.dom.exception.InvalidStateException;
-
 import java.io.*;
-
 /**
  * represents source file scanner
  *
@@ -12,7 +9,6 @@ import java.io.*;
  */
 public class SourceFileScanner extends BaseScanner {
     private InputStreamReader fileReader;
-    private int readChar;
 
     public SourceFileScanner(String name) throws FileNotFoundException {
         this(new FileInputStream(name));
@@ -20,7 +16,6 @@ public class SourceFileScanner extends BaseScanner {
 
     public SourceFileScanner(InputStream inputStream) {
         this.fileReader = new InputStreamReader(inputStream);
-        this.readChar = -1;
     }
 
     @Override
@@ -29,20 +24,11 @@ public class SourceFileScanner extends BaseScanner {
     }
 
     @Override
-    protected boolean subHasNext() {
+    protected int subNext() {
         try {
-            return (this.readChar = this.fileReader.read()) != -1;
+            return this.fileReader.read();
         } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    protected char subNext() {
-        if (this.readChar == -1) {
-            throw new InvalidStateException("please invoke hasNext test method first.");
-        } else {
-            return (char) this.readChar;
+            throw new LexicalParseException("read source file raise error.", e);
         }
     }
 }

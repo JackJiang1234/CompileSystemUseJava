@@ -10,17 +10,13 @@ public interface Scanner extends AutoCloseable {
     /**
      * push back a char then invoke next will return the char
      * */
-    void pushBack(char c);
+    void pushBack(int c);
 
     /**
-     * test has next char for then scanner
-     * */
-    boolean hasNext();
-
-    /**
-     * get next char
-     * */
-    char next();
+    　* @description: read next char
+    　* @return return -1 if read the end of file, otherwise return the read char
+    　*/
+    int next();
 
     /**
      * 当前行
