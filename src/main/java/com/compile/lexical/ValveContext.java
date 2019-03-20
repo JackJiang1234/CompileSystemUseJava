@@ -13,8 +13,8 @@ public class ValveContext {
     private BaseToken token;
     private int index;
 
-    public ValveContext(ParsePipeline pipeline, Scanner scanner) {
-        this.scanner = scanner;
+    public ValveContext(ParsePipeline pipeline) {
+        this.scanner = pipeline.getScanner();
         this.pipeline = pipeline;
         this.valves = new ArrayList<>(Arrays.asList(pipeline.getValves()));
         this.valves.add(this.pipeline.getBasic());

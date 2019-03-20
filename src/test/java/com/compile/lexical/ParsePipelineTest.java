@@ -16,22 +16,22 @@ public class ParsePipelineTest {
 
     @Test
     public void testNotSetBasicValve() {
-        ParsePipeline parsePipeline = new ParsePipeline();
-        assertThrows(LexicalParseException.class, () -> parsePipeline.invokeParse(null));
+        ParsePipeline parsePipeline = new ParsePipeline(null);
+        assertThrows(LexicalParseException.class, () -> parsePipeline.invokeParse());
     }
 
     @Test
     public void testSetBasicValve() {
-        ParsePipeline parsePipeline = new ParsePipeline();
+        ParsePipeline parsePipeline = new ParsePipeline(null);
         final boolean[] isRun = {false};
         parsePipeline.setBasic(createValve(c -> isRun[0] = true));
-        parsePipeline.invokeParse(null);
+        parsePipeline.invokeParse();
         assertTrue(isRun[0]);
     }
 
     @Test
     public void testSetMoreValves() {
-        ParsePipeline parsePipeline = new ParsePipeline();
+        ParsePipeline parsePipeline = new ParsePipeline(null);
         final int[] add = {0};
         parsePipeline.setBasic(createValve(c -> {
             assertEquals(1, add[0]);
@@ -41,7 +41,7 @@ public class ParsePipelineTest {
             add[0]++;
             c.invokeNext();
         }));
-        parsePipeline.invokeParse(null);
+        parsePipeline.invokeParse();
         assertEquals(2, add[0]);
     }
 

@@ -1,7 +1,11 @@
 package com.compile.lexical.token;
 
 public class KeywordToken extends BaseToken {
-    public KeywordToken(String name){
-        super(name);
+
+    private KeywordEnum keywordEnum;
+
+    public KeywordToken(KeywordEnum keywordEnum){
+        super(keywordEnum.getName());
+        this.keywordEnum = keywordEnum;
     }
 }
