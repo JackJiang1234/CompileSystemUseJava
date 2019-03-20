@@ -18,7 +18,7 @@ public class ParseIdentifierValve extends BaseValve {
         while (scanner.hasNext()) {
             ch = scanner.next();
             if (isValidIdentifierStart(ch)) {
-
+                parse(ch, context.getScanner());
             } else {
                 scanner.pushBack(ch);
                 context.invokeNext();
