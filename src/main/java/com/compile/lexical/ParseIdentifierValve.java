@@ -36,7 +36,7 @@ public class ParseIdentifierValve extends BaseValve {
     private BaseToken parse(int readChar, Scanner scanner) {
         CharAppender appender = new CharAppender();
         appender.append(readChar);
-
+        // todo id length limit check
         while (true) {
             readChar = scanner.next();
             if (this.isValidIdentifierChar(readChar)) {

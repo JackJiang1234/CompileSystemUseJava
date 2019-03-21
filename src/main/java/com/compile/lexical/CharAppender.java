@@ -10,21 +10,25 @@ package com.compile.lexical;
 public class CharAppender {
     private StringBuilder appender;
 
-    public CharAppender(){
+    public CharAppender() {
         this.appender = new StringBuilder();
     }
 
-    public CharAppender append(int ch){
-        return this.append((char)ch);
+    public CharAppender append(int ch) {
+        return this.append((char) ch);
     }
 
-    public CharAppender append(char ch){
+    public CharAppender append(char ch) {
         this.appender.append(ch);
         return this;
     }
 
+    public int length(){
+        return this.appender.length();
+    }
+
     @Override
-    public String toString(){
+    public String toString() {
         return this.appender.toString();
     }
 }

@@ -14,15 +14,30 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class ValveTestBase {
 
-    protected ParsePipeline createParsePipeline(Scanner scanner) {
+    protected final ParsePipeline createParsePipeline(String content) {
+        return this.createParsePipeline(new StringScanner(content));
+    }
+
+    protected final ParsePipeline createParsePipeline(Scanner scanner) {
         ParsePipeline parsePipeline = new ParsePipeline(scanner);
         parsePipeline.setBasic(new EndValve());
         parsePipeline.addValve(new SkipWhiteSpaceValve());
 
+        initPipeline(parsePipeline);
+
         return parsePipeline;
     }
 
-    protected void assertAsExpectedToken(BaseToken expected, BaseToken target){
+    protected BaseToken parse(String content) {
+        ParsePipeline parsePipeline = this.createParsePipeline(new StringScanner(content));
+        return parsePipeline.invokeParse();
+    }
+
+    protected void initPipeline(ParsePipeline pipeline) {
+
+    }
+
+    protected void assertAsExpectedToken(BaseToken expected, BaseToken target) {
         assertEquals(expected.getClass(), target.getClass());
         assertEquals(expected.getName(), target.getName());
     }

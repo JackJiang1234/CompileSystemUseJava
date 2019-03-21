@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @ClassName: ParseIdentifierValveTest
- * @Description TODO
+ * @Description 解析id 或 keyword 测试
  * @Author jianyong.jiang
  * @Date 2019/3/20 13:47
  * @Version 1.0.0
@@ -34,10 +34,7 @@ public class ParseIdentifierValveTest extends ValveTestBase {
     }
 
     @Override
-    protected ParsePipeline createParsePipeline(Scanner scanner) {
-        ParsePipeline parsePipeline = super.createParsePipeline(scanner);
-        parsePipeline.addValve(new ParseIdentifierValve());
-
-        return parsePipeline;
+    protected void initPipeline(ParsePipeline pipeline){
+        pipeline.addValve(new ParseIdentifierValve());
     }
 }
