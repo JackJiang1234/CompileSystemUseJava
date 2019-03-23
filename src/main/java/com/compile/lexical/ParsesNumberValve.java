@@ -34,21 +34,4 @@ public class ParsesNumberValve extends BaseValve {
             context.invokeNext();
         }
     }
-
-    private String readUntilWhitespace(Scanner scanner) {
-        CharAppender appender = new CharAppender();
-        int readChar;
-
-        while (true) {
-            readChar = scanner.next();
-            if (Character.isWhitespace(readChar) || readChar == BaseScanner.EOF) {
-                scanner.pushBack(readChar);
-                break;
-            } else {
-                appender.append(readChar);
-            }
-        }
-
-        return appender.toString();
-    }
 }

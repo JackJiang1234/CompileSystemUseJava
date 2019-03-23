@@ -18,7 +18,9 @@ public class ParseIdentifierValve extends BaseValve {
 
         ch = scanner.next();
         if (isValidIdentifierStart(ch)) {
-            context.setToken(parse(ch, context.getScanner()));
+            scanner.pushBack(ch);
+            String idStr = this.readUntilWhitespace(scanner);
+            context.setToken(parse(idStr, scanner.getLine(), scanner.getColumn()));
         } else {
             scanner.pushBack(ch);
             context.invokeNext();
@@ -33,20 +35,19 @@ public class ParseIdentifierValve extends BaseValve {
         return this.isValidIdentifierStart(c) || Character.isDigit(c);
     }
 
-    private BaseToken parse(int readChar, Scanner scanner) {
+    private BaseToken parse(String idStr, int line, int col) {
         CharAppender appender = new CharAppender();
-        appender.append(readChar);
+        StringScanner scanner = new StringScanner(idStr);
+        int readChar;
+
         // todo id length limit check
-        while (true) {
-            readChar = scanner.next();
+        while ((readChar = scanner.next()) != -1) {
             if (this.isValidIdentifierChar(readChar)) {
                 appender.append(readChar);
             } else {
-                scanner.pushBack(readChar);
-                break;
+                throw new LexicalParseException("%d line %d column \"%s\" parse as id error.");
             }
         }
-
         return this.createTokenById(appender.toString());
     }
 

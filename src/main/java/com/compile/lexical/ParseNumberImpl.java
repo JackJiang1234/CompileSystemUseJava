@@ -13,7 +13,7 @@ package com.compile.lexical;
     private int line;
     private int col;
 
-    public static final String PARSE_NUMBER_FORMAT_ERROR = "%d line %d column '%s' parse %s num error.";
+    public static final String PARSE_NUMBER_FORMAT_ERROR = "%d line %d column '%s' parse as %s num error.";
 
     public ParseNumberImpl(String numStr, int line, int col){
         this.numStr = numStr;
