@@ -4,6 +4,7 @@ import com.compile.lexical.token.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @ClassName: ParseIdentifierValveTest
@@ -33,8 +34,14 @@ public class ParseIdentifierValveTest extends ValveTestBase {
         }
     }
 
+    @Test
+    public void testInvalidIdentifier() {
+        ParsePipeline pipeline = this.createParsePipeline(new StringScanner("  abc%^&  "));
+        assertThrows(LexicalParseException.class, () -> pipeline.invokeParse());
+    }
+
     @Override
-    protected void initPipeline(ParsePipeline pipeline){
+    protected void initPipeline(ParsePipeline pipeline) {
         pipeline.addValve(new ParseIdentifierValve());
     }
 }

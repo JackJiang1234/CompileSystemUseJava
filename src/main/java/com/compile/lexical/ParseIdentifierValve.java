@@ -45,7 +45,7 @@ public class ParseIdentifierValve extends BaseValve {
             if (this.isValidIdentifierChar(readChar)) {
                 appender.append(readChar);
             } else {
-                throw new LexicalParseException("%d line %d column \"%s\" parse as id error.");
+                throw new LexicalParseException(String.format("%d line %d column \"%s\" parse as id error.", line, col, idStr));
             }
         }
         return this.createTokenById(appender.toString());
