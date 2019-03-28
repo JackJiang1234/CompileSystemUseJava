@@ -36,7 +36,7 @@ public class StringScannerTest extends ScannerTestBase {
         StringScanner scanner = new StringScanner("aaaa\r\nbbbb\r\ncccc");
         while (scanner.next() != BaseScanner.EOF) {
         }
-        assertEquals(2, scanner.getLine());
+        assertEquals(3, scanner.getLine());
     }
 
     @Test
