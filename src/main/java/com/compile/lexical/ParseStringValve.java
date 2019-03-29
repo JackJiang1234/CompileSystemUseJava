@@ -26,7 +26,7 @@ public class ParseStringValve extends LookAheadCharBaseValue {
             if (ch == '\\'){
                 // 转义
                 charAppender.append(this.parseEscapeChar(scanner));
-            }else if (ch == '\n'|| ch == -1){
+            }else if (ch == '\n'|| ch == BaseScanner.EOF){
                 throw new LexicalParseException("string not closed quotation.");
             }else {
                 charAppender.append(ch);

@@ -9,6 +9,5 @@ package com.compile.lexical;
 public class ParseCommentValve extends BaseValve {
     @Override
     public void invoke(ValveContext context) {
-
     }
 }
