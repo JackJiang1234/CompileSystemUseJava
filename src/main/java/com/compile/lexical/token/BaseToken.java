@@ -9,14 +9,14 @@ import java.util.Objects;
  * @Version 1.0.0
  */
 public abstract class BaseToken {
-    private String name;
+    private String literal;
 
-    public BaseToken(String name){
-        Objects.requireNonNull(name);
-        this.name = name;
+    public BaseToken(String literal){
+        Objects.requireNonNull(literal);
+        this.literal = literal;
     }
 
-    public String getName(){
-        return this.name;
+    public String getLiteral(){
+        return this.literal;
     }
 }

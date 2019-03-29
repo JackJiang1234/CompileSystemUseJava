@@ -6,7 +6,14 @@ package com.compile.lexical.token;
  * @date 2019/03/17
  */
 public class CharToken extends BaseToken {
-    public CharToken(String name){
-        super(name);
+    public CharToken(char name){
+        super(Character.toString(name));
+        this.value = name;
     }
+
+    public char getValue(){
+        return this.value;
+    }
+
+    private char value;
 }

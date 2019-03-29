@@ -1,5 +1,6 @@
 package com.compile.lexical;
 
+import com.compile.lexical.token.BaseToken;
 import com.compile.lexical.token.NumToken;
 
 import java.util.function.Supplier;

@@ -1,7 +1,6 @@
 package com.compile.lexical;
 
 import com.compile.lexical.token.BaseToken;
-import com.compile.lexical.token.KeywordToken;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -39,6 +38,6 @@ public class ValveTestBase {
 
     protected void assertAsExpectedToken(BaseToken expected, BaseToken target) {
         assertEquals(expected.getClass(), target.getClass());
-        assertEquals(expected.getName(), target.getName());
+        assertEquals(expected.getLiteral(), target.getLiteral());
     }
 }
