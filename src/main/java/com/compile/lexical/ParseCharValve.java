@@ -37,26 +37,4 @@ public class ParseCharValve extends LookAheadCharBaseValue {
         }
         return new CharToken(result);
     }
-
-    // 解析转义符
-    private char parseEscapeChar(Scanner scanner) {
-        int ch = scanner.next();
-        char result;
-
-        if (ch == 'n') {
-            result = '\n';
-        } else if (ch == '\\') {
-            result = '\\';
-        } else if (ch == 't') {
-            result = '\t';
-        } else if (ch == '0') {
-            result = '\0';
-        } else if (ch == '\'') {
-            result = '\'';
-        } else {
-            throw new LexicalParseException(String.format("unknown escape char %c.", ch));
-        }
-
-        return result;
-    }
 }

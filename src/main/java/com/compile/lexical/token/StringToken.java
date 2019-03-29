@@ -6,7 +6,7 @@ package com.compile.lexical.token;
  * @date 2019/03/17
  */
 public class StringToken extends BaseToken {
-    public StringToken(String name){
-        super(name);
+    public StringToken(String literal){
+        super(literal);
     }
 }
