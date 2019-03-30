@@ -7,29 +7,22 @@ package com.compile.lexical;
  * @Date 2019/3/21 17:22
  * @Version 1.0.0
  */
- class ParseNumberImpl {
+class ParseNumberImpl {
+    public static final String PARSE_NUMBER_FORMAT_ERROR = "%d line %d column parse as %s num error.";
+    public static final String PARSE_NUMBER_HEX_ERROR = "%d line %d column behind 0x no data";
 
-    private String numStr;
-    private int line;
-    private int col;
-
-    public static final String PARSE_NUMBER_FORMAT_ERROR = "%d line %d column '%s' parse as %s num error.";
-
-    public ParseNumberImpl(String numStr, int line, int col){
-        this.numStr = numStr;
-        this.line = line;
-        this.col = col;
+    public ParseNumberImpl(Scanner scanner) {
+        this.scanner = scanner;
     }
 
-    public NumbParseResult parseNumber(){
-        Scanner scanner = new StringScanner(numStr);
-        int readChar = scanner.next();
-        if ('1' <= readChar && readChar <= '9') {
+    public NumbParseResult parseNumber() {
+        int next = scanner.next();
+        if ('1' <= next && next <= '9') {
             // 十进制
-            return this.parseDecimal(readChar, scanner);
+            return this.parseDecimal(next, scanner);
         } else {
             // 八进制或十六进制
-            return this.parseHexOrOct(readChar, scanner);
+            return this.parseHexOrOct(scanner);
         }
     }
 
@@ -52,9 +45,9 @@ package com.compile.lexical;
         return new NumbParseResult(appender.toString(), value);
     }
 
-    private NumbParseResult parseHexOrOct(int readChar, Scanner scanner) {
+    private NumbParseResult parseHexOrOct(Scanner scanner) {
         // 再读一个字符确认是八进制还是十六进制
-        readChar = scanner.next();
+        int readChar = scanner.next();
         if (readChar == 'x') {
             // 十六进制
             return parseHex(scanner);
@@ -70,15 +63,17 @@ package com.compile.lexical;
         CharAppender appender = new CharAppender();
         appender.append('0').append('x');
 
-        while (true){
+        while (true) {
             readChar = scanner.next();
             Integer number = ParseNumUtil.getHexNumberByChar(readChar);
             if (number == null) {
-                if (appender.length() == 2){
+                if (appender.length() == 2) {
                     // just 0x
-                    throw new LexicalParseException(String.format(PARSE_NUMBER_FORMAT_ERROR, this.line, this.col, numStr, "hex"));
+                    throw new LexicalParseException(String.format(PARSE_NUMBER_HEX_ERROR, this.scanner.getLine(), this.scanner.getColumn()));
+                } else {
+                    scanner.pushBack(readChar);
+                    return new NumbParseResult(appender.toString(), value);
                 }
-                return new NumbParseResult(appender.toString(), value);
             } else {
                 appender.append(readChar);
                 value = value * 16 + number;
@@ -92,13 +87,13 @@ package com.compile.lexical;
         CharAppender appender = new CharAppender();
         appender.append('0');
 
-        while (true){
+        while (true) {
             readChar = scanner.next();
             if (Character.isDigit(readChar)) {
                 Integer number = ParseNumUtil.getOctNumberByChar(readChar);
                 if (number == null) {
                     // not octal number
-                    throw new LexicalParseException(String.format(PARSE_NUMBER_FORMAT_ERROR, line, col, numStr, "octal"));
+                    throw new LexicalParseException(String.format(PARSE_NUMBER_FORMAT_ERROR, this.scanner.getLine(), this.scanner.getColumn(), "octal"));
                 } else {
                     appender.append(readChar);
                     value = value * 8 + number;
@@ -109,4 +104,6 @@ package com.compile.lexical;
             }
         }
     }
+
+    private Scanner scanner;
 }

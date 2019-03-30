@@ -1,6 +1,6 @@
 package com.compile.lexical.token;
 
-public class KeywordToken extends BaseToken {
+public class KeywordToken extends IdentifierToken {
 
     private KeywordEnum keywordEnum;
 

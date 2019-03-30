@@ -19,4 +19,8 @@ public abstract class BaseToken {
     public String getLiteral(){
         return this.literal;
     }
+
+    public boolean notEnd(){
+        return this != EndToken.END;
+    }
 }

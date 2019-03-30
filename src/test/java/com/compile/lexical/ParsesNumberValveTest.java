@@ -3,6 +3,7 @@ package com.compile.lexical;
 import com.compile.lexical.token.BaseToken;
 import com.compile.lexical.token.EndToken;
 import com.compile.lexical.token.NumToken;
+import com.compile.lexical.token.SeparatorToken;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -63,6 +64,18 @@ public class ParsesNumberValveTest extends ValveTestBase {
         testParseNumFaultTolerance("111xxx", 111);
         testParseNumFaultTolerance("07xxx", 7);
         testParseNumFaultTolerance("0x6xxx", 6);
+    }
+
+    @Test
+    public void testMixedParse(){
+        ParsePipeline pipeline = this.createParsePipeline("10;");
+        pipeline.addValve(new ParseSeparatorValve());
+        NumToken token = (NumToken)pipeline.invokeParse();
+        assertEquals("10", token.getLiteral());
+        assertEquals(10, token.getValue());
+
+        SeparatorToken separatorToken = (SeparatorToken)pipeline.invokeParse();
+        assertEquals(";", separatorToken.getLiteral());
     }
 
     private void testParseNumFaultTolerance(String numStr, int expectedValue) {

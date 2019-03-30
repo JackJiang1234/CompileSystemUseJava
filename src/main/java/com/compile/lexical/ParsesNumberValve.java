@@ -3,8 +3,6 @@ package com.compile.lexical;
 import com.compile.lexical.token.BaseToken;
 import com.compile.lexical.token.NumToken;
 
-import java.util.function.Supplier;
-
 /**
  * 解析数字
  * 0x开头的十六制整数0x[0-9a-f]+
@@ -16,23 +14,21 @@ import java.util.function.Supplier;
  * @author jianyong.jiang
  * @date 2019/03/17
  */
-public class ParsesNumberValve extends BaseValve {
-    public ParsesNumberValve() {
+public class ParsesNumberValve extends LookAheadCharBaseValue {
+    @Override
+    protected boolean isMatch(int ch) {
+        this.lookAhead = ch;
+        return Character.isDigit(ch);
     }
 
     @Override
-    public void invoke(ValveContext context) {
-        Scanner scanner = context.getScanner();
-        int readChar = scanner.next();
-
-        if (Character.isDigit(readChar)) {
-            scanner.pushBack(readChar);
-            ParseNumberImpl impl = new ParseNumberImpl(this.readUntilWhitespace(scanner), scanner.getLine(), scanner.getColumn());
-            NumbParseResult result = impl.parseNumber();
-            context.setToken(new NumToken(result.getNumStr(), result.getValue()));
-        } else {
-            scanner.pushBack(readChar);
-            context.invokeNext();
-        }
+    protected BaseToken doParse(Scanner scanner) {
+        scanner.pushBack(this.lookAhead);
+        ParseNumberImpl impl = new ParseNumberImpl(scanner);
+        NumbParseResult result = impl.parseNumber();
+        return new NumToken(result.getNumStr(), result.getValue());
     }
+
+    private int lookAhead;
+
 }

@@ -7,6 +7,7 @@ import com.compile.lexical.token.OperatorUtil;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ParseOperatorValveTest extends ValveTestBase {
 
@@ -47,18 +48,25 @@ class ParseOperatorValveTest extends ValveTestBase {
 
     @Test
     public void testErrorEndCommentParse() {
-
-    }
-
-    @Test
-    public void testUnknownCharParse() {
-
+        String multiCommentLine = "/*abc *&";
+        ParsePipeline pipeline = this.createParsePipeline(multiCommentLine);
+        assertThrows(LexicalParseException.class, () -> pipeline.invokeParse());
     }
 
 
     @Test
     public void testMixedParse() {
+        ParsePipeline pipeline = this.createParsePipeline("* /*abc */ -");
+        OperatorToken token = (OperatorToken) pipeline.invokeParse();
+        assertEquals("*", token.getLiteral());
 
+        token = (OperatorToken) pipeline.invokeParse();
+        assertEquals("/*abc */", token.getLiteral());
+
+        token = (OperatorToken) pipeline.invokeParse();
+        assertEquals("-", token.getLiteral());
+
+        this.assertAsExpectedToken(EndToken.END, pipeline.invokeParse());
     }
 
 

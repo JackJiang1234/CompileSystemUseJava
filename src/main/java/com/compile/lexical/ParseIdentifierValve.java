@@ -19,7 +19,7 @@ public class ParseIdentifierValve extends BaseValve {
         ch = scanner.next();
         if (isValidIdentifierStart(ch)) {
             scanner.pushBack(ch);
-            String idStr = this.readUntilWhitespace(scanner);
+            String idStr = this.readUntilNotMatch(scanner, read -> this.isValidIdentifierChar(read));
             context.setToken(parse(idStr, scanner.getLine(), scanner.getColumn()));
         } else {
             scanner.pushBack(ch);
