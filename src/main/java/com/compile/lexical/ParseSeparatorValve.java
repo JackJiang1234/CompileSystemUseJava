@@ -1,5 +1,6 @@
 package com.compile.lexical;
 
+import com.compile.lexical.token.BaseToken;
 import com.compile.lexical.token.SeparatorToken;
 import com.compile.lexical.token.SeparatorUtil;
 
@@ -10,16 +11,18 @@ import com.compile.lexical.token.SeparatorUtil;
  * @author jianyong.jiang
  * @date 2019/03/17
  */
-public class ParseSeparatorValve extends BaseValve {
+public class ParseSeparatorValve extends LookAheadCharBaseValue {
+
     @Override
-    public void invoke(ValveContext context) {
-        int ch = context.getScanner().next();
-        if (SeparatorUtil.isSeparator(ch)) {
-            SeparatorToken token = new SeparatorToken((char) ch);
-            context.setToken(token);
-        } else {
-            context.getScanner().pushBack(ch);
-            context.invokeNext();
-        }
+    protected boolean isMatch(int ch) {
+        this.lookAhead = ch;
+        return SeparatorUtil.isSeparator(this.lookAhead);
     }
+
+    @Override
+    protected BaseToken doParse(Scanner scanner) {
+        return new SeparatorToken((char) this.lookAhead);
+    }
+
+    private int lookAhead;
 }

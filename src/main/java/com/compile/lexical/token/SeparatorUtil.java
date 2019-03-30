@@ -1,11 +1,13 @@
 package com.compile.lexical.token;
 
+import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  * ! exclamation 惊叹号
+ *
  * @ at 单价
  * # number …号
  * () parentheses 圆括号
@@ -23,18 +25,21 @@ public final class SeparatorUtil {
     public static final char LEFT_BRACKET = '{';
     public static final char RIGHT_BRACKET = '}';
 
-    public static boolean isSeparator(int test){
-        return SeparatorUtil.separatorSet.contains((char)test);
+    public static boolean isSeparator(int test) {
+        return SeparatorUtil.separatorSet.contains((char) test);
     }
 
-    public static Set<Character> getSeparators(){
+    public static Set<Character> getSeparators() {
         return Collections.unmodifiableSet(separatorSet);
     }
 
-    private static final Set<Character> separatorSet = new HashSet<Character>(){{
-        add(SeparatorUtil.COMMA);
-        add(SeparatorUtil.SEMICOLON);
-        add(SeparatorUtil.LEFT_BRACKET);
-        add(SeparatorUtil.RIGHT_BRACKET);
+    private static final Set<Character> separatorSet = new HashSet<Character>() {{
+        try {
+            for (Field f : SeparatorUtil.class.getFields()) {
+                add(f.getChar(SeparatorUtil.class));
+            }
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }};
 }
