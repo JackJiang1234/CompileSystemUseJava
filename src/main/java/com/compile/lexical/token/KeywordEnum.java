@@ -11,7 +11,7 @@ public enum KeywordEnum {
         return this.name;
     }
 
-    private KeywordEnum(String name) {
+    KeywordEnum(String name) {
         this.name = name;
     }
 }
