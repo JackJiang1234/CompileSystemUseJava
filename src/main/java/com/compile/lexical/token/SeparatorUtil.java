@@ -22,8 +22,8 @@ import java.util.Set;
 public final class SeparatorUtil {
     public static final char COMMA = ',';
     public static final char SEMICOLON = ';';
-    public static final char LEFT_BRACKET = '{';
-    public static final char RIGHT_BRACKET = '}';
+    public static final char LEFT_BRACE = '{';
+    public static final char RIGHT_BRACE = '}';
 
     public static boolean isSeparator(int test) {
         return SeparatorUtil.separatorSet.contains((char) test);

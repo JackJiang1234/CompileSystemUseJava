@@ -1,5 +1,7 @@
 package com.compile.lexical;
 
+import java.util.function.Function;
+
 /**
  * base Valve for lexical analysis
  *
@@ -14,12 +16,19 @@ public abstract class BaseValve {
     public abstract void invoke(ValveContext context);
 
     protected String readUntilWhitespace(Scanner scanner) {
+        return readUntilMatch(scanner, readChar -> Character.isWhitespace(readChar));
+    }
+
+    protected String readUntilNewLine(Scanner scanner){
+        return readUntilMatch(scanner, readChar -> readChar == '\r' || readChar == '\n');
+    }
+
+    private String readUntilMatch(Scanner scanner, Function<Integer, Boolean> match) {
         CharAppender appender = new CharAppender();
         int readChar;
 
-        while (true) {
-            readChar = scanner.next();
-            if (Character.isWhitespace(readChar) || readChar == BaseScanner.EOF) {
+        while ((readChar = scanner.next()) != BaseScanner.EOF) {
+            if (match.apply(readChar)) {
                 scanner.pushBack(readChar);
                 break;
             } else {

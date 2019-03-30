@@ -17,6 +17,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class SkipWhiteSpaceValveTest extends ValveTestBase {
 
     @Test
+    public void testEmptyStringParse(){
+        ParsePipeline parsePipeline = this.createParsePipeline(new StringScanner(""));
+        BaseToken token = parsePipeline.invokeParse();
+        assertEquals(EndToken.END, token);
+    }
+
+    @Test
     public void testSkipWhiteSpaceNoContent() {
         ParsePipeline parsePipeline = this.createParsePipeline(new StringScanner("  \t   \r\n   "));
         BaseToken token = parsePipeline.invokeParse();

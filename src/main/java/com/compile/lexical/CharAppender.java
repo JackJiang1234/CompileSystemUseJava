@@ -14,6 +14,18 @@ public class CharAppender {
         this.appender = new StringBuilder();
     }
 
+    public CharAppender(char... chars) {
+        this();
+        this.appender.append(chars);
+    }
+
+    public CharAppender(int... chars) {
+        this();
+        for (int ch : chars) {
+            this.append((char) ch);
+        }
+    }
+
     public CharAppender append(int ch) {
         return this.append((char) ch);
     }
@@ -23,7 +35,7 @@ public class CharAppender {
         return this;
     }
 
-    public int length(){
+    public int length() {
         return this.appender.length();
     }
 

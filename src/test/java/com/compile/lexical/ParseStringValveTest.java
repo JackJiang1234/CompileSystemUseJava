@@ -8,12 +8,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ParseStringValveTest extends ValveTestBase{
-
-    @Test
-    public void testEmptyStringParse(){
-        this.test("", "");
-    }
-
     @Test
     public void testNormalStringParse(){
         String str = "abc";
@@ -40,7 +34,7 @@ class ParseStringValveTest extends ValveTestBase{
     }
 
     @Test
-    public void testMutiStringParse(){
+    public void testMultiStringParse(){
         String str1 = "abc";
         String str2 = "efg";
         ParsePipeline pipeline = this.createParsePipeline(String.format("\"%s\" \"%s\" ", str1, str2));

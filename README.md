@@ -7,7 +7,7 @@
 ### 词法单元
 
 #### 关键字
- int, char, void, if, else, switch, case, while, do, for, break, continue, return
+ int, char, void, if, else, switch, case, default, while, do, for, break, continue, return
  
  #### 分界符
  ,, ;, {, }
