@@ -1,6 +1,8 @@
 package com.toyc.lexical;
 
-public class LexicalParseException extends RuntimeException {
+import com.toyc.common.ToycException;
+
+public class LexicalParseException extends ToycException {
 
     public LexicalParseException() {
         super();

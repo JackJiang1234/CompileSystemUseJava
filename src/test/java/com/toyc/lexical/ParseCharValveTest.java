@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * @ClassName: ParseCharValveTest
  * @Description TODO
  * @Author jianyong.jiang
- * @Date 2019/3/29 14:13
+ * @Date 2019/3/29
  * @Version 1.0.0
  */
 public class ParseCharValveTest extends ValveTestBase {

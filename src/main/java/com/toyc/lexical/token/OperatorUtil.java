@@ -10,7 +10,7 @@ import java.util.Set;
  * @Description TODO
  * http://www.fhdq.net/bd/16.html
  * @Author jianyong.jiang
- * @Date 2019/3/30 14:18
+ * @Date 2019/3/30
  * @Version 1.0.0
  */
 public final class OperatorUtil {

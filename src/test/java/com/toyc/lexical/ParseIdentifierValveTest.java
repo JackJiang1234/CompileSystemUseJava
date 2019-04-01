@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * @ClassName: ParseIdentifierValveTest
  * @Description 解析id 或 keyword 测试
  * @Author jianyong.jiang
- * @Date 2019/3/20 13:47
+ * @Date 2019/3/20
  * @Version 1.0.0
  */
 public class ParseIdentifierValveTest extends ValveTestBase {

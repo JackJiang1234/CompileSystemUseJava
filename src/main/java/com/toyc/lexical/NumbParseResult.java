@@ -4,7 +4,7 @@ package com.toyc.lexical;
  * @ClassName:
  * @Description 解析数字结果
  * @Author jianyong.jiang
- * @Date 2019/3/21 17:25
+ * @Date 2019/3/21
  * @Version 1.0.0
  */
 class NumbParseResult {

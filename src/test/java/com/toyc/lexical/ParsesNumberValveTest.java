@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * @ClassName: 解析数字token测试
  * @Description TODO
  * @Author jianyong.jiang
- * @Date 2019/3/21 17:31
+ * @Date 2019/3/21
  * @Version 1.0.0
  */
 public class ParsesNumberValveTest extends ValveTestBase {

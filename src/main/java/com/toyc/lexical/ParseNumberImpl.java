@@ -4,7 +4,7 @@ package com.toyc.lexical;
  * @ClassName: ParseNumberImpl
  * @Description 解析数字实现
  * @Author jianyong.jiang
- * @Date 2019/3/21 17:22
+ * @Date 2019/3/21
  * @Version 1.0.0
  */
 class ParseNumberImpl {

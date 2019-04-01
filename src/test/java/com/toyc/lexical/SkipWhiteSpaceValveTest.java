@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * @ClassName: SkipWhiteSpaceValveTest
  * @Description TODO
  * @Author jianyong.jiang
- * @Date 2019/3/20 11:09
+ * @Date 2019/3/20
  * @Version 1.0.0
  */
 public class SkipWhiteSpaceValveTest extends ValveTestBase {

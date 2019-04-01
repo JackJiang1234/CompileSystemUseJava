@@ -4,7 +4,7 @@ package com.toyc.lexical;
  * @ClassName: CharAppender
  * @Description 表示字符追加处理
  * @Author jianyong.jiang
- * @Date 2019/3/20 13:37
+ * @Date 2019/3/20
  * @Version 1.0.0
  */
 public class CharAppender {

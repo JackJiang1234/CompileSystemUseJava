@@ -4,7 +4,7 @@ package com.toyc.lexical.token;
  * @ClassName: EndToken
  * @Description TODO
  * @Author jianyong.jiang
- * @Date 2019/3/20 11:28
+ * @Date 2019/3/20
  * @Version 1.0.0
  */
 public class EndToken extends BaseToken {

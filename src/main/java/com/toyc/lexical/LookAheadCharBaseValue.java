@@ -6,7 +6,7 @@ import com.toyc.lexical.token.BaseToken;
  * @ClassName: LookAheadCharBaseValue
  * @Description 向前看一个字符分析 模板方法
  * @Author jianyong.jiang
- * @Date 2019/3/29 11:47
+ * @Date 2019/3/29
  * @Version 1.0.0
  */
 public abstract class LookAheadCharBaseValue extends BaseValve {
