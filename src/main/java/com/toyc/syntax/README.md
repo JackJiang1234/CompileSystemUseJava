@@ -1,6 +1,8 @@
 # 语法定义
 
-终结符用大写字母， 非终结符用<小写>
+终结符用大写字母，EMPTY表示空
+
+ 非终结符用<小写>
 
 ### TOYC程序文法
 <program>			->	<segment> <program> |  EMPTY
@@ -14,25 +16,28 @@
 <type>				->	INT ｜ CHAR  |  VOID
 
 ### 指针定义或其他定义
+
+//  *p=null, a=100, a[10] = 1    |  a = 100
+
 <def>				->	MUL ID <init> <deflist>  | ID  <idtail>
 
 ### 初始化值 或 空  如 = 表达式求值
 <init>				->	ASSIGN <expr> | EMPTY
 
-### 多个变量定义  
-<deflist>			->	COMMA <defdata> <deflist> | SEMICOLON
+### 多变量定义  
+ <deflist>			->	COMMA <defdata> <deflist> | SEMICOLON    
 
+// *p=null,a=100,a[10] = 1 指针，变量，数组定义序列
 
+<defdata>			->	ID <vardef> | MUL ID  <init>
 
-## 基本定义语法
-//*p=null,a=100,a[10]=1 指针，变量，数组定义序列
-<defdata>			->	ident <varrdef>|mul ident <init>
+### 基本定义语法
 
 //a=100,a[10]=1 变量 数组 初始化
-<varrdef>			->	lbrack num rbrack | <init>
 
-//指针定义，其他
-<def>					->	mul id <init><deflist>|ident <idtail>
+# <vardef>			->	LEFT_BRACKET NUM  RIGHT_BRACKET |  <init>
+
+
 //a a[10] 变量和数组定义，其他（函数声明和函数定义）
 <idtail>			->	<varrdef><deflist>|lparen <para> rparen <funtail>
 //-----------------------------------------------------------------------------------函数定义声明语法
@@ -119,4 +124,3 @@
 <realarg>			->	<arg><arglist>|^
 <arglist>			->	comma<arg><arglist>|^
 <arg> 				-> 	<expr>
-//122条文法

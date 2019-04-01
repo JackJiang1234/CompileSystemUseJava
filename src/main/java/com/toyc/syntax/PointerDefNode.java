@@ -3,7 +3,7 @@ package com.toyc.syntax;
 /**
  * @ClassName: PointerDefNode
  * @Description 指针定义开头
- *  产生式  MUL ID <init> <deflist>
+ * 产生式  MUL ID <init> <deflist>
  * @Author jianyong.jiang
  * @Date 2019/4/1
  * @Version 1.0.0
@@ -29,7 +29,6 @@ public class PointerDefNode extends DefNode {
         } else {
             this.initNode = node;
         }
-
         return this;
     }
 
@@ -37,7 +36,7 @@ public class PointerDefNode extends DefNode {
         return this.idNode;
     }
 
-    public InitNode getInitNode(){
+    public InitNode getInitNode() {
         return this.initNode;
     }
 

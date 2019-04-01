@@ -18,4 +18,20 @@ public interface SyntaxTreeVisitor {
     void visit(NonPointerDefNode nonPointerDefNode);
 
     void visit(InitNode initNode);
+
+    void visit(ExprNode exprNode);
+
+    void visit(CommaDeflistNode commaDeflistNode);
+
+    void visit(SemicolonDeflistNode semicolonDeflistNode);
+
+    void visit(PointerDefDataNode pointerDefDataNode);
+
+    void visit(NonPointerDefDataNode nonPointerDefDataNode);
+
+    void visit(ArrayVarDefNode arrayVarDefNode);
+
+    void visit(NumNode numNode);
+
+    void visit(InitVarDefNode initVarDefNode);
 }
