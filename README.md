@@ -7,7 +7,7 @@
 ### 词法单元
 
 #### 关键字
- int, char, void, if, else, switch, case, default, while, do, for, break, continue, return
+ int, char, void, if, else, switch, case, default, while, do, for, break, continue, return, extern
  
  #### 分界符
  ,, ;, {, }
@@ -32,11 +32,12 @@
 
 
 解析语法算法LL(1)  消除左递归和公因子   SELECT,FOLLOW,FIRST集合  
-对语法建模
 
 同构树 所有结点都是同一类型  只关心叶子结点
 
-异型树 每个结点有特点类型， 按语法规则建模，利用静态类型系统设计结点
+
+异形不规则树 每个结点有特点类型， 按语法规则建模，利用静态类型系统设计结点
+访问者模式
 
 Antlr   Lex,YACC 开源版本Flex和Bison
 
