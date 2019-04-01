@@ -29,7 +29,15 @@ public class SegmentNode extends SyntaxNode {
         } else {
             this.typeNode = node;
         }
+        return this;
+    }
 
+    public SegmentNode withDef(DefNode node) {
+        if (this.defNode != null) {
+            throw new SyntaxParsingException("defNode node has been set.");
+        } else {
+            this.defNode = node;
+        }
         return this;
     }
 
@@ -39,4 +47,5 @@ public class SegmentNode extends SyntaxNode {
 
     private boolean isExtern;
     private TypeNode typeNode;
+    private DefNode defNode;
 }

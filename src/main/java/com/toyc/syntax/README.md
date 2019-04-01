@@ -1,22 +1,36 @@
 # 语法定义
+
 终结符用大写字母， 非终结符用<小写>
 
-## TOYC程序文法
+### TOYC程序文法
+<program>			->	<segment> <program> |  EMPTY
 
-<program>			->	<segment><program>| EMPTY
 ### 程序由变量定义，变量声明，函数定义，函数声明组成
-<segment>			->	EXTERN <type><def>|<type><def>
 
-//基本类型
-<type>				->	rsv_int|rsv_char|rsv_void
+<segment>			->	EXTERN  <type> <def> | <type> <def>
+
+### 基本类型
+
+<type>				->	INT ｜ CHAR  |  VOID
+
+### 指针定义或其他定义
+<def>				->	MUL ID <init> <deflist>  | ID  <idtail>
+
+### 初始化值 或 空  如 = 表达式求值
+<init>				->	ASSIGN <expr> | EMPTY
+
+### 多个变量定义  
+<deflist>			->	COMMA <defdata> <deflist> | SEMICOLON
+
+
+
 ## 基本定义语法
 //*p=null,a=100,a[10]=1 指针，变量，数组定义序列
 <defdata>			->	ident <varrdef>|mul ident <init>
-<deflist>			->	comma <defdata> <deflist>|semicon
+
 //a=100,a[10]=1 变量 数组 初始化
 <varrdef>			->	lbrack num rbrack | <init>
-//=false 空 初始化值
-<init>				->	assign <expr>|^
+
 //指针定义，其他
 <def>					->	mul id <init><deflist>|ident <idtail>
 //a a[10] 变量和数组定义，其他（函数声明和函数定义）

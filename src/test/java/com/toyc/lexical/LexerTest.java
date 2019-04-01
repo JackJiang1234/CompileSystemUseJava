@@ -17,6 +17,7 @@ class LexerTest {
         String line;
 
         while ((token = lexer.next()).notEnd()){
+            //System.out.println(token.getLiteral());
             line = reader.readLine();
             assertEquals(line, token.getLiteral());
         }
