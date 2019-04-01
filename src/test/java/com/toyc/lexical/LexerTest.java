@@ -1,6 +1,6 @@
-package com.compile.lexical;
+package com.toyc.lexical;
 
-import com.compile.lexical.token.BaseToken;
+import com.toyc.lexical.token.BaseToken;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

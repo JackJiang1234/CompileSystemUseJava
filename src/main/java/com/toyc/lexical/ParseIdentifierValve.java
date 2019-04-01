@@ -1,6 +1,5 @@
 package com.toyc.lexical;
 
-import com.compile.lexical.token.*;
 import com.toyc.lexical.token.*;
 
 /**

@@ -1,8 +1,7 @@
-package com.compile.lexical;
+package com.toyc.lexical;
 
-import com.compile.lexical.token.BaseToken;
+import com.toyc.lexical.token.BaseToken;
 
-import java.io.Closeable;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
