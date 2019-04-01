@@ -36,9 +36,9 @@ public class ParseIdentifierValveTest extends ValveTestBase {
     }
 
     @Test
-    public void testInvalidIdentifier() {
-        ParsePipeline pipeline = this.createParsePipeline(new StringScanner("  abc%^&  "));
-        assertThrows(LexicalParseException.class, () -> pipeline.invokeParse());
+    public void testMixedParse(){
+        ParsePipeline pipeline = this.createParsePipeline("fun()");
+        this.assertAsExpectedToken(new IdentifierToken("fun"), pipeline.invokeParse());
     }
 
     @Override
