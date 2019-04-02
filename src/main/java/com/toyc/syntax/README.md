@@ -29,23 +29,30 @@
 
 // *p=null,a=100,a[10] = 1 指针，变量，数组定义序列
 
-<defdata>			->	ID <vardef> | MUL ID  <init>
+<defdata>			->	ID <varrdef> | MUL ID  <init>
 
 ### 基本定义语法
 
 //a=100,a[10]=1 变量 数组 初始化
 
-# <vardef>			->	LEFT_BRACKET NUM  RIGHT_BRACKET |  <init>
-
+<varrdef>			->	LEFT_BRACKET NUM  RIGHT_BRACKET |  <init>
 
 //a a[10] 变量和数组定义，其他（函数声明和函数定义）
-<idtail>			->	<varrdef><deflist>|lparen <para> rparen <funtail>
-//-----------------------------------------------------------------------------------函数定义声明语法
-//参数列表
-<paradatatail>->	lbrack num rbrack|^
-<paradata>		->	mul ident|ident <paradatatail>
-<para>				->	<type><paradata><paralist>|^
-<paralist>		->	comma<type><paradata><paralist>|^
+
+<idtail>			->	<varrdef><deflist> | LEFT_PARENTHESE <para> RIGHT_PARENTHESE <funtail>
+
+### 函数声明或定义语法
+
+//函数参数列表
+
+# <para>				->	<type> <paradata> <paralist> | EMPTY
+
+<paradata>		->	MUL ID  |  ID  <paradatatail>
+
+<paradatatail>->	LEFT_BRACKET   NUM   RIGHT_BRACKET  |  EMPTY
+
+<paralist>		->	COMMA  <type>  <paradata>  <paralist> |  EMPTY
+
 //函数声明和函数定义
 <funtail>			->	<block>|semicon
 //函数体

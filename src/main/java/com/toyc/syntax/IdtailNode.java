@@ -1,11 +1,11 @@
 package com.toyc.syntax;
 
 /**
- * @ClassName: VarDefNode
+ * @ClassName: IdtailNode
  * @Description TODO
  * @Author jianyong.jiang
- * @Date 2019/4/1
+ * @Date 2019/4/2
  * @Version 1.0.0
  */
-public abstract class VarDefNode extends SyntaxNode {
+public abstract class IdtailNode extends SyntaxNode {
 }

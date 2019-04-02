@@ -18,11 +18,11 @@ public class NonPointerDefDataNode extends DefDataNode {
         return this;
     }
 
-    public NonPointerDefDataNode withVarDefNode(VarDefNode node) {
-        this.varDefNode = node;
+    public NonPointerDefDataNode withVarDefNode(VarArrayDefNode node) {
+        this.varArrayDefNode = node;
         return this;
     }
 
     private IdNode idNode;
-    private VarDefNode varDefNode;
+    private VarArrayDefNode varArrayDefNode;
 }

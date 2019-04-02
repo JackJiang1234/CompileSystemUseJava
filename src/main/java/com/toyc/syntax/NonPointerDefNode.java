@@ -2,7 +2,8 @@ package com.toyc.syntax;
 
 /**
  * @ClassName: NonPointerDefNode
- * @Description TODO
+ * @Description  def 非指针定义分支
+ *   <def>	->	ID  <idtail>
  * @Author jianyong.jiang
  * @Date 2019/4/1
  * @Version 1.0.0

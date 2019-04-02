@@ -29,9 +29,13 @@ public interface SyntaxTreeVisitor {
 
     void visit(NonPointerDefDataNode nonPointerDefDataNode);
 
-    void visit(ArrayVarDefNode arrayVarDefNode);
+    void visit(ArrayDefNode arrayVarDefNode);
 
     void visit(NumNode numNode);
 
-    void visit(InitVarDefNode initVarDefNode);
+    void visit(InitVarArrayDefNode initVarDefNode);
+
+    void visit(VarOrArrDefIdtailNode varOrArrDefIdtailNode);
+
+    void visit(FuncIdtailNode funcIdtailNode);
 }
