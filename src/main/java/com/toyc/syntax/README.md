@@ -45,7 +45,7 @@
 
 //函数参数列表
 
-# <para>				->	<type> <paradata> <paralist> | EMPTY
+<para>				->	<type> <paradata> <paralist> | EMPTY
 
 <paradata>		->	MUL ID  |  ID  <paradatatail>
 
@@ -54,28 +54,47 @@
 <paralist>		->	COMMA  <type>  <paradata>  <paralist> |  EMPTY
 
 //函数声明和函数定义
-<funtail>			->	<block>|semicon
+
+<funtail>			->	<block> | SEMICOLON    
+
 //函数体
-<block>				->	lbrac<subprogram>rbrac
-//子程序
-<subprogram>	->	<localdef><subprogram>|<statement><subprogram>|^
+
+<block>				->	LEFT_BRACE <subprogram> RIGHT_BRACE
+
+### 程序
+
+<subprogram>	->	<localdef> <subprogram> | <statement> <subprogram>  | EMPTY
+
 //-----------------------------------------------------------------------------------局部变量定义
 //局部变量定义和全局变量完全相同，但对全局变量初始化形式进行语义约束——只能初始化为字面量。
 <localdef>		->	<type><defdata><deflist>
 //-----------------------------------------------------------------------------------控制语句定义
 //语句支持：赋值 while do-while for if-else return break continue switch
-<statement>		->	//赋值 空语句
-									<altexpr>semicon
-									//循环
-									|<whilestat>|<forstat>|<dowhilestat>
-									//分支
-									|<ifstat>|<switchstat>
-									//break;
-									|rsv_break semicon
-									//continue;
-									|rsv_continue semicon
-									//return; return 1;
-									|rsv_return<altexpr>semicon
+
+# <statement>		->	//赋值 空语句
+
+# 									<altexpr>semicon
+
+# 									//循环
+
+# 									|<whilestat>|<forstat>|<dowhilestat>
+
+​									//分支
+
+# 									|<ifstat>|<switchstat>
+
+​									//break;
+
+# 									|  BREAK semicon
+
+​									//continue;
+
+# 									| CONTINE semicon
+
+​									//return; return 1;
+
+# 									| RETURN <altexpr>semicon
+
 //while(){}
 <whilestat>		->	rsv_while lparen<altexpr>rparen<block>
 //do{}while();

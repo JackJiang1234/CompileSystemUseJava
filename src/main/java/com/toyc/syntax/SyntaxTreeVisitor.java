@@ -38,4 +38,26 @@ public interface SyntaxTreeVisitor {
     void visit(VarOrArrDefIdtailNode varOrArrDefIdtailNode);
 
     void visit(FuncIdtailNode funcIdtailNode);
+
+    void visit(VarArrayPointerDeclareParaNode varArrayPointerDeclareParaNode);
+
+    void visit(PointerParaDataNode pointerParaDataNode);
+
+    void visit(VarArrayParaDataNode varArrayParaDataNode);
+
+    void visit(ParaDataTailNode paraDataTailNode);
+
+    void visit(ParaListNode paraListNode);
+
+    void visit(ParaDeclareNode paraDeclareNode);
+
+    void visit(BlockFunTailNode blockFunTailNode);
+
+    void visit(SemicolonFunTailNode semicolonFunTailNode);
+
+    void visit(LocalDefSubProgramNode localDefSubProgramNode);
+
+    void visit(StatementSubProgramNode statementSubProgramNode);
+
+    void visit(LocalDefNode localDefNode);
 }

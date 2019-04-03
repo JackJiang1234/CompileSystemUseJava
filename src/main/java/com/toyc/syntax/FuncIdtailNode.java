@@ -3,7 +3,7 @@ package com.toyc.syntax;
 /**
  * @ClassName: FuncIdtailNode
  * @Description  函数声明或定义
- *  function -> lparen <para> rparen <funtail>
+ *  function -> LEFT_PARENTHESE  <para> RIGHT_PARENTHESE  <funtail>
  * @Author jianyong.jiang
  * @Date 2019/4/2
  * @Version 1.0.0
