@@ -9,17 +9,17 @@ package com.toyc.lexical.token;
  */
 public enum TagEnum {
     // keyword
-    CHAR(true, false), VOID(true, false), INT(true, false),
-    BREAK(true, false), ELSE(true, false), CONTINUE(true, false),
-    EXTERN(true, false), IF(true, false), IN(true, false), OUT(true, false),
-    RETURN(true, false), STRING(true, false), WHILE(true, false),
+    CHAR, VOID, INT,
+    BREAK, ELSE, CONTINUE,
+    EXTERN, IF, IN, OUT,
+    RETURN, STRING, WHILE,
 
     // separator
     // COMMA = ','
     // SEMICOLON = ';'
     // LEFT_BRACE = '{'
     // RIGHT_BRACE = '}'
-    COMMA(false, true), SEMICOLON(false, true), LEFT_BRACE(false, true), RIGHT_BRACE(false, true),
+    COMMA, SEMICOLON, LEFT_BRACE, RIGHT_BRACE,
 
     // operator
     //  MUL = '*';  DIV = '/';   MOD = '%';
@@ -28,25 +28,20 @@ public enum TagEnum {
     //  GT = '>'; LT = '<'; LEFT_PARENTHESE = '(';
     //  RIGHT_PARENTHESE = ')'; LEFT_BRACKET = '[';
     //  RIGHT_BRACKET = ']';
-    MUL(false, false), DIV(false, false), MOD(false, false), PLUS(false, false), MINUS(false, false),
-    NOT(false, false), ASSIGN(false, false), LEA(false, false), VERTICAL(false, false), GT(false, false),
-    LT(false, false), LEFT_PARENTHESE(false, false), RIGHT_PARENTHESE(false, false), LEFT_BRACKET(false, false),
-    RIGHT_BRACKET(false, false);
+    MUL, DIV, MOD, PLUS, MINUS,
+    NOT, ASSIGN, LEA, VERTICAL, GT,
+    LT, LEFT_PARENTHESE, RIGHT_PARENTHESE, LEFT_BRACKET,
+    RIGHT_BRACKET,
 
-    public boolean isSeparator() {
-        return this.isSeparator;
-    }
-
-    public boolean isKeyword() {
-        return this.isKeyword;
-    }
-
-
-    TagEnum(boolean isKeyword, boolean isSeparator) {
-        this.isKeyword = isKeyword;
-        this.isSeparator = isSeparator;
-    }
-
-    private boolean isKeyword;
-    private boolean isSeparator;
+    // AND = "&&";
+    //INC = "++";
+    // DEC = "--";
+    // OR = "||";
+    // GTE = ">=";
+    // LTE = "<=";
+    // EQU = "==";
+    // NOT_EQU = "!=";
+    // SINGLE_LINE_COMMENT = "//";
+    //MULTILINE_COMMENT = "/*";
+    AND, INC, DEC, OR, GTE, LTE, EQU, NOT_EQU, SINGLE_LINE_COMMENT, MULTILINE_COMMENT;
 }
