@@ -5,10 +5,6 @@ public interface SyntaxTreeVisitor {
 
     void visit(SegmentNode node);
 
-    void visit(IntNode intNode);
-
-    void visit(CharNode charNode);
-
     void visit(VoidNode voidNode);
 
     void visit(PointerDefNode pointerDefNode);
@@ -60,4 +56,6 @@ public interface SyntaxTreeVisitor {
     void visit(StatementSubProgramNode statementSubProgramNode);
 
     void visit(LocalDefNode localDefNode);
+
+    void visit(TypeNode typeNode);
 }

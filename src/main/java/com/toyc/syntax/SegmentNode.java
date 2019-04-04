@@ -23,7 +23,7 @@ public class SegmentNode extends SyntaxNode {
         return this.typeNode;
     }
 
-    public SegmentNode withTypeNode(TypeNode node) {
+    public SegmentNode addTypeNode(TypeNode node) {
         if (typeNode != null) {
             throw new SyntaxParsingException("type node has been set.");
         } else {
@@ -32,7 +32,7 @@ public class SegmentNode extends SyntaxNode {
         return this;
     }
 
-    public SegmentNode withDef(DefNode node) {
+    public SegmentNode addDef(DefNode node) {
         if (this.defNode != null) {
             throw new SyntaxParsingException("defNode node has been set.");
         } else {

@@ -15,8 +15,7 @@ import java.util.List;
  */
 public class ProgramNode extends SyntaxNode {
 
-    public ProgramNode(String fileName) {
-        this.fileName = fileName;
+    public ProgramNode() {
     }
 
     @Override
@@ -24,11 +23,7 @@ public class ProgramNode extends SyntaxNode {
         visitor.visit(this);
     }
 
-    public String getFileName() {
-        return this.fileName;
-    }
-
-    public ProgramNode withSegment(SegmentNode segment) {
+    public ProgramNode addSegment(SegmentNode segment) {
         this.segmentNodeList = CollectionUtil.createIfNull(this.segmentNodeList);
         this.segmentNodeList.add(segment);
         return this;
@@ -40,5 +35,4 @@ public class ProgramNode extends SyntaxNode {
 
     private List<SegmentNode> segmentNodeList;
 
-    private String fileName;
 }
