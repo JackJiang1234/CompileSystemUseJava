@@ -33,15 +33,8 @@ public enum TagEnum {
     LT, LEFT_PARENTHESE, RIGHT_PARENTHESE, LEFT_BRACKET,
     RIGHT_BRACKET,
 
-    // AND = "&&";
-    //INC = "++";
-    // DEC = "--";
-    // OR = "||";
-    // GTE = ">=";
-    // LTE = "<=";
-    // EQU = "==";
-    // NOT_EQU = "!=";
-    // SINGLE_LINE_COMMENT = "//";
-    //MULTILINE_COMMENT = "/*";
-    AND, INC, DEC, OR, GTE, LTE, EQU, NOT_EQU, SINGLE_LINE_COMMENT, MULTILINE_COMMENT;
+    // binary
+    AND, INC, DEC, OR, GTE, LTE, EQU, NOT_EQU, SINGLE_LINE_COMMENT, MULTILINE_COMMENT,
+
+    ID, NUMBER, ERROR, END
 }

@@ -7,7 +7,7 @@ package com.toyc.lexical.token;
  */
 public class CharToken extends BaseToken {
     public CharToken(char name){
-        super(Character.toString(name));
+        super(TagEnum.CHAR);
         this.value = name;
     }
 
