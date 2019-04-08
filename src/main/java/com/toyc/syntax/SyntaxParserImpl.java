@@ -28,14 +28,14 @@ public class SyntaxParserImpl implements SyntaxParser {
 
     // <program> ->	<segment> <program> |  EMPTY
     private void program(ProgramNode programNode) {
-        if (lookToken.notEnd()){
+        if (lookToken.notEnd()) {
             segment(programNode);
             program(programNode);
         }
     }
 
     // <segment> ->	EXTERN  <type> <def> | <type> <def>
-    private void segment(ProgramNode programNode){
+    private void segment(ProgramNode programNode) {
         SegmentNode segmentNode = new SegmentNode(match(TagEnum.EXTERN));
         segmentNode.addTypeNode(type());
         segmentNode.addDef(def());
@@ -43,24 +43,31 @@ public class SyntaxParserImpl implements SyntaxParser {
     }
 
     // <type> -> INT ｜ CHAR  |  VOID
-    private TypeNode type(){
-        if (this.lookToken.isTypeToken()){
+    private TypeNode type() {
+        if (this.lookToken.isTypeToken()) {
             TypeNode typeNode = new TypeNode(this.lookToken.getTag());
             this.move();
             return typeNode;
-        }
-        else{
+        } else {
             throw new SyntaxParsingException("unknown type " + this.lookToken.getLiteral());
         }
     }
 
     // <def> ->	MUL ID <init> <deflist>  | ID  <idtail>
-    private DefNode def(){
+    private DefNode def() {
         DefNode node;
-        if (this.match(TagEnum.MUL)){
+        String id;
+        if (this.match(TagEnum.MUL)) {
             node = new PointerDefNode();
+            if (this.match(TagEnum.ID)) {
+                id = this.lookToken.getLiteral();
+            } else {
+                throw new SyntaxParsingException("");
+            }
+
+            return node;
         }
-        if (this.match(TagEnum.ID)){
+        if (this.match(TagEnum.ID)) {
             node = new NonPointerDefNode();
         }
         throw new SyntaxParsingException("parse <def> error, expected the token MUL or ID, but it's " + this.lookToken.getLiteral());
@@ -70,11 +77,11 @@ public class SyntaxParserImpl implements SyntaxParser {
         this.lookToken = this.lexer.next();
     }
 
-    private boolean match(TagEnum tagEnum){
-        if (this.lookToken.match(tagEnum)){
+    private boolean match(TagEnum tagEnum) {
+        if (this.lookToken.match(tagEnum)) {
             move();
             return true;
-        }else {
+        } else {
             return false;
         }
     }
