@@ -34,6 +34,10 @@ public abstract class BaseToken {
         return this.tag == tag;
     }
 
+    public boolean isTypeToken() {
+        return this.tag == TagEnum.CHAR || this.tag == TagEnum.INT || this.tag == TagEnum.VOID;
+    }
+
     private String literal;
     private TagEnum tag;
 }

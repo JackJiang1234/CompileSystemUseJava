@@ -11,7 +11,7 @@ class LexerTest {
     @Test
     void testGetToken() throws Exception {
         ClassLoader classLoader = this.getClass().getClassLoader();
-        Lexer lexer = Lexer.create(classLoader.getResourceAsStream("lexical/test.c"));
+        Lexer lexer = LexerFactory.createForSteam(classLoader.getResourceAsStream("lexical/test.c"));
         BufferedReader reader = new BufferedReader(new InputStreamReader(classLoader.getResourceAsStream("lexical/test_expect.txt")));
         BaseToken token;
         String line;

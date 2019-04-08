@@ -10,12 +10,4 @@ import java.io.InputStream;
  * */
 public interface Lexer extends AutoCloseable {
     BaseToken next();
-
-    static Lexer create(String fileName) throws FileNotFoundException {
-        return new LexerImpl(fileName);
-    }
-
-    static Lexer create(InputStream stream) {
-        return new LexerImpl(stream);
-    }
 }

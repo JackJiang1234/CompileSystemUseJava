@@ -29,10 +29,9 @@ public class ProgramNode extends SyntaxNode {
         return this;
     }
 
-    private List<SegmentNode> getSegments() {
-        return Collections.unmodifiableList(this.segmentNodeList);
+    public List<SegmentNode> getSegments() {
+        return Collections.unmodifiableList(CollectionUtil.createIfNull(this.segmentNodeList));
     }
 
     private List<SegmentNode> segmentNodeList;
-
 }

@@ -2,18 +2,11 @@ package com.toyc.lexical;
 
 import com.toyc.lexical.token.BaseToken;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class LexerImpl implements Lexer {
-
-    public LexerImpl(String fileName) throws FileNotFoundException {
-        this(new FileInputStream(fileName));
-    }
-
-    public LexerImpl(InputStream stream) {
-        this.sourceFileScanner = new SourceFileScanner(stream);
+    public LexerImpl(BaseScanner scanner) {
+        this.scanner = scanner;
         this.preparePipeline();
     }
 
@@ -24,11 +17,11 @@ public class LexerImpl implements Lexer {
 
     @Override
     public void close() throws Exception {
-        this.sourceFileScanner.close();
+        this.scanner.close();
     }
 
-    private void preparePipeline(){
-        this.pipeline = new ParsePipeline(this.sourceFileScanner);
+    private void preparePipeline() {
+        this.pipeline = new ParsePipeline(this.scanner);
         this.pipeline.setBasic(new EndValve());
         this.pipeline.addValve(new SkipWhiteSpaceValve());
         this.pipeline.addValve(new ParseIdentifierValve());
@@ -38,6 +31,6 @@ public class LexerImpl implements Lexer {
         this.pipeline.addValve(new ParseCharValve());
     }
 
-    private SourceFileScanner sourceFileScanner;
+    private BaseScanner scanner;
     private ParsePipeline pipeline;
 }
