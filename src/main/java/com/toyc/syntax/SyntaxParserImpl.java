@@ -2,8 +2,7 @@ package com.toyc.syntax;
 
 import com.toyc.lexical.Lexer;
 import com.toyc.lexical.token.BaseToken;
-import com.toyc.lexical.token.KeywordEnum;
-import com.toyc.lexical.token.KeywordToken;
+import com.toyc.lexical.token.TagEnum;
 
 /**
  * @ClassName: SyntaxParserImpl
@@ -35,7 +34,7 @@ public class SyntaxParserImpl implements SyntaxParser {
     }
 
     private void segment(ProgramNode programNode){
-        SegmentNode segmentNode = new SegmentNode(match(KeywordEnum.EXTERN));
+        SegmentNode segmentNode = new SegmentNode(match(TagEnum.EXTERN));
 
 
         programNode.addSegment(segmentNode);
@@ -49,8 +48,8 @@ public class SyntaxParserImpl implements SyntaxParser {
         this.lookToken = this.lexer.next();
     }
 
-    private boolean match(KeywordEnum keyword){
-        return this.lookToken instanceof KeywordToken ? ((KeywordToken) this.lookToken).match(keyword) : false;
+    private boolean match(TagEnum tagEnum){
+        return this.lookToken.match(tagEnum);
     }
 
     private Lexer lexer;

@@ -12,6 +12,6 @@ public class EndToken extends BaseToken {
     public final static EndToken END = new EndToken();
 
     private EndToken(){
-        super("END_OF_FILE");
+        super("END_OF_FILE",TagEnum.END);
     }
 }

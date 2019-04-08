@@ -1,9 +1,7 @@
 package com.toyc.lexical.token;
 
 import java.lang.reflect.Field;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @ClassName: OperatorUtil
@@ -29,6 +27,11 @@ public final class OperatorUtil {
     public static final char RIGHT_PARENTHESE = ')';
     public static final char LEFT_BRACKET = '[';
     public static final char RIGHT_BRACKET = ']';
+
+    public static final char COMMA = ',';
+    public static final char SEMICOLON = ';';
+    public static final char LEFT_BRACE = '{';
+    public static final char RIGHT_BRACE = '}';
 
     public static final String AND = "&&";
     public static final String INC = "++";
@@ -78,6 +81,14 @@ public final class OperatorUtil {
         return Collections.unmodifiableSet(binaryOperatorSet);
     }
 
+    public static TagEnum getTagByName(String name){
+        return operatorTagMap.get(name);
+    }
+
+    public static OperatorToken createTokenByName(String name){
+        return new OperatorToken(name, getTagByName(name));
+    }
+
     private static final Set<String> binaryOperatorSet = new HashSet<>();
 
     private static final Set<Character> greedyCharSet = new HashSet<>();
@@ -85,6 +96,8 @@ public final class OperatorUtil {
     private static final Set<Character> endGreedyCharSet = new HashSet<>();
 
     private static final Set<Character> unaryOperatorSet = new HashSet<Character>();
+
+    private static final Map<String, TagEnum> operatorTagMap = new HashMap<String, TagEnum>();
 
     static {
         try {
@@ -97,6 +110,7 @@ public final class OperatorUtil {
                     endGreedyCharSet.add(op.charAt(1));
                     binaryOperatorSet.add(op);
                 }
+                operatorTagMap.put(f.get(null).toString(), TagEnum.valueOf(f.getName()));
             }
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);

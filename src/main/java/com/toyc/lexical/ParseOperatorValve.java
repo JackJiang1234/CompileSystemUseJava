@@ -1,9 +1,6 @@
 package com.toyc.lexical;
 
-import com.toyc.lexical.token.BaseToken;
-import com.toyc.lexical.token.CommentToken;
-import com.toyc.lexical.token.OperatorToken;
-import com.toyc.lexical.token.OperatorUtil;
+import com.toyc.lexical.token.*;
 
 /**
  * 解析运算符, 包括单目和双目运算符
@@ -26,7 +23,7 @@ public class ParseOperatorValve extends LookAheadCharBaseValue {
         if (OperatorUtil.needGreedyParse(this.lookAhead)) {
             return this.doBinaryOperatorParse(scanner);
         } else {
-            return new OperatorToken(Character.toString((char) this.lookAhead));
+            return OperatorUtil.createTokenByName(Character.toString((char) this.lookAhead));
         }
     }
 
@@ -39,11 +36,11 @@ public class ParseOperatorValve extends LookAheadCharBaseValue {
             if (OperatorUtil.isCommentSymbol(symbol)) {
                 return doCommentParse(symbol, scanner);
             } else {
-                return new OperatorToken(appender.toString());
+                return OperatorUtil.createTokenByName(appender.toString());
             }
         } else {
             scanner.pushBack(next);
-            return new OperatorToken(Character.toString((char) this.lookAhead));
+            return OperatorUtil.createTokenByName(Character.toString((char) this.lookAhead));
         }
     }
 
@@ -54,8 +51,8 @@ public class ParseOperatorValve extends LookAheadCharBaseValue {
         } else {
             comment = this.readUntilMultiLineEndCommentSymbol(scanner);
         }
-
-        return new CommentToken(symbol + comment);
+        TagEnum tag = OperatorUtil.getTagByName(symbol);
+        return new CommentToken(symbol + comment, tag);
     }
 
     // 读取直到*/

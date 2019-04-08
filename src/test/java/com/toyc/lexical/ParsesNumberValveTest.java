@@ -1,10 +1,10 @@
 package com.toyc.lexical;
 
+import com.toyc.lexical.token.OperatorToken;
 import org.junit.jupiter.api.Assertions;
 import com.toyc.lexical.token.BaseToken;
 import com.toyc.lexical.token.EndToken;
 import com.toyc.lexical.token.NumToken;
-import com.toyc.lexical.token.SeparatorToken;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -70,12 +70,12 @@ public class ParsesNumberValveTest extends ValveTestBase {
     @Test
     public void testMixedParse(){
         ParsePipeline pipeline = this.createParsePipeline("10;");
-        pipeline.addValve(new ParseSeparatorValve());
+        pipeline.addValve(new ParseOperatorValve());
         NumToken token = (NumToken)pipeline.invokeParse();
         assertEquals("10", token.getLiteral());
         assertEquals(10, token.getValue());
 
-        SeparatorToken separatorToken = (SeparatorToken)pipeline.invokeParse();
+        OperatorToken separatorToken = (OperatorToken)pipeline.invokeParse();
         assertEquals(";", separatorToken.getLiteral());
     }
 

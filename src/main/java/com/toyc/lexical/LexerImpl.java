@@ -36,7 +36,6 @@ public class LexerImpl implements Lexer {
         this.pipeline.addValve(new ParseStringValve());
         this.pipeline.addValve(new ParsesNumberValve());
         this.pipeline.addValve(new ParseCharValve());
-        this.pipeline.addValve(new ParseSeparatorValve());
     }
 
     private SourceFileScanner sourceFileScanner;

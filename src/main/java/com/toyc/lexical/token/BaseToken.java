@@ -9,12 +9,12 @@ import java.util.Objects;
  * @Version 1.0.0
  */
 public abstract class BaseToken {
-    public BaseToken(String literal) {
-        Objects.requireNonNull(literal);
-        this.literal = literal;
+    public BaseToken(TagEnum tagEnum) {
+        this(null, tagEnum);
     }
 
-    public BaseToken(TagEnum tagEnum) {
+    public BaseToken(String literal, TagEnum tagEnum) {
+        this.literal = literal;
         this.tag = tagEnum;
     }
 

@@ -19,7 +19,7 @@ public class ParseIdentifierValveTest extends ValveTestBase {
     public void testKeywordIdentifierParse() {
         ParsePipeline pipeline = this.createParsePipeline(new StringScanner("int i"));
 
-        this.assertAsExpectedToken(new KeywordToken(KeywordUtils.getKeywordEnumByName("int")), pipeline.invokeParse());
+        this.assertAsExpectedToken(KeywordUtils.createTokenByName("int"), pipeline.invokeParse());
         this.assertAsExpectedToken(new IdentifierToken("i"), pipeline.invokeParse());
 
         assertEquals(EndToken.END, pipeline.invokeParse());
@@ -27,9 +27,9 @@ public class ParseIdentifierValveTest extends ValveTestBase {
 
     @Test
     public void testAllKeywordsParse() {
-        for (KeywordEnum key : KeywordEnum.values()) {
-            ParsePipeline pipeline = this.createParsePipeline(new StringScanner(key.getName()));
-            this.assertAsExpectedToken(new KeywordToken(key), pipeline.invokeParse());
+        for (String key : KeywordUtils.getKeywordSet()) {
+            ParsePipeline pipeline = this.createParsePipeline(new StringScanner(key));
+            this.assertAsExpectedToken(KeywordUtils.createTokenByName(key), pipeline.invokeParse());
             assertEquals(EndToken.END, pipeline.invokeParse());
         }
     }

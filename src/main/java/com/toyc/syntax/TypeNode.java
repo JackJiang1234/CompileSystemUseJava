@@ -1,7 +1,6 @@
 package com.toyc.syntax;
 
-import com.toyc.lexical.token.BaseToken;
-import com.toyc.lexical.token.KeywordEnum;
+import com.toyc.lexical.token.TagEnum;
 
 /**
  * @ClassName: TypeNode
@@ -12,8 +11,8 @@ import com.toyc.lexical.token.KeywordEnum;
  */
 public class TypeNode extends SyntaxNode {
 
-    public TypeNode(KeywordEnum typeKeyword) {
-        this.typeKeyword = typeKeyword;
+    public TypeNode(TagEnum typeTag) {
+        this.typeTag = typeTag;
     }
 
     @Override
@@ -21,5 +20,5 @@ public class TypeNode extends SyntaxNode {
         visitor.visit(this);
     }
 
-    private KeywordEnum typeKeyword;
+    private TagEnum typeTag;
 }

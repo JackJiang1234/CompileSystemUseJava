@@ -1,6 +1,11 @@
 package com.toyc.lexical.token;
 
+import com.toyc.lexical.LexicalParseException;
+
+import java.text.ParseException;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * @ClassName: KeywordUtils
@@ -10,6 +15,21 @@ import java.util.HashMap;
  * @Version 1.0.0
  */
 public final class KeywordUtils {
+    public static TagEnum getTagEnumByName(String name){
+        return keywordTagMap.get(name);
+    }
+
+    public static KeywordToken createTokenByName(String name){
+        if (keywordTagMap.containsKey(name)){
+            return new KeywordToken(name, keywordTagMap.get(name));
+        }
+        throw new LexicalParseException("unknown keyword " +  name);
+    }
+
+    public static Set<String> getKeywordSet(){
+        return Collections.unmodifiableSet(keywordTagMap.keySet());
+    }
+
     private static HashMap<String, TagEnum> keywordTagMap = new HashMap<String, TagEnum>() {{
         put("char", TagEnum.CHAR);
         put("void", TagEnum.VOID);
@@ -25,19 +45,4 @@ public final class KeywordUtils {
         put("string", TagEnum.STRING);
         put("while", TagEnum.WHILE);
     }};
-    private static HashMap<String, KeywordEnum> keywordEnumHashMap = new HashMap<>();
-
-    static {
-        for (KeywordEnum key : KeywordEnum.values()) {
-            keywordEnumHashMap.put(key.getName(), key);
-        }
-    }
-
-    public static TagEnum getTagEnumByName(String name){
-        return keywordTagMap.get(name);
-    }
-
-    public static KeywordEnum getKeywordEnumByName(String name) {
-        return keywordEnumHashMap.get(name);
-    }
 }

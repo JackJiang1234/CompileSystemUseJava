@@ -5,7 +5,7 @@ public class NumToken extends BaseToken {
     private int value;
 
     public NumToken(String name, int value) {
-        super(name);
+        super(name, TagEnum.NUMBER);
         this.value = value;
     }
 
