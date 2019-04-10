@@ -1,0 +1,12 @@
+{
+  "segmentNodeList": [{
+    "isExtern": false,
+    "typeNode": {
+      "typeTag": "INT"
+    },
+    "defNode": {
+      "id": "i",
+      "idTailNode": null
+    }
+  }]
+}

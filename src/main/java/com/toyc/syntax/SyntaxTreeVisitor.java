@@ -31,9 +31,9 @@ public interface SyntaxTreeVisitor {
 
     void visit(InitVarArrayDefNode initVarDefNode);
 
-    void visit(VarOrArrDefIdtailNode varOrArrDefIdtailNode);
+    void visit(VarOrArrDefIdTailNode varOrArrDefIdtailNode);
 
-    void visit(FuncIdtailNode funcIdtailNode);
+    void visit(FuncIdTailNode funcIdtailNode);
 
     void visit(VarArrayPointerDeclareParaNode varArrayPointerDeclareParaNode);
 

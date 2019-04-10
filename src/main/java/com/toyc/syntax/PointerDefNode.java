@@ -14,32 +14,17 @@ public class PointerDefNode extends DefNode {
         visitor.visit(this);
     }
 
-    public PointerDefNode withId(IdNode node) {
-        if (this.idNode != null) {
-            throw new SyntaxParsingException("id node has been set.");
-        } else {
-            this.idNode = node;
-        }
-        return this;
+    public InitNode getInitNode() {
+        return this.initNode;
     }
 
-    public PointerDefNode withInitNode(InitNode node) {
+    void addInitNode(InitNode node) {
         if (this.initNode != null) {
             throw new SyntaxParsingException("initNode node has been set.");
         } else {
             this.initNode = node;
         }
-        return this;
     }
 
-    public IdNode getIdNode() {
-        return this.idNode;
-    }
-
-    public InitNode getInitNode() {
-        return this.initNode;
-    }
-
-    private IdNode idNode;
     private InitNode initNode;
 }

@@ -15,6 +15,18 @@ public class TypeNode extends SyntaxNode {
         this.typeTag = typeTag;
     }
 
+    public boolean isInt(){
+        return this.typeTag == TagEnum.INT;
+    }
+
+    public boolean isChar(){
+        return this.typeTag == TagEnum.CHAR;
+    }
+
+    public boolean isVoid(){
+        return this.typeTag == TagEnum.VOID;
+    }
+
     @Override
     public void visit(SyntaxTreeVisitor visitor) {
         visitor.visit(this);

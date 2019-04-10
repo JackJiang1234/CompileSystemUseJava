@@ -9,4 +9,14 @@ package com.toyc.syntax;
  * @Version 1.0.0
  */
 public abstract class DefNode extends SyntaxNode {
+
+    void addId(String id){
+        this.id = id;
+    }
+
+    public String getId(){
+        return this.id;
+    }
+
+    private String id;
 }

@@ -2,8 +2,8 @@ package com.toyc.syntax;
 
 /**
  * @ClassName: NonPointerDefNode
- * @Description  def 非指针定义分支
- *   <def>	->	ID  <idtail>
+ * @Description def 非指针定义分支
+ * <def>	->	ID  <idtail>
  * @Author jianyong.jiang
  * @Date 2019/4/1
  * @Version 1.0.0
@@ -13,4 +13,14 @@ public class NonPointerDefNode extends DefNode {
     public void visit(SyntaxTreeVisitor visitor) {
         visitor.visit(this);
     }
+
+    public IdTailNode getIdTailNode() {
+        return this.idTailNode;
+    }
+
+    void addTailNode(IdTailNode idTailNode) {
+        this.idTailNode = idTailNode;
+    }
+
+    private IdTailNode idTailNode;
 }

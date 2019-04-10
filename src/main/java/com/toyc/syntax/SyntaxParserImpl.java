@@ -15,7 +15,7 @@ public class SyntaxParserImpl implements SyntaxParser {
 
     public SyntaxParserImpl(Lexer lexer) {
         this.lexer = lexer;
-        this.move();
+        this.moveNext();
     }
 
     @Override
@@ -46,44 +46,61 @@ public class SyntaxParserImpl implements SyntaxParser {
     private TypeNode type() {
         if (this.lookToken.isTypeToken()) {
             TypeNode typeNode = new TypeNode(this.lookToken.getTag());
-            this.move();
+            this.moveNext();
             return typeNode;
         } else {
-            throw new SyntaxParsingException("unknown type " + this.lookToken.getLiteral());
+            throw new SyntaxParsingException("expected <type>, but it's " + this.lookToken.getLiteral());
         }
     }
 
     // <def> ->	MUL ID <init> <deflist>  | ID  <idtail>
     private DefNode def() {
-        DefNode node;
-        String id;
         if (this.match(TagEnum.MUL)) {
-            node = new PointerDefNode();
-            if (this.match(TagEnum.ID)) {
-                id = this.lookToken.getLiteral();
+            if (this.match(TagEnum.ID, false)) {
+                PointerDefNode node = new PointerDefNode();
+                node.addId(this.lookToken.getLiteral());
+                this.moveNext();
+                node.addInitNode(init());
+                return node;
             } else {
-                throw new SyntaxParsingException("");
+                throw new SyntaxParsingException("parse <def> error, expected the token ID, but it's " + this.lookToken.getLiteral());
             }
-
-            return node;
         }
-        if (this.match(TagEnum.ID)) {
-            node = new NonPointerDefNode();
+        if (this.match(TagEnum.ID, false)) {
+            NonPointerDefNode node = new NonPointerDefNode();
+            node.addId(this.lookToken.getLiteral());
+            this.moveNext();
+            node.addTailNode(idtail());
+            return node;
         }
         throw new SyntaxParsingException("parse <def> error, expected the token MUL or ID, but it's " + this.lookToken.getLiteral());
     }
 
-    private void move() {
+    // <init> -> ASSIGN <expr> | EMPTY
+    private InitNode init(){
+        return null;
+    }
+
+    // <idtail>	->	<varrdef><deflist> | LEFT_PARENTHESE <para> RIGHT_PARENTHESE <funtail>
+    private IdTailNode idtail(){
+        this.match(TagEnum.SEMICOLON);
+        return null;
+    }
+
+    private void moveNext() {
         this.lookToken = this.lexer.next();
     }
 
     private boolean match(TagEnum tagEnum) {
-        if (this.lookToken.match(tagEnum)) {
-            move();
-            return true;
-        } else {
-            return false;
+        return this.match(tagEnum, true);
+    }
+
+    private boolean match(TagEnum tagEnum, boolean matchedMoveToNext) {
+        boolean isMatched = this.lookToken.match(tagEnum);
+        if (isMatched && matchedMoveToNext) {
+            this.moveNext();
         }
+        return isMatched;
     }
 
     private Lexer lexer;

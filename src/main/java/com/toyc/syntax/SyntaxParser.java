@@ -1,8 +1,5 @@
 package com.toyc.syntax;
 
-import com.toyc.lexical.Lexer;
-import com.toyc.lexical.Scanner;
-
 /**
 *@Description 表示toyc语法分析器
 *@Author jianyong.jiang

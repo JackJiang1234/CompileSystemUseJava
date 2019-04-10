@@ -23,22 +23,24 @@ public class SegmentNode extends SyntaxNode {
         return this.typeNode;
     }
 
-    public SegmentNode addTypeNode(TypeNode node) {
+    public DefNode getDefNode(){
+        return this.defNode;
+    }
+
+    void addTypeNode(TypeNode node) {
         if (typeNode != null) {
             throw new SyntaxParsingException("type node has been set.");
         } else {
             this.typeNode = node;
         }
-        return this;
     }
 
-    public SegmentNode addDef(DefNode node) {
+    void addDef(DefNode node) {
         if (this.defNode != null) {
             throw new SyntaxParsingException("defNode node has been set.");
         } else {
             this.defNode = node;
         }
-        return this;
     }
 
     public boolean isExtern() {

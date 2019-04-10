@@ -1,24 +1,24 @@
 package com.toyc.syntax;
 
 /**
- * @ClassName: VarOrArrDefIdtailNode
+ * @ClassName: VarOrArrDefIdTailNode
  * @Description TODO
  * @Author jianyong.jiang
  * @Date 2019/4/2
  * @Version 1.0.0
  */
-public class VarOrArrDefIdtailNode extends IdtailNode {
+public class VarOrArrDefIdTailNode extends IdTailNode {
     @Override
     public void visit(SyntaxTreeVisitor visitor) {
         visitor.visit(this);
     }
 
-    public VarOrArrDefIdtailNode withVarArrayDefNode(VarArrayDefNode defNode){
+    public VarOrArrDefIdTailNode withVarArrayDefNode(VarArrayDefNode defNode){
         this.varArrayDefNode = defNode;
         return this;
     }
 
-    public VarOrArrDefIdtailNode withDefListNode(DeflistNode node){
+    public VarOrArrDefIdTailNode withDefListNode(DeflistNode node){
         this.deflistNode = node;
         return this;
     }
