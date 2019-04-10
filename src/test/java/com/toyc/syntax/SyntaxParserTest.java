@@ -36,7 +36,7 @@ class SyntaxParserTest {
         assertSyntaxParseTest("ParseVarDefListExpected.json", "int i; int b;");
     }
 
-    private void assertSyntaxParseTest(String expectedFileName, String content){
+    private void assertSyntaxParseTest(String expectedFileName, String content) {
         SyntaxParser parser = this.createParse(content);
         ProgramNode programNode = parser.parse();
         try {
@@ -46,7 +46,7 @@ class SyntaxParserTest {
         }
     }
 
-    private String getFileContent(String name){
+    private String getFileContent(String name) {
         try {
             return IOUtils.resourceToString("syntax/" + name, Charset.forName("UTF-8"), this.getClass().getClassLoader());
         } catch (IOException e) {
