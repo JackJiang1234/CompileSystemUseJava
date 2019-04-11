@@ -6,7 +6,7 @@ import com.toyc.lexical.token.TagEnum;
 
 /**
  * @ClassName: SyntaxParserImpl
- * @Description 语法解析默认实现
+ * @Description 语法解析默认实现,算法LL(1)
  * @Author jianyong.jiang
  * @Date 2019/4/4
  * @Version 1.0.0
@@ -87,6 +87,22 @@ public class SyntaxParserImpl implements SyntaxParser {
         return null;
     }
 
+    private void varArrayDef(){
+
+    }
+
+    private void deflist(){
+
+    }
+
+    private void para(){
+
+    }
+
+    private void funtail(){
+
+    }
+
     private void moveNext() {
         this.lookToken = this.lexer.next();
     }
@@ -95,9 +111,9 @@ public class SyntaxParserImpl implements SyntaxParser {
         return this.match(tagEnum, true);
     }
 
-    private boolean match(TagEnum tagEnum, boolean matchedMoveToNext) {
+    private boolean match(TagEnum tagEnum, boolean matchMoveToNext) {
         boolean isMatched = this.lookToken.match(tagEnum);
-        if (isMatched && matchedMoveToNext) {
+        if (isMatched && matchMoveToNext) {
             this.moveNext();
         }
         return isMatched;
