@@ -9,5 +9,7 @@ import java.io.InputStream;
  *
  * */
 public interface Lexer extends AutoCloseable {
+    int getLine();
+    int getCol();
     BaseToken next();
 }

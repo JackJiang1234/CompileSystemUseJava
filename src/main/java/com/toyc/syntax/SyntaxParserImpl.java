@@ -48,7 +48,7 @@ public class SyntaxParserImpl implements SyntaxParser {
             this.moveNext();
             return typeNode;
         } else {
-            throw new SyntaxParsingException("expected <type>, but it's " + this.lookToken.getLiteral());
+            throw new SyntaxParsingException(this.prepareMessage("expected <type>, but it's " + this.lookToken.getLiteral()));
         }
     }
 
@@ -62,7 +62,7 @@ public class SyntaxParserImpl implements SyntaxParser {
                 node.addInitNode(init());
                 return node;
             } else {
-                throw new SyntaxParsingException("parse <def> error, expected the token ID, but it's " + this.lookToken.getLiteral());
+                throw new SyntaxParsingException(this.prepareMessage("parse <def> error, expected the token ID, but it's " + this.lookToken.getLiteral()));
             }
         }
         if (this.match(TagEnum.ID, false)) {
@@ -72,7 +72,7 @@ public class SyntaxParserImpl implements SyntaxParser {
             node.addTailNode(idTail());
             return node;
         }
-        throw new SyntaxParsingException("parse <def> error, expected the token MUL or ID, but it's " + this.lookToken.getLiteral());
+        throw new SyntaxParsingException(this.prepareMessage("parse <def> error, expected the token MUL or ID, but it's " + this.lookToken.getLiteral()));
     }
 
     // <init> -> ASSIGN <expr> | EMPTY
@@ -92,7 +92,7 @@ public class SyntaxParserImpl implements SyntaxParser {
     }
 
     // <defdata> ->	ID <varrdef> | MUL ID  <init>
-    private void defData(){
+    private void defData() {
     }
 
     // <varrdef> ->	LEFT_BRACKET NUM  RIGHT_BRACKET |  <init>
@@ -107,17 +107,17 @@ public class SyntaxParserImpl implements SyntaxParser {
     }
 
     // <paradata>		->	MUL ID  |  ID  <paradatatail>
-    private void paraData(){
+    private void paraData() {
 
     }
 
     // <paradatatail>  ->	LEFT_BRACKET   NUMBER   RIGHT_BRACKET  |  _EMPTY
-    private void paraDataTail(){
+    private void paraDataTail() {
 
     }
 
     // <paralist> ->	COMMA  <type>  <paradata>  <paralist> |  _EMPTY
-    private void paraList(){
+    private void paraList() {
 
     }
 
@@ -127,7 +127,7 @@ public class SyntaxParserImpl implements SyntaxParser {
     }
 
     // <block>	->	LEFT_BRACE <subprogram> RIGHT_BRACE
-    private void block(){
+    private void block() {
 
     }
 
@@ -150,6 +150,10 @@ public class SyntaxParserImpl implements SyntaxParser {
             this.moveNext();
         }
         return isMatched;
+    }
+
+    private String prepareMessage(String message) {
+        return message + String.format(" line %d, col %d.", this.lexer.getLine(), this.lexer.getCol());
     }
 
     private Lexer lexer;

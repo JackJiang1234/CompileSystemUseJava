@@ -11,6 +11,16 @@ public class LexerImpl implements Lexer {
     }
 
     @Override
+    public int getLine() {
+        return this.scanner.getLine();
+    }
+
+    @Override
+    public int getCol() {
+        return this.scanner.getColumn();
+    }
+
+    @Override
     public BaseToken next() {
         return this.pipeline.invokeParse();
     }

@@ -27,12 +27,12 @@ class SyntaxParserTest {
     }
 
     @Test
-    void testParseVarDef() throws JSONException {
+    void testParseVarDef() {
         assertSyntaxParseTest("ParseVarDefExpected.json", "int i;");
     }
 
     @Test
-    void testParseVarDefList() throws JSONException {
+    void testParseVarDefList() {
         assertSyntaxParseTest("ParseVarDefListExpected.json", "int i; int b;");
     }
 
