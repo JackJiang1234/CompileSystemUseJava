@@ -30,12 +30,13 @@ public final class OperatorUtil {
 
     public static final char COMMA = ',';
     public static final char SEMICOLON = ';';
+    public static final char COLON = ':';
     public static final char LEFT_BRACE = '{';
     public static final char RIGHT_BRACE = '}';
 
     public static final String AND = "&&";
-    public static final String INC = "++";
-    public static final String DEC = "--";
+    public static final String INCR = "++";
+    public static final String DECR = "--";
     public static final String OR = "||";
     public static final String GTE = ">=";
     public static final String LTE = "<=";

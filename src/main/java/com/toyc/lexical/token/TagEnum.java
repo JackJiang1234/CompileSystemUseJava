@@ -17,9 +17,10 @@ public enum TagEnum {
     // separator
     // COMMA = ','
     // SEMICOLON = ';'
+    // COLON = ':'
     // LEFT_BRACE = '{'
     // RIGHT_BRACE = '}'
-    COMMA, SEMICOLON, LEFT_BRACE, RIGHT_BRACE,
+    COMMA, SEMICOLON, COLON,LEFT_BRACE, RIGHT_BRACE,
 
     // operator
     //  MUL = '*';  DIV = '/';   MOD = '%';
@@ -34,7 +35,7 @@ public enum TagEnum {
     RIGHT_BRACKET,
 
     // binary
-    AND, INC, DEC, OR, GTE, LTE, EQU, NOT_EQU, SINGLE_LINE_COMMENT, MULTILINE_COMMENT,
+    AND, INCR, DECR, OR, GTE, LTE, EQU, NOT_EQU, SINGLE_LINE_COMMENT, MULTILINE_COMMENT,
 
     ID, NUMBER, ERROR, END
 }

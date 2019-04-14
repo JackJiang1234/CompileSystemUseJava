@@ -18,7 +18,6 @@ public class SyntaxParserImpl implements SyntaxParser {
         this.moveNext();
     }
 
-    @Override
     public ProgramNode parse() {
         ProgramNode programNode = new ProgramNode();
         this.program(programNode);
