@@ -15,7 +15,7 @@
 
 <type>				->	INT ｜ CHAR  |  VOID
 
-### 指针定义或其他定义
+### 指针定义或 非指针定义
 
 //  *p=null, a=100, a[10] = 1    |  a = 100
 
@@ -53,11 +53,11 @@
 
 <paralist>		->	COMMA  <type>  <paradata>  <paralist> |  _EMPTY
 
-//函数声明和函数定义
+// 函数声明和函数定义
 
 <funtail>			->	<block> | SEMICOLON    
 
-//函数体
+// 语句块 
 
 <block>				->	LEFT_BRACE <subprogram> RIGHT_BRACE
 
@@ -65,14 +65,14 @@
 
 <subprogram>	->	<localdef> <subprogram> | <statement> <subprogram>  | _EMPTY
 
-#### // 局部变量定义
+#### 局部变量定义
 
 // 局部变量定义和全局变量完全相同，但对全局变量初始化形式进行语义约束——只能初始化为字面量。
 <localdef>		->  <type><defdata><deflist>
 
 //-----------------------------------------------------------------------------------控制语句定义
 
-#### // 语句：赋值 while do-while for if-else return break continue switch
+#### 语句：赋值 while do-while for if-else return break continue switch
 
 ```java
 <statement>  ->	

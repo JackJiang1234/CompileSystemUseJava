@@ -6,7 +6,7 @@ import com.toyc.lexical.token.TagEnum;
 
 /**
  * @ClassName: SyntaxParserImpl
- * @Description 语法解析默认实现,算法LL(1)
+ * @Description 语法解析默认实现, 算法LL(1)
  * @Author jianyong.jiang
  * @Date 2019/4/4
  * @Version 1.0.0
@@ -52,7 +52,7 @@ public class SyntaxParserImpl implements SyntaxParser {
         }
     }
 
-    // <def> ->	MUL ID <init> <deflist>  | ID  <idtail>
+    // <def> ->	MUL ID <init> <deflist>  | ID  <idTail>
     private DefNode def() {
         if (this.match(TagEnum.MUL)) {
             if (this.match(TagEnum.ID, false)) {
@@ -69,38 +69,72 @@ public class SyntaxParserImpl implements SyntaxParser {
             NonPointerDefNode node = new NonPointerDefNode();
             node.addId(this.lookToken.getLiteral());
             this.moveNext();
-            node.addTailNode(idtail());
+            node.addTailNode(idTail());
             return node;
         }
         throw new SyntaxParsingException("parse <def> error, expected the token MUL or ID, but it's " + this.lookToken.getLiteral());
     }
 
     // <init> -> ASSIGN <expr> | EMPTY
-    private InitNode init(){
+    private InitNode init() {
         return null;
     }
 
-    // <idtail>	->	<varrdef><deflist> | LEFT_PARENTHESE <para> RIGHT_PARENTHESE <funtail>
-    private IdTailNode idtail(){
+    // <idTail>	->	<varrdef><deflist> | LEFT_PARENTHESE <para> RIGHT_PARENTHESE <funtail>
+    private IdTailNode idTail() {
         this.match(TagEnum.SEMICOLON);
         return null;
     }
 
-    private void varArrayDef(){
+    //  <deflist> -> COMMA <defdata> <deflist> | SEMICOLON
+    private void defList() {
 
     }
 
-    private void deflist(){
+    // <defdata> ->	ID <varrdef> | MUL ID  <init>
+    private void defData(){
+    }
+
+    // <varrdef> ->	LEFT_BRACKET NUM  RIGHT_BRACKET |  <init>
+    private void varArrayDef() {
 
     }
 
-    private void para(){
+
+    // <para>  -> <type> <paradata> <paralist> | _EMPTY
+    private void para() {
 
     }
 
-    private void funtail(){
+    // <paradata>		->	MUL ID  |  ID  <paradatatail>
+    private void paraData(){
 
     }
+
+    // <paradatatail>  ->	LEFT_BRACKET   NUMBER   RIGHT_BRACKET  |  _EMPTY
+    private void paraDataTail(){
+
+    }
+
+    // <paralist> ->	COMMA  <type>  <paradata>  <paralist> |  _EMPTY
+    private void paraList(){
+
+    }
+
+    // <funtail>  -> <block> | SEMICOLON
+    private void funTail() {
+
+    }
+
+    // <block>	->	LEFT_BRACE <subprogram> RIGHT_BRACE
+    private void block(){
+
+    }
+
+    // <expr> ->  <assexpr>
+    private void expr() {
+    }
+
 
     private void moveNext() {
         this.lookToken = this.lexer.next();
