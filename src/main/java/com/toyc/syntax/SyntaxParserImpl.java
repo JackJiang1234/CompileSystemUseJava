@@ -4,6 +4,8 @@ import com.toyc.lexical.Lexer;
 import com.toyc.lexical.token.BaseToken;
 import com.toyc.lexical.token.TagEnum;
 
+import java.util.function.Supplier;
+
 /**
  * @ClassName: SyntaxParserImpl
  * @Description 语法解析默认实现, 算法LL(1)
@@ -43,27 +45,21 @@ public class SyntaxParserImpl implements SyntaxParser {
 
     // <type> -> INT ｜ CHAR  |  VOID
     private TypeNode type() {
-        if (this.lookToken.isTypeToken()) {
-            TypeNode typeNode = new TypeNode(this.lookToken.getTag());
-            this.moveNext();
-            return typeNode;
-        } else {
-            throw new SyntaxParsingException(this.prepareMessage("expected <type>, but it's " + this.lookToken.getLiteral()));
-        }
+        this.matchFailException(() -> this.lookToken.isTypeToken(), "expected <type>, but it's " + this.lookToken.getLiteral());
+        TypeNode typeNode = new TypeNode(this.lookToken.getTag());
+        this.moveNext();
+        return typeNode;
     }
 
     // <def> ->	MUL ID <init> <deflist>  | ID  <idTail>
     private DefNode def() {
         if (this.match(TagEnum.MUL)) {
-            if (this.match(TagEnum.ID, false)) {
-                PointerDefNode node = new PointerDefNode();
-                node.addId(this.lookToken.getLiteral());
-                this.moveNext();
-                node.addInitNode(init());
-                return node;
-            } else {
-                throw new SyntaxParsingException(this.prepareMessage("parse <def> error, expected the token ID, but it's " + this.lookToken.getLiteral()));
-            }
+            this.matchFailException(TagEnum.ID, false, "parse <def> error, expected the token ID, but it's " + this.lookToken.getLiteral());
+            PointerDefNode node = new PointerDefNode();
+            node.addId(this.lookToken.getLiteral());
+            this.moveNext();
+            node.addInitNode(init());
+            return node;
         }
         if (this.match(TagEnum.ID, false)) {
             NonPointerDefNode node = new NonPointerDefNode();
@@ -82,6 +78,14 @@ public class SyntaxParserImpl implements SyntaxParser {
 
     // <idTail>	->	<varrdef><deflist> | LEFT_PARENTHESE <para> RIGHT_PARENTHESE <funtail>
     private IdTailNode idTail() {
+        if (this.match(TagEnum.LEFT_PARENTHESE)) {
+            FuncIdTailNode idTailNode = new FuncIdTailNode();
+            idTailNode.addParaNode(para());
+            //if (this.match(TagEnum.RIGHT_PARENTHESE))
+            return idTailNode;
+        }
+        varArrayDef();
+        defList();
         this.match(TagEnum.SEMICOLON);
         return null;
     }
@@ -102,8 +106,8 @@ public class SyntaxParserImpl implements SyntaxParser {
 
 
     // <para>  -> <type> <paradata> <paralist> | _EMPTY
-    private void para() {
-
+    private ParaNode para() {
+        return null;
     }
 
     // <paradata>		->	MUL ID  |  ID  <paradatatail>
@@ -150,6 +154,20 @@ public class SyntaxParserImpl implements SyntaxParser {
             this.moveNext();
         }
         return isMatched;
+    }
+
+    private void matchFailException(TagEnum tagEnum, String message) {
+        this.matchFailException(() -> this.match(tagEnum), message);
+    }
+
+    private void matchFailException(TagEnum tagEnum, boolean matchMoveToNext, String message) {
+        this.matchFailException(() -> this.match(tagEnum, matchMoveToNext), message);
+    }
+
+    private void matchFailException(Supplier<Boolean> supplier, String message) {
+        if (!supplier.get()) {
+            throw new SyntaxParsingException(this.prepareMessage(message));
+        }
     }
 
     private String prepareMessage(String message) {
