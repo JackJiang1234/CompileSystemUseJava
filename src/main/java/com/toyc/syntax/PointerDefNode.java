@@ -18,7 +18,7 @@ public class PointerDefNode extends DefNode {
         return this.initNode;
     }
 
-    void addInitNode(InitNode node) {
+    void setInitNode(InitNode node) {
         if (this.initNode != null) {
             throw new SyntaxParsingException("initNode node has been set.");
         } else {

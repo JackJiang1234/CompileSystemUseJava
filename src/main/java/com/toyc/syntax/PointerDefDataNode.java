@@ -3,7 +3,7 @@ package com.toyc.syntax;
 /**
  * @ClassName: PointerDefDataNode
  * @Description MUL ID <init>
- *     省去MUL定义， 隐式包含
+ * 省去MUL定义， 隐式包含
  * @Author jianyong.jiang
  * @Date 2019/4/1
  * @Version 1.0.0
@@ -14,17 +14,22 @@ public class PointerDefDataNode extends DefDataNode {
         visitor.visit(this);
     }
 
-    public PointerDefDataNode withIdNode(IdNode node){
-        this.idNode = node;
-
-        return this;
+    void setId(String id) {
+        this.id = id;
     }
 
-    public PointerDefDataNode withInitNode(InitNode initNode){
+    void setInitNode(InitNode initNode) {
         this.initNode = initNode;
-        return this;
     }
 
-    private IdNode idNode;
+    public String getId() {
+        return this.id;
+    }
+
+    public InitNode getInitNode() {
+        return initNode;
+    }
+
+    private String id;
     private InitNode initNode;
 }

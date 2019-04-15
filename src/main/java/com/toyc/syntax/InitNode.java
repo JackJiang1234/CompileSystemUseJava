@@ -15,9 +15,8 @@ public class InitNode extends SyntaxNode {
         visitor.visit(this);
     }
 
-    public InitNode withExprNode(ExprNode node) {
+    void setExprNode(ExprNode node) {
         this.exprNode = node;
-        return this;
     }
 
     public ExprNode getExprNode() {

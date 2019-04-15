@@ -18,7 +18,7 @@ public class NonPointerDefNode extends DefNode {
         return this.idTailNode;
     }
 
-    void addTailNode(IdTailNode idTailNode) {
+    void setTailNode(IdTailNode idTailNode) {
         this.idTailNode = idTailNode;
     }
 

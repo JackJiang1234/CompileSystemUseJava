@@ -10,7 +10,7 @@ package com.toyc.syntax;
  */
 public abstract class DefNode extends SyntaxNode {
 
-    void addId(String id){
+    void setId(String id){
         this.id = id;
     }
 

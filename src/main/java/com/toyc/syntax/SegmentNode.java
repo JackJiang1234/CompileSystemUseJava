@@ -27,7 +27,7 @@ public class SegmentNode extends SyntaxNode {
         return this.defNode;
     }
 
-    void addTypeNode(TypeNode node) {
+    void setTypeNode(TypeNode node) {
         if (typeNode != null) {
             throw new SyntaxParsingException("type node has been set.");
         } else {
@@ -35,7 +35,7 @@ public class SegmentNode extends SyntaxNode {
         }
     }
 
-    void addDef(DefNode node) {
+    void setDef(DefNode node) {
         if (this.defNode != null) {
             throw new SyntaxParsingException("defNode node has been set.");
         } else {

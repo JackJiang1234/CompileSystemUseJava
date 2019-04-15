@@ -14,11 +14,11 @@ public class FuncIdTailNode extends IdTailNode {
         visitor.visit(this);
     }
 
-    public void addParaNode(ParaNode paraNode){
+    public void setParaNode(ParaNode paraNode){
         this.paraNode = paraNode;
     }
 
-    public void addFunTailNode(FunTailNode funTailNode){
+    public void setFunTailNode(FunTailNode funTailNode){
         this.funTailNode = funTailNode;
     }
 

@@ -2,6 +2,7 @@ package com.toyc.syntax;
 
 import com.toyc.lexical.Lexer;
 import com.toyc.lexical.token.BaseToken;
+import com.toyc.lexical.token.NumToken;
 import com.toyc.lexical.token.TagEnum;
 
 import java.util.function.Supplier;
@@ -30,17 +31,17 @@ public class SyntaxParserImpl implements SyntaxParser {
     // <program> ->	<segment> <program> |  EMPTY
     private void program(ProgramNode programNode) {
         if (lookToken.notEnd()) {
-            segment(programNode);
+            programNode.addSegment(segment());
             program(programNode);
         }
     }
 
     // <segment> ->	EXTERN  <type> <def> | <type> <def>
-    private void segment(ProgramNode programNode) {
+    private SegmentNode segment() {
         SegmentNode segmentNode = new SegmentNode(match(TagEnum.EXTERN));
-        segmentNode.addTypeNode(type());
-        segmentNode.addDef(def());
-        programNode.addSegment(segmentNode);
+        segmentNode.setTypeNode(type());
+        segmentNode.setDef(def());
+        return segmentNode;
     }
 
     // <type> -> INT ｜ CHAR  |  VOID
@@ -56,16 +57,16 @@ public class SyntaxParserImpl implements SyntaxParser {
         if (this.match(TagEnum.MUL)) {
             this.matchFailException(TagEnum.ID, false, "parse <def> error, expected the token ID, but it's " + this.lookToken.getLiteral());
             PointerDefNode node = new PointerDefNode();
-            node.addId(this.lookToken.getLiteral());
+            node.setId(this.lookToken.getLiteral());
             this.moveNext();
-            node.addInitNode(init());
+            node.setInitNode(init());
             return node;
         }
         if (this.match(TagEnum.ID, false)) {
             NonPointerDefNode node = new NonPointerDefNode();
-            node.addId(this.lookToken.getLiteral());
+            node.setId(this.lookToken.getLiteral());
             this.moveNext();
-            node.addTailNode(idTail());
+            node.setTailNode(idTail());
             return node;
         }
         throw new SyntaxParsingException(this.prepareMessage("parse <def> error, expected the token MUL or ID, but it's " + this.lookToken.getLiteral()));
@@ -73,6 +74,11 @@ public class SyntaxParserImpl implements SyntaxParser {
 
     // <init> -> ASSIGN <expr> | EMPTY
     private InitNode init() {
+        InitNode initNode = new InitNode();
+        if (this.match(TagEnum.ASSIGN)) {
+            initNode.setExprNode(expr());
+            return initNode;
+        }
         return null;
     }
 
@@ -80,28 +86,65 @@ public class SyntaxParserImpl implements SyntaxParser {
     private IdTailNode idTail() {
         if (this.match(TagEnum.LEFT_PARENTHESE)) {
             FuncIdTailNode idTailNode = new FuncIdTailNode();
-            idTailNode.addParaNode(para());
-            //if (this.match(TagEnum.RIGHT_PARENTHESE))
+            idTailNode.setParaNode(para());
+            this.matchFailException(TagEnum.RIGHT_PARENTHESE, "parse <idTail> error, lost right parenthese.");
+            idTailNode.setFunTailNode(funTail());
+            return idTailNode;
+        } else {
+            VarArrayIdTailNode idTailNode = new VarArrayIdTailNode();
+            idTailNode.setVarArrayDefNode(varArrayDef());
+            idTailNode.setDefListNode(defList());
             return idTailNode;
         }
-        varArrayDef();
-        defList();
-        this.match(TagEnum.SEMICOLON);
-        return null;
     }
 
     //  <deflist> -> COMMA <defdata> <deflist> | SEMICOLON
-    private void defList() {
-
+    private DeflistNode defList() {
+        if (this.match(TagEnum.SEMICOLON)) {
+            return null;
+        } else {
+            this.matchFailException(TagEnum.COMMA, "parse  <deflist> error. expected COMMA, but it's " + this.lookToken.getLiteral());
+            DeflistNode deflistNode = new DeflistNode();
+            deflistNode.setDefDataNode(defData());
+            deflistNode.setDeflistNode(defList());
+            return deflistNode;
+        }
     }
 
     // <defdata> ->	ID <varrdef> | MUL ID  <init>
-    private void defData() {
+    private DefDataNode defData() {
+        if (this.match(TagEnum.ID, false)) {
+            NonPointerDefDataNode nonPointerDefDataNode = new NonPointerDefDataNode();
+            nonPointerDefDataNode.setId(this.lookToken.getLiteral());
+            this.moveNext();
+            nonPointerDefDataNode.setVarDefNode(varArrayDef());
+            return nonPointerDefDataNode;
+        }
+        if (this.match(TagEnum.MUL)) {
+            this.matchFailException(TagEnum.ID, false, "parse <defdata> error, expected the token ID, but it's " + this.lookToken.getLiteral());
+            PointerDefDataNode pointerDefDataNode = new PointerDefDataNode();
+            pointerDefDataNode.setId(this.lookToken.getLiteral());
+            this.moveNext();
+            pointerDefDataNode.setInitNode(init());
+            return pointerDefDataNode;
+        }
+        throw new SyntaxParsingException(this.prepareMessage("parse <defdata> error, expected the token MUL or ID, but it's " + this.lookToken.getLiteral()));
     }
 
     // <varrdef> ->	LEFT_BRACKET NUM  RIGHT_BRACKET |  <init>
-    private void varArrayDef() {
-
+    private VarArrayDefNode varArrayDef() {
+        if (this.match(TagEnum.LEFT_BRACKET)) {
+            this.matchFailException(TagEnum.NUMBER, false, "parse <varrdef> error. expected the NUMBER.");
+            ArrayDefNode defNode = new ArrayDefNode();
+            defNode.setNumber(((NumToken) this.lookToken).getValue());
+            this.moveNext();
+            this.matchFailException(TagEnum.RIGHT_BRACKET, "parse <varrdef> error. expected the RIGHT_BRACKET.");
+            return defNode;
+        } else {
+            InitVarArrayDefNode initVarArrayDefNode = new InitVarArrayDefNode();
+            initVarArrayDefNode.setInitNode(init());
+            return initVarArrayDefNode;
+        }
     }
 
 
@@ -126,8 +169,8 @@ public class SyntaxParserImpl implements SyntaxParser {
     }
 
     // <funtail>  -> <block> | SEMICOLON
-    private void funTail() {
-
+    private FunTailNode funTail() {
+        return null;
     }
 
     // <block>	->	LEFT_BRACE <subprogram> RIGHT_BRACE
@@ -136,7 +179,8 @@ public class SyntaxParserImpl implements SyntaxParser {
     }
 
     // <expr> ->  <assexpr>
-    private void expr() {
+    private ExprNode expr() {
+        return null;
     }
 
 

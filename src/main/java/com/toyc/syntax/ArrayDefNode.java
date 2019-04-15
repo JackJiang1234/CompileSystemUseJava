@@ -16,10 +16,13 @@ public class ArrayDefNode extends VarArrayDefNode {
         visitor.visit(this);
     }
 
-    public ArrayDefNode withNumNode(NumNode node){
-        this.numNode = node;
-        return this;
+    void setNumber(int number) {
+        this.number = number;
     }
 
-    private NumNode numNode;
+    public int getNumber() {
+        return this.number;
+    }
+
+    private int number;
 }

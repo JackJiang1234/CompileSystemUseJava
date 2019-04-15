@@ -13,16 +13,14 @@ public class NonPointerDefDataNode extends DefDataNode {
         visitor.visit(this);
     }
 
-    public NonPointerDefDataNode withIdNode(IdNode idNode) {
-        this.idNode = idNode;
-        return this;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public NonPointerDefDataNode withVarDefNode(VarArrayDefNode node) {
+    public void setVarDefNode(VarArrayDefNode node) {
         this.varArrayDefNode = node;
-        return this;
     }
 
-    private IdNode idNode;
+    private String id;
     private VarArrayDefNode varArrayDefNode;
 }

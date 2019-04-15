@@ -17,10 +17,6 @@ public interface SyntaxTreeVisitor {
 
     void visit(ExprNode exprNode);
 
-    void visit(CommaDeflistNode commaDeflistNode);
-
-    void visit(SemicolonDeflistNode semicolonDeflistNode);
-
     void visit(PointerDefDataNode pointerDefDataNode);
 
     void visit(NonPointerDefDataNode nonPointerDefDataNode);
@@ -31,7 +27,7 @@ public interface SyntaxTreeVisitor {
 
     void visit(InitVarArrayDefNode initVarDefNode);
 
-    void visit(VarOrArrDefIdTailNode varOrArrDefIdtailNode);
+    void visit(VarArrayIdTailNode varArrayIdtailNode);
 
     void visit(FuncIdTailNode funcIdtailNode);
 
@@ -58,4 +54,6 @@ public interface SyntaxTreeVisitor {
     void visit(LocalDefNode localDefNode);
 
     void visit(TypeNode typeNode);
+
+    void visit(DeflistNode deflistNode);
 }

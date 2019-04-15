@@ -40,7 +40,9 @@ class SyntaxParserTest {
         SyntaxParser parser = this.createParse(content);
         ProgramNode programNode = parser.parse();
         try {
-            JSONAssert.assertEquals(this.getFileContent(expectedFileName), this.toJson(programNode), false);
+            String target = this.toJson(programNode);
+            System.out.println(target);
+            JSONAssert.assertEquals(this.getFileContent(expectedFileName), target, false);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

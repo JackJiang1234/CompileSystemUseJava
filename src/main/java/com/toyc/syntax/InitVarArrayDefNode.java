@@ -14,9 +14,8 @@ public class InitVarArrayDefNode extends VarArrayDefNode {
         visitor.visit(this);
     }
 
-    public InitVarArrayDefNode withInitNode(InitNode node) {
+    void setInitNode(InitNode node) {
         this.initNode = node;
-        return this;
     }
 
     public InitNode getInitNode() {
