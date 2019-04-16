@@ -7,9 +7,6 @@ package com.toyc.syntax;
  * @Date 2019/4/1
  * @Version 1.0.0
  */
-public class ExprNode extends SyntaxNode {
-    @Override
-    public void visit(SyntaxTreeVisitor visitor) {
-        visitor.visit(this);
-    }
+public abstract class ExprNode extends SyntaxNode {
+
 }

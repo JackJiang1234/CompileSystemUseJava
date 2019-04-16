@@ -15,8 +15,6 @@ public interface SyntaxTreeVisitor {
 
     void visit(InitNode initNode);
 
-    void visit(ExprNode exprNode);
-
     void visit(PointerDefDataNode pointerDefDataNode);
 
     void visit(NonPointerDefDataNode nonPointerDefDataNode);
@@ -56,4 +54,14 @@ public interface SyntaxTreeVisitor {
     void visit(TypeNode typeNode);
 
     void visit(DeflistNode deflistNode);
+
+    void visit(OrExprNode orExprNode);
+
+    void visit(AndExprNode andExprNode);
+
+    void visit(OrTailNode orTailNode);
+
+    void visit(AssignExprNode assignExprNode);
+
+    void visit(AssignTailExprNode assignTailExprNode);
 }

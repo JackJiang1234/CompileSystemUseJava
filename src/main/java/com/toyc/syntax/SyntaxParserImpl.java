@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 
 /**
  * @ClassName: SyntaxParserImpl
- * @Description 语法解析默认实现, 算法LL(1)
+ * @Description 语法解析默认实现, 使用LL(1)
  * @Author jianyong.jiang
  * @Date 2019/4/4
  * @Version 1.0.0
@@ -148,7 +148,6 @@ public class SyntaxParserImpl implements SyntaxParser {
         }
     }
 
-
     // <para>  -> <type> <paradata> <paralist> | _EMPTY
     private ParaNode para() {
         return null;
@@ -181,9 +180,30 @@ public class SyntaxParserImpl implements SyntaxParser {
 
     // <expr> ->  <assexpr>
     private ExprNode expr() {
-        return null;
+        return assignExpr();
     }
 
+    // <assexpr> ->  <orexpr> <asstail>
+    private AssignExprNode assignExpr() {
+        AssignExprNode assignExprNode = new AssignExprNode();
+        assignExprNode.setOrExprNode(orExpr());
+        assignExprNode.setAssignTailExprNode(assignTail());
+        return assignExprNode;
+    }
+
+    private AssignTailExprNode assignTail() {
+        AssignTailExprNode node = null;
+        if (this.match(TagEnum.ASSIGN)) {
+            node = new AssignTailExprNode();
+            node.setAssignExprNode(assignExpr());
+        }
+        return node;
+    }
+
+    // <orexpr> ->  <andexpr> <ortail>
+    private OrExprNode orExpr() {
+        return null;
+    }
 
     private void moveNext() {
         this.lookToken = this.lexer.next();
