@@ -6,10 +6,11 @@
         "typeTag": "INT"
       },
       "defNode": {
-        "id": "i",
+        "id": "arr",
         "idTailNode": {
           "varArrayDefNode": {
-            "initNode": null
+            "isArray": true,
+            "number": 10
           },
           "deflistNode": null
         }

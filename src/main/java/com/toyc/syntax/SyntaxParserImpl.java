@@ -137,6 +137,7 @@ public class SyntaxParserImpl implements SyntaxParser {
             this.matchFailException(TagEnum.NUMBER, false, "parse <varrdef> error. expected the NUMBER.");
             ArrayDefNode defNode = new ArrayDefNode();
             defNode.setNumber(((NumToken) this.lookToken).getValue());
+            defNode.setArray(true);
             this.moveNext();
             this.matchFailException(TagEnum.RIGHT_BRACKET, "parse <varrdef> error. expected the RIGHT_BRACKET.");
             return defNode;

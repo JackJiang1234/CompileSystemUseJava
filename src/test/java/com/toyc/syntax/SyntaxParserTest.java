@@ -32,8 +32,18 @@ class SyntaxParserTest {
     }
 
     @Test
+    void testParseExternVarDef() {
+        assertSyntaxParseTest("ParseExternVarDefExpected.json", "extern int i;");
+    }
+
+    @Test
     void testParseVarDefList() {
         assertSyntaxParseTest("ParseVarDefListExpected.json", "int i; int b;");
+    }
+
+    @Test
+    void testParseArrayDef() {
+        assertSyntaxParseTest("ParseArrayDefExpected.json", "int arr[10];");
     }
 
     private void assertSyntaxParseTest(String expectedFileName, String content) {

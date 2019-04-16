@@ -7,7 +7,12 @@
       },
       "defNode": {
         "id": "i",
-        "idTailNode": null
+        "idTailNode": {
+          "varArrayDefNode": {
+            "initNode": null
+          },
+          "deflistNode": null
+        }
       }
     },
     {
@@ -17,7 +22,12 @@
       },
       "defNode": {
         "id": "b",
-        "idTailNode": null
+        "idTailNode": {
+          "varArrayDefNode": {
+            "initNode": null
+          },
+          "deflistNode": null
+        }
       }
     }
   ]
