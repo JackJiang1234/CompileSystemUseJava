@@ -29,7 +29,7 @@
 
 // *p=null,a=100,a[10] = 1 指针，变量，数组定义序列
 
-<defdata>			->	ID <varrdef> | MUL ID  <init>
+<defdata>			->	ID <varrdef> | MUL ID  <init> 
 
 ### 基本定义语法
 
