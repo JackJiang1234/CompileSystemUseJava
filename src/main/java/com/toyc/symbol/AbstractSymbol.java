@@ -1,4 +1,4 @@
-package com.toyc.context;
+package com.toyc.symbol;
 
 /**
  * @Description 表示符号基类
@@ -7,12 +7,12 @@ package com.toyc.context;
  * @Version 1.0.0
  */
 public abstract class AbstractSymbol {
-    public String getName() {
-        return name;
+    public AbstractSymbol(String name) {
+        this.name = name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getName() {
+        return name;
     }
 
     private String name;

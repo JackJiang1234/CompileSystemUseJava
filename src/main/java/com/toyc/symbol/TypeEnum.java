@@ -1,4 +1,4 @@
-package com.toyc.context;
+package com.toyc.symbol;
 
 /**
  * @ClassName: TypeEnum
@@ -11,7 +11,8 @@ public enum TypeEnum {
     INT("int", 4),
     CHAR("char", 1),
     BOOL("boolean", 1),
-    POINTER("pointer", 4);
+    POINTER("pointer", 4),
+    VOID("void", 0);
 
     TypeEnum(String name, int width){
         this.name = name;
