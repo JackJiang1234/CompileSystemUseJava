@@ -28,6 +28,10 @@ public class VariableSymbol extends AbstractSymbol {
         return initData;
     }
 
+    public boolean isPointer(){
+        return this.type.equals(PrimitiveType.POINTER);
+    }
+
     public boolean isArray(){
         return this.type.getClass().equals(ArrayType.class);
     }
