@@ -1,32 +1,33 @@
 package com.toyc.symbol;
 
 /**
- * @ClassName: TypeEnum
- * @Description TODO
+ * @Description 表示基本类型
  * @Author jianyong.jiang
- * @Date 2019/5/7
+ * @Date 2019/5/8
  * @Version 1.0.0
  */
-public enum TypeEnum {
+public enum PrimitiveType implements Type {
     INT("int", 4),
     CHAR("char", 1),
     BOOL("boolean", 1),
     POINTER("pointer", 4),
     VOID("void", 0);
 
-    TypeEnum(String name, int width){
+    PrimitiveType(String name, int size) {
         this.name = name;
-        this.width = width;
+        this.size = size;
     }
 
+    @Override
     public String getName() {
-        return name;
+        return this.name;
     }
 
-    public int getWidth() {
-        return width;
+    @Override
+    public int getSize() {
+        return this.size;
     }
 
     private String name;
-    private int width;
+    private int size;
 }

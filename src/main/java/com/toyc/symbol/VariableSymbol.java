@@ -7,17 +7,36 @@ package com.toyc.symbol;
  * @Version 1.0.0
  */
 public class VariableSymbol extends AbstractSymbol {
-    public VariableSymbol(String name, TypeEnum type) {
+    public VariableSymbol(String name, Type type) {
         super(name);
         this.type = type;
     }
 
-    public TypeEnum getType() {
+    public Type getType() {
         return type;
     }
 
-    private TypeEnum type;
-    private boolean isArray;
-    private boolean isExtern;
+    public boolean isExtern() {
+        return isExtern;
+    }
 
+    public void setExtern(boolean extern) {
+        isExtern = extern;
+    }
+
+    public Object getInitData() {
+        return initData;
+    }
+
+    public boolean isArray(){
+        return this.type.getClass().equals(ArrayType.class);
+    }
+
+    public void setInitData(Object initData) {
+        this.initData = initData;
+    }
+
+    private Type type;
+    private boolean isExtern;
+    private Object initData;
 }
