@@ -7,6 +7,6 @@ package com.toyc.lexical.token;
  */
 public class StringToken extends BaseToken {
     public StringToken(String literal){
-        super(literal, TagEnum.STRING);
+        super(literal, Tag.STRING);
     }
 }

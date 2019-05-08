@@ -51,7 +51,7 @@ public class ParseOperatorValve extends LookAheadCharBaseValue {
         } else {
             comment = this.readUntilMultiLineEndCommentSymbol(scanner);
         }
-        TagEnum tag = OperatorUtil.getTagByName(symbol);
+        Tag tag = OperatorUtil.getTagByName(symbol);
         return new CommentToken(symbol + comment, tag);
     }
 

@@ -1,13 +1,13 @@
 package com.toyc.lexical.token;
 
 /**
- * @ClassName: TagEnum
+ * @ClassName: Tag
  * @Description TODO
  * @Author jianyong.jiang
  * @Date 2019/4/4
  * @Version 1.0.0
  */
-public enum TagEnum {
+public enum Tag {
     // keyword
     CHAR, VOID, INT,
     BREAK, ELSE, CONTINUE,

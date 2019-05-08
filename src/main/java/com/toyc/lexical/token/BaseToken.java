@@ -1,7 +1,5 @@
 package com.toyc.lexical.token;
 
-import java.util.Objects;
-
 /**
  * @Description 表标token抽象基类
  * @Author jianyong.jiang
@@ -9,16 +7,16 @@ import java.util.Objects;
  * @Version 1.0.0
  */
 public abstract class BaseToken {
-    public BaseToken(TagEnum tagEnum) {
-        this(null, tagEnum);
+    public BaseToken(Tag tag) {
+        this(null, tag);
     }
 
-    public BaseToken(String literal, TagEnum tagEnum) {
+    public BaseToken(String literal, Tag tag) {
         this.literal = literal;
-        this.tag = tagEnum;
+        this.tag = tag;
     }
 
-    public TagEnum getTag() {
+    public Tag getTag() {
         return this.tag;
     }
 
@@ -30,14 +28,14 @@ public abstract class BaseToken {
         return this != EndToken.END;
     }
 
-    public boolean match(TagEnum tag) {
+    public boolean match(Tag tag) {
         return this.tag == tag;
     }
 
     public boolean isTypeToken() {
-        return this.tag == TagEnum.CHAR || this.tag == TagEnum.INT || this.tag == TagEnum.VOID;
+        return this.tag == Tag.CHAR || this.tag == Tag.INT || this.tag == Tag.VOID;
     }
 
     private String literal;
-    private TagEnum tag;
+    private Tag tag;
 }

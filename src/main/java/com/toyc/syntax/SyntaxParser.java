@@ -7,5 +7,5 @@ package com.toyc.syntax;
 *@Version 1.0.0
 */
 public interface SyntaxParser {
-    ProgramNode parse();
+    void parse();
 }

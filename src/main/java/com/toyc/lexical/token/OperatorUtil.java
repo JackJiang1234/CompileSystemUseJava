@@ -82,7 +82,7 @@ public final class OperatorUtil {
         return Collections.unmodifiableSet(binaryOperatorSet);
     }
 
-    public static TagEnum getTagByName(String name){
+    public static Tag getTagByName(String name){
         return operatorTagMap.get(name);
     }
 
@@ -98,7 +98,7 @@ public final class OperatorUtil {
 
     private static final Set<Character> unaryOperatorSet = new HashSet<Character>();
 
-    private static final Map<String, TagEnum> operatorTagMap = new HashMap<String, TagEnum>();
+    private static final Map<String, Tag> operatorTagMap = new HashMap<String, Tag>();
 
     static {
         try {
@@ -111,7 +111,7 @@ public final class OperatorUtil {
                     endGreedyCharSet.add(op.charAt(1));
                     binaryOperatorSet.add(op);
                 }
-                operatorTagMap.put(f.get(null).toString(), TagEnum.valueOf(f.getName()));
+                operatorTagMap.put(f.get(null).toString(), Tag.valueOf(f.getName()));
             }
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);

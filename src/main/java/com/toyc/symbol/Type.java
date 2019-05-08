@@ -7,14 +7,7 @@ package com.toyc.symbol;
  * @Version 1.0.0
  */
 public interface Type {
-
-    /**
-     * 名称
-     * */
     String getName();
 
-    /**
-     * 大小取
-     * */
     int getSize();
 }

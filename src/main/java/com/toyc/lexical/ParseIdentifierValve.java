@@ -55,7 +55,7 @@ public class ParseIdentifierValve extends BaseValve {
      * 标识符有可能是关键字或普通的标识符
      */
     private BaseToken createTokenById(String id) {
-        TagEnum tagEnum = KeywordUtils.getTagEnumByName(id);
-        return tagEnum == null ? new IdentifierToken(id) : new KeywordToken(id, tagEnum);
+        Tag tag = KeywordUtils.getTagEnumByName(id);
+        return tag == null ? new IdentifierToken(id) : new KeywordToken(id, tag);
     }
 }

@@ -8,7 +8,7 @@ package com.toyc.lexical.token;
  * @Version 1.0.0
  */
 public class CommentToken extends OperatorToken {
-    public CommentToken(String literal, TagEnum tagEnum) {
-        super(literal, tagEnum);
+    public CommentToken(String literal, Tag tag) {
+        super(literal, tag);
     }
 }

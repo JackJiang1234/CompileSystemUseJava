@@ -2,8 +2,7 @@ package com.toyc.syntax;
 
 import com.toyc.lexical.Lexer;
 import com.toyc.lexical.token.BaseToken;
-import com.toyc.lexical.token.NumToken;
-import com.toyc.lexical.token.TagEnum;
+import com.toyc.lexical.token.Tag;
 
 import java.util.function.Supplier;
 
@@ -21,145 +20,104 @@ public class SyntaxParserImpl implements SyntaxParser {
         this.moveNext();
     }
 
-    public ProgramNode parse() {
-        ProgramNode programNode = new ProgramNode();
-        this.program(programNode);
+    public void parse() {
 
-        return programNode;
     }
 
     // <program> ->	<segment> <program> |  EMPTY
-    private void program(ProgramNode programNode) {
+    private void parseProgram() {
         if (lookToken.notEnd()) {
-            programNode.addSegment(segment());
-            program(programNode);
+            parseSegment();
         }
     }
 
     // <segment> ->	EXTERN  <type> <def> | <type> <def>
-    private SegmentNode segment() {
-        SegmentNode segmentNode = new SegmentNode(match(TagEnum.EXTERN));
-        segmentNode.setTypeNode(type());
-        segmentNode.setDef(def());
-        return segmentNode;
+    private void parseSegment() {
+        match(Tag.EXTERN);
+        parseType();
+        parseDef();
     }
 
     // <type> -> INT ｜ CHAR  |  VOID
-    private TypeNode type() {
+    private void parseType() {
         this.matchFailException(() -> this.lookToken.isTypeToken(), "expected <type>, but it's " + this.lookToken.getLiteral());
-        TypeNode typeNode = new TypeNode(this.lookToken.getTag());
-        this.moveNext();
-        return typeNode;
     }
 
     // <def> ->	MUL ID <init> <deflist>  | ID  <idTail>
-    private DefNode def() {
-        if (this.match(TagEnum.MUL)) {
-            this.matchFailException(TagEnum.ID, false, "parse <def> error, expected the token ID, but it's " + this.lookToken.getLiteral());
-            PointerDefNode node = new PointerDefNode();
-            node.setId(this.lookToken.getLiteral());
-            this.moveNext();
-            node.setInitNode(init());
-            return node;
+    private void parseDef() {
+        if (this.match(Tag.MUL)) {
+            this.matchFailException(Tag.ID, false, "parse <def> error, expected the token ID, but it's " + this.lookToken.getLiteral());
+            this.parseInit();
+            this.parseDefList();
         }
-        if (this.match(TagEnum.ID, false)) {
-            NonPointerDefNode node = new NonPointerDefNode();
-            node.setId(this.lookToken.getLiteral());
-            this.moveNext();
-            node.setTailNode(idTail());
-            return node;
+        if (this.match(Tag.ID, false)) {
+            this.parseIdTail();
         }
         throw new SyntaxParsingException(this.prepareMessage("parse <def> error, expected the token MUL or ID, but it's " + this.lookToken.getLiteral()));
     }
 
     // <init> -> ASSIGN <expr> | EMPTY
-    private InitNode init() {
-        InitNode initNode = new InitNode();
-        if (this.match(TagEnum.ASSIGN)) {
-            initNode.setExprNode(expr());
-            return initNode;
+    private void parseInit() {
+        if (this.match(Tag.ASSIGN)) {
+            this.parseExpr();
         }
-        return null;
     }
 
     // <idTail>	->	<varrdef><deflist> | LEFT_PARENTHESE <para> RIGHT_PARENTHESE <funtail>
-    private IdTailNode idTail() {
-        if (this.match(TagEnum.LEFT_PARENTHESE)) {
-            FuncIdTailNode idTailNode = new FuncIdTailNode();
-            idTailNode.setParaNode(para());
-            this.matchFailException(TagEnum.RIGHT_PARENTHESE, "parse <idTail> error, lost right parenthese.");
-            idTailNode.setFunTailNode(funTail());
-            return idTailNode;
+    private void parseIdTail() {
+        if (this.match(Tag.LEFT_PARENTHESE)) {
+
         } else {
-            VarArrayIdTailNode idTailNode = new VarArrayIdTailNode();
-            idTailNode.setVarArrayDefNode(varArrayDef());
-            idTailNode.setDefListNode(defList());
-            return idTailNode;
+
         }
     }
 
     //  <deflist> -> COMMA <defdata> <deflist> | SEMICOLON
-    private DeflistNode defList() {
-        if (this.match(TagEnum.SEMICOLON)) {
-            return null;
-        } else {
-            this.matchFailException(TagEnum.COMMA, "parse  <deflist> error. expected COMMA, but it's " + this.lookToken.getLiteral());
-            DeflistNode deflistNode = new DeflistNode();
-            deflistNode.setDefDataNode(defData());
-            deflistNode.setDeflistNode(defList());
-            return deflistNode;
+    private void parseDefList() {
+        while (match(Tag.COMMA)) {
+            parseDefData();
         }
+        match(Tag.SEMICOLON);
     }
 
     // <defdata> ->	ID <varrdef> | MUL ID  <init>
-    private DefDataNode defData() {
-        if (this.match(TagEnum.ID, false)) {
-            NonPointerDefDataNode nonPointerDefDataNode = new NonPointerDefDataNode();
-            nonPointerDefDataNode.setId(this.lookToken.getLiteral());
-            this.moveNext();
-            nonPointerDefDataNode.setVarDefNode(varArrayDef());
-            return nonPointerDefDataNode;
+    private void parseDefData() {
+        if (this.match(Tag.ID, false)) {
+            this.parseVarArrayDef();
         }
-        if (this.match(TagEnum.MUL)) {
-            this.matchFailException(TagEnum.ID, false, "parse <defdata> error, expected the token ID, but it's " + this.lookToken.getLiteral());
-            PointerDefDataNode pointerDefDataNode = new PointerDefDataNode();
-            pointerDefDataNode.setId(this.lookToken.getLiteral());
-            this.moveNext();
-            pointerDefDataNode.setInitNode(init());
-            return pointerDefDataNode;
+        if (this.match(Tag.MUL)) {
+            this.matchFailException(Tag.ID, false, "parse <defdata> error, expected the token ID, but it's " + this.lookToken.getLiteral());
+            this.parseInit();
         }
         throw new SyntaxParsingException(this.prepareMessage("parse <defdata> error, expected the token MUL or ID, but it's " + this.lookToken.getLiteral()));
     }
 
     // <varrdef> ->	LEFT_BRACKET NUM  RIGHT_BRACKET |  <init>
-    private VarArrayDefNode varArrayDef() {
-        if (this.match(TagEnum.LEFT_BRACKET)) {
-            this.matchFailException(TagEnum.NUMBER, false, "parse <varrdef> error. expected the NUMBER.");
-            ArrayDefNode defNode = new ArrayDefNode();
-            defNode.setNumber(((NumToken) this.lookToken).getValue());
-            defNode.setArray(true);
+    private void parseVarArrayDef() {
+        if (this.match(Tag.LEFT_BRACKET)) {
+            this.matchFailException(Tag.NUMBER, false, "parse <varrdef> error. expected the NUMBER.");
+
             this.moveNext();
-            this.matchFailException(TagEnum.RIGHT_BRACKET, "parse <varrdef> error. expected the RIGHT_BRACKET.");
-            return defNode;
+            this.matchFailException(Tag.RIGHT_BRACKET, "parse <varrdef> error. expected the RIGHT_BRACKET.");
+
         } else {
-            InitVarArrayDefNode initVarArrayDefNode = new InitVarArrayDefNode();
-            initVarArrayDefNode.setInitNode(init());
-            return initVarArrayDefNode;
+            this.parseInit();
         }
     }
 
     // <para>  -> <type> <paradata> <paralist> | _EMPTY
-    private ParaNode para() {
-        return null;
+    private void parseParameter() {
+        parseType();
+
     }
 
     // <paradata>		->	MUL ID  |  ID  <paradatatail>
-    private void paraData() {
+    private void parseParameterData() {
 
     }
 
     // <paradatatail>  ->	LEFT_BRACKET   NUMBER   RIGHT_BRACKET  |  _EMPTY
-    private void paraDataTail() {
+    private void parseParameterDataTail() {
 
     }
 
@@ -169,8 +127,8 @@ public class SyntaxParserImpl implements SyntaxParser {
     }
 
     // <funtail>  -> <block> | SEMICOLON
-    private FunTailNode funTail() {
-        return null;
+    private void funTail() {
+
     }
 
     // <block>	->	LEFT_BRACE <subprogram> RIGHT_BRACE
@@ -179,54 +137,46 @@ public class SyntaxParserImpl implements SyntaxParser {
     }
 
     // <expr> ->  <assexpr>
-    private ExprNode expr() {
-        return assignExpr();
+    private void parseExpr() {
+
     }
 
     // <assexpr> ->  <orexpr> <asstail>
-    private AssignExprNode assignExpr() {
-        AssignExprNode assignExprNode = new AssignExprNode();
-        assignExprNode.setOrExprNode(orExpr());
-        assignExprNode.setAssignTailExprNode(assignTail());
-        return assignExprNode;
+    private void assignExpr() {
+
     }
 
-    private AssignTailExprNode assignTail() {
-        AssignTailExprNode node = null;
-        if (this.match(TagEnum.ASSIGN)) {
-            node = new AssignTailExprNode();
-            node.setAssignExprNode(assignExpr());
-        }
-        return node;
+    private void assignTail() {
+
     }
 
     // <orexpr> ->  <andexpr> <ortail>
-    private OrExprNode orExpr() {
-        return null;
+    private void orExpr() {
+
     }
 
     private void moveNext() {
         this.lookToken = this.lexer.next();
     }
 
-    private boolean match(TagEnum tagEnum) {
-        return this.match(tagEnum, true);
+    private boolean match(Tag tag) {
+        return this.match(tag, true);
     }
 
-    private boolean match(TagEnum tagEnum, boolean matchMoveToNext) {
-        boolean isMatched = this.lookToken.match(tagEnum);
+    private boolean match(Tag tag, boolean matchMoveToNext) {
+        boolean isMatched = this.lookToken.match(tag);
         if (isMatched && matchMoveToNext) {
             this.moveNext();
         }
         return isMatched;
     }
 
-    private void matchFailException(TagEnum tagEnum, String message) {
-        this.matchFailException(() -> this.match(tagEnum), message);
+    private void matchFailException(Tag tag, String message) {
+        this.matchFailException(() -> this.match(tag), message);
     }
 
-    private void matchFailException(TagEnum tagEnum, boolean matchMoveToNext, String message) {
-        this.matchFailException(() -> this.match(tagEnum, matchMoveToNext), message);
+    private void matchFailException(Tag tag, boolean matchMoveToNext, String message) {
+        this.matchFailException(() -> this.match(tag, matchMoveToNext), message);
     }
 
     private void matchFailException(Supplier<Boolean> supplier, String message) {
