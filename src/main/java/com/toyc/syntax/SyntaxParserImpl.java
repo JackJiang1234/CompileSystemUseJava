@@ -24,27 +24,59 @@ public class SyntaxParserImpl implements SyntaxParser {
 
     }
 
-    // <program> ->	<segment> <program> |  EMPTY
+    /**
+     *  程序语法解析入口
+     *  <program> -> <segment> <program> | ∈
+     *  收集语句序列，以便后续中间代码和目标代码生成
+     *  prgram.code = segment.code + segment.code + ...
+     *  return program.code
+     * */
     private void parseProgram() {
         if (lookToken.notEnd()) {
             parseSegment();
         }
     }
 
-    // <segment> ->	EXTERN  <type> <def> | <type> <def>
+    /**
+     *  解析程序段
+     *  <segment> -> <type> <defcontent>
+     *  程序段由变量或函数声明和定义组成
+     *  defcontent.type = type.type
+     *  return defcontent.code
+     * */
     private void parseSegment() {
-        match(Tag.EXTERN);
         parseType();
-        parseDef();
+        parseDefContent();
     }
 
-    // <type> -> INT ｜ CHAR  |  VOID
+    /**
+     *  解析类型
+     *  <type> -> INT ｜ CHAR  |  VOID
+     *  return type
+     * */
     private void parseType() {
         this.matchFailException(() -> this.lookToken.isTypeToken(), "expected <type>, but it's " + this.lookToken.getLiteral());
     }
 
-    // <def> ->	MUL ID <init> <deflist>  | ID  <idTail>
-    private void parseDef() {
+    /**
+     *  解析变量或函数声明或定义内容, 声明或定义可能以指针开头
+     *  <defcontent> ->	MUL ID <init> <deflist>  | ID  <idTail>
+     *
+     *  指针变量声明或定义处理
+     *  init.id = get_id()
+     *  init.ispointer = test_pointer()
+     *  init.type = parent.type
+     *  deflist.type = parent.type
+     *  defcontent.code = init.code + deflist.code
+     *
+     *  普通变量声明或定义处理
+     *  idtail.id = get_id()
+     *  idtail.type = parent.type
+     *  defconent.code = idtail.code;
+     *
+     *  return defcontent.code
+     * */
+    private void parseDefContent() {
         if (this.match(Tag.MUL)) {
             this.matchFailException(Tag.ID, false, "parse <def> error, expected the token ID, but it's " + this.lookToken.getLiteral());
             this.parseInit();
@@ -56,23 +88,12 @@ public class SyntaxParserImpl implements SyntaxParser {
         throw new SyntaxParsingException(this.prepareMessage("parse <def> error, expected the token MUL or ID, but it's " + this.lookToken.getLiteral()));
     }
 
-    // <init> -> ASSIGN <expr> | EMPTY
-    private void parseInit() {
-        if (this.match(Tag.ASSIGN)) {
-            this.parseExpr();
-        }
-    }
-
-    // <idTail>	->	<varrdef><deflist> | LEFT_PARENTHESE <para> RIGHT_PARENTHESE <funtail>
-    private void parseIdTail() {
-        if (this.match(Tag.LEFT_PARENTHESE)) {
-
-        } else {
-
-        }
-    }
-
-    //  <deflist> -> COMMA <defdata> <deflist> | SEMICOLON
+    /**
+     *  解析多个变量定义
+     *  <deflist> -> COMMA <defdata> <deflist> | SEMICOLON
+     *  defdata.type = parent.type
+     *  deflist.code = defdata.code + defdata.code + ...
+     * */
     private void parseDefList() {
         while (match(Tag.COMMA)) {
             parseDefData();
@@ -80,10 +101,26 @@ public class SyntaxParserImpl implements SyntaxParser {
         match(Tag.SEMICOLON);
     }
 
-    // <defdata> ->	ID <varrdef> | MUL ID  <init>
+    /**
+     *  解析变量定义内容
+     *  <defdata> -> ID <var_or_array_init> | MUL ID  <init>
+     *
+     *  数组或普通变量定义
+     *  var_or_array_init.id = get_id()
+     *  var_or_array_init.type = parent.type
+     *  defdata.code = var_or_array_init.code
+     *
+     *  指针变量定义
+     *  init.id = get_id()
+     *  init.type = parent.type
+     *  init.ispointer = test_pointer()
+     *  defdata.code = init.code
+     *
+     *  return defdata.code
+     * */
     private void parseDefData() {
         if (this.match(Tag.ID, false)) {
-            this.parseVarArrayDef();
+            this.parseVarOrArrayInit();
         }
         if (this.match(Tag.MUL)) {
             this.matchFailException(Tag.ID, false, "parse <defdata> error, expected the token ID, but it's " + this.lookToken.getLiteral());
@@ -92,8 +129,24 @@ public class SyntaxParserImpl implements SyntaxParser {
         throw new SyntaxParsingException(this.prepareMessage("parse <defdata> error, expected the token MUL or ID, but it's " + this.lookToken.getLiteral()));
     }
 
-    // <varrdef> ->	LEFT_BRACKET NUM  RIGHT_BRACKET |  <init>
-    private void parseVarArrayDef() {
+    /**
+     *  解析数组或变量初始化
+     *  <var_or_array_init> -> LEFT_BRACKET NUM  RIGHT_BRACKET |  <init>
+     *
+     *  数组解析
+     *  array.elementType = parent.type
+     *  array.size = getNum()
+     *  var_or_array_init.code = array.code
+     *
+     *  初始化解析
+     *  init.id = parent.id
+     *  init.type = parent.type
+     *  init.ispointer = parent.isporinter
+     *  var_or_array_init.code = init.code
+     *
+     *  return var_or_array_init.code
+     * */
+    private void parseVarOrArrayInit(){
         if (this.match(Tag.LEFT_BRACKET)) {
             this.matchFailException(Tag.NUMBER, false, "parse <varrdef> error. expected the NUMBER.");
 
@@ -102,6 +155,36 @@ public class SyntaxParserImpl implements SyntaxParser {
 
         } else {
             this.parseInit();
+        }
+    }
+
+    /**
+     *  解析普通变量和函数声明或定义
+     *  <idTail> ->	<var_or_array_init> <deflist> | LEFT_PARENTHESE <para> RIGHT_PARENTHESE <funtail>
+     *
+     *  普通变量解析
+     *  var_or_array_init.id = parent.id
+     *  var_or_array_init.type = parent.type
+     *  deflist.type = parent.type
+     *  idtail.code = var_or_array_init.code + deflist.code
+     *
+     *  函数解析
+     *  funtail.parameters = para.parameters
+     *  funtail.returntype = parent.type
+     *  idtail.code = funtail.code
+     * */
+    private void parseIdTail() {
+        if (this.match(Tag.LEFT_PARENTHESE)) {
+
+        } else {
+
+        }
+    }
+
+    // <init> -> ASSIGN <expr> | EMPTY
+    private void parseInit() {
+        if (this.match(Tag.ASSIGN)) {
+            this.parseExpr();
         }
     }
 

@@ -11,7 +11,7 @@
 
 ### 程序由变量定义，变量声明，函数定义，函数声明组成
 
-<segment>			->	EXTERN  <type> <def> | <type> <def>
+<segment>			->	 <type> <defcontent> 
 
 ### 基本类型
 
@@ -21,7 +21,7 @@
 
 //  *p=null, a=100, a[10] = 1    |  a = 100
 
-<def>				->	MUL ID <init> <deflist>  | ID  <idtail>
+<defcontent>	->	MUL ID <init> <deflist>  | ID  <idtail>
 
 ### 初始化值 或 空  如 = 表达式求值
 <init>				->	ASSIGN <expr> |  _EMPTY
@@ -29,19 +29,19 @@
 ### 多变量定义  
  <deflist>			->	COMMA <defdata> <deflist> | SEMICOLON    
 
-// *p=null,a=100,a[10] = 1 指针，变量，数组定义序列
+// *p=null,a=100,a[10]  指针，变量，数组定义序列
 
-<defdata>			->	ID <varrdef> | MUL ID  <init> 
+<defdata>			->	ID <var_or_array_init> | MUL ID  <init> 
 
 ### 基本定义语法
 
 //a=100,a[10]=1 变量 数组 初始化
 
-<varrdef>			->	LEFT_BRACKET NUM  RIGHT_BRACKET |  <init>
+<var_or_array_init>			->	LEFT_BRACKET NUM  RIGHT_BRACKET |  <init>
 
 //a a[10] 变量和数组定义，其他（函数声明和函数定义）
 
-<idtail>			->	<varrdef><deflist> | LEFT_PARENTHESE <para> RIGHT_PARENTHESE <funtail>
+<idtail>			->	<var_or_array_init> <deflist> | LEFT_PARENTHESE <para> RIGHT_PARENTHESE <funtail>
 
 ### 函数声明或定义语法
 
