@@ -49,9 +49,9 @@
 
 <para>				->	<type> <paradata> <paralist> | _EMPTY
 
-<paradata>		->	MUL ID  |  ID  <paradatatail>
+<paradata>		->	MUL ID  |  ID  <paraarray>
 
-<paradatatail>->	LEFT_BRACKET   NUMBER   RIGHT_BRACKET  |  _EMPTY
+<paraarray>->	LEFT_BRACKET   NUMBER   RIGHT_BRACKET  |  _EMPTY
 
 <paralist>		->	COMMA  <type>  <paradata>  <paralist> |  _EMPTY
 

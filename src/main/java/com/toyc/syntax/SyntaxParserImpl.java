@@ -189,12 +189,32 @@ public class SyntaxParserImpl implements SyntaxParser {
      * paradata.type = type.type
      * parameters.add(paradata.parameter)
      * parameters.add(paralist.parameters)
-     *
+     * <p>
      * return parameters
      */
     private void parseParameter() {
-        parseType();
+        this.parseType();
+        this.parseParameterData();
+        this.parseParameterList();
+    }
 
+    /**
+     * 解析单个参数内容
+     * <paradata>  ->	MUL ID  |  ID  <paraarray>
+     * <p>
+     * 普通参数解析
+     * parameter.id = get_id()
+     * parameter.isPointer = is_pointer()
+     * <p>
+     * 数组参数解析
+     * parameter.arrayName = get_id()
+     * parameter.isArray = true
+     * parameter.arraySize = paraarray.size()
+     * <p>
+     * return parameter
+     */
+    private void parseParameterData() {
+        this.parseParameterArraySize();
     }
 
     // <init> -> ASSIGN <expr> | EMPTY
@@ -204,19 +224,29 @@ public class SyntaxParserImpl implements SyntaxParser {
         }
     }
 
-
-    // <paradata>		->	MUL ID  |  ID  <paradatatail>
-    private void parseParameterData() {
+    /**
+     * 解析数组参数大小
+     * <paraarray>  ->	LEFT_BRACKET   NUMBER   RIGHT_BRACKET  |  ∈
+     * <p>
+     * return get_array_size()
+     */
+    private void parseParameterArraySize() {
 
     }
 
-    // <paradatatail>  ->	LEFT_BRACKET   NUMBER   RIGHT_BRACKET  |  _EMPTY
-    private void parseParameterDataTail() {
-
-    }
-
-    // <paralist> ->	COMMA  <type>  <paradata>  <paralist> |  _EMPTY
-    private void paraList() {
+    /**
+     * 解析首个声明或定义变量后的参数列表
+     * <paralist> -> COMMA <type> <paradata> <paralist> |  ∈
+     * <p>
+     * <p>
+     * var.type = type.type
+     * var.id =   paradata.id
+     * var.ispointer = paradata.ispointer
+     * var.isarray = paradata.isarray
+     * parent.varlist.add(var)
+     * return parent.varlist
+     */
+    private void parseParameterList() {
 
     }
 
