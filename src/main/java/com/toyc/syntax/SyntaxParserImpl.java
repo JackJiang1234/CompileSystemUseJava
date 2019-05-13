@@ -250,15 +250,40 @@ public class SyntaxParserImpl implements SyntaxParser {
 
     }
 
-    // <funtail>  -> <block> | SEMICOLON
+    /**
+     * 解析函数定义或确定是否声明
+     * <funtail>  -> <block> | SEMICOLON
+     * <p>
+     * 解析是否声明
+     * function.is_declare = get_is_delcare()
+     * <p>
+     * 解析函数方法体
+     * block.returntype = parent.type
+     * block.paraemters = parent.parameters
+     * function.bodycode = block.code;
+     * <p>
+     * return function;
+     */
+
     private void parseFunTail() {
+        this.parseBlock();
+    }
+
+    /**
+     * 解析函数语句块入口
+     * <block>	-> LEFT_BRACE <sequence> RIGHT_BRACE
+     * sequence.returntype = parent.type
+     * sequence.paraemters = parent.parameters
+     * return sequence.code
+     */
+    private void parseBlock() {
 
     }
 
-    // <block>	->	LEFT_BRACE <subprogram> RIGHT_BRACE
-    private void block() {
-
-    }
+    /**
+     * 解析函数语句块
+     * <sequence>	->	<localdef> <sequence> | <statement> <sequence>  | ∈
+     */
 
     // <expr> ->  <assexpr>
     private void parseExpr() {

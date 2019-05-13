@@ -61,11 +61,11 @@
 
 // 语句块 
 
-<block>				->	LEFT_BRACE <subprogram> RIGHT_BRACE
+<block>				->	LEFT_BRACE <sequence> RIGHT_BRACE
 
 ### 程序
 
-<subprogram>	->	<localdef> <subprogram> | <statement> <subprogram>  | _EMPTY
+<sequence>	->	<localdef> <sequence> | <statement> <sequence>  | _EMPTY
 
 #### 局部变量定义
 
