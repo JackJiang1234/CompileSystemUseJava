@@ -277,13 +277,78 @@ public class SyntaxParserImpl implements SyntaxParser {
      * return sequence.code
      */
     private void parseBlock() {
-
+        this.parseSequence();
     }
 
     /**
      * 解析函数语句块
      * <sequence>	->	<localdef> <sequence> | <statement> <sequence>  | ∈
+     * <p>
+     * 解析局部变量定义
+     * sequence.code = localdef.code
+     * <p>
+     * 解析语句块
+     * statment.type = localdef.type
+     * statment.id = localdef.id
+     * sequence.code = statement.code
+     * <p>
+     * return sequence.code
      */
+    private void parseSequence() {
+        this.parseLocalDef();
+    }
+
+    /**
+     * 解析局部变量定义
+     * <localdef>  ->  <type> <defdata> <deflist>
+     * <p>
+     * localdef.code = new list()
+     * defdata.type = type.type
+     * localdef.code.add(defdata.code)
+     * <p>
+     * deflist.type = type.type
+     * localdef.code.add(deflist.code)
+     * <p>
+     * return localdef.code
+     */
+    private void parseLocalDef() {
+
+    }
+
+    /**
+     * 解析语句
+     * <statement>  -> <altexpr> SEMICOLON | <whilestat>| <forstat> | <dowhilestat> | <ifstat> | <switchstat> | BREAK SEMICOLON | CONTINE SEMICOLON | RETURN <altexpr> SEMICOLON
+     *
+     *  赋值或空语句 <altexpr> SEMICOLON
+     *  statement.type = parent.type
+     *  statement.id = parent.id
+     *  statement.code = altexpr.code
+     *
+     *  while语句 <whilestat>
+     *
+     *
+     *  return statement
+     *
+     */
+    private void parseStatment() {
+        this.parseAlternativeExpr();
+        this.parseWhile();
+    }
+
+    /**
+     * 解析while语句
+     * <whilestat> ->  WHILE  LEFT_PARENTHESE  <altexpr> RIGHT_PARENTHESE <block>
+     *
+     *
+     * */
+    private void parseWhile(){
+
+    }
+
+
+    private void parseAlternativeExpr(){
+
+    }
 
     // <expr> ->  <assexpr>
     private void parseExpr() {
