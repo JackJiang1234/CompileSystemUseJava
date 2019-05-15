@@ -2,12 +2,12 @@
 
 ### 约定
 
-终结符用大写字母，_EMPTY表示空
+终结符用大写字母，∈表示空
 
  非终结符用<小写>
 
 ### TOYC程序文法
-<program>			->	<segment> <program> |  _EMPTY
+<program>			->	<segment> <program> |  ∈
 
 ### 程序由变量定义，变量声明，函数定义，函数声明组成
 
@@ -24,7 +24,7 @@
 <defcontent>	->	MUL ID <init> <deflist>  | ID  <idtail>
 
 ### 初始化值 或 空  如 = 表达式求值
-<init>				->	ASSIGN <expr> |  _EMPTY
+<init>				->	ASSIGN <expr> |  ∈
 
 ### 多变量定义  
  <deflist>			->	COMMA <defdata> <deflist> | SEMICOLON    
@@ -47,13 +47,13 @@
 
 //函数参数列表
 
-<para>				->	<type> <paradata> <paralist> | _EMPTY
+<para>				->	<type> <paradata> <paralist> | ∈
 
 <paradata>		->	MUL ID  |  ID  <paraarray>
 
-<paraarray>->	LEFT_BRACKET   NUMBER   RIGHT_BRACKET  |  _EMPTY
+<paraarray>->	LEFT_BRACKET   NUMBER   RIGHT_BRACKET  |  ∈
 
-<paralist>		->	COMMA  <type>  <paradata>  <paralist> |  _EMPTY
+<paralist>		->	COMMA  <type>  <paradata>  <paralist> |  ∈
 
 // 函数声明和函数定义
 
@@ -65,7 +65,7 @@
 
 ### 程序
 
-<sequence>	->	<localdef> <sequence> | <statement> <sequence>  | _EMPTY
+<sequence>	->	<localdef> <sequence> | <statement> <sequence>  | ∈
 
 #### 局部变量定义
 
@@ -117,42 +117,42 @@
 
 // if(a>b){}	if(a>b){}else{}
 <ifstat>			->  IF LEFT_PARENTHESE  <expr> RIGHT_PARENTHESE  <block> <elsestat>
-<elsestat>		-> 	ELSE <block> | _EMPTY
+<elsestat>		-> 	ELSE <block> | ∈
 
 // switch(a+b){case 1: case 'a': default:}
 <switchstat>	-> 	SWITCH  LEFT_PARENTHESE  <expr> RIGHT_PARENTHESE  LEFT_BRACE <casestat> RIGHT_BRACE
-<casestat> 		->     CASE <caselabel> COLON <subprogram><casestat> | DEFAULT COLON <subprogram>
+<casestat> 		->     CASE <caselabel> COLON <subprogram><casestat> | DEFAULT COLON 
 <caselabel>		->   <literal>
 
 #### // 表达式语法
 
 // 表达式支持运算：= || && > < >= <= == != + - * / % ! - & * [] ()
-<altexpr>	->   <expr> |  _EMPTY
+<altexpr>	->   <expr> |  ∈
 <expr> 	     ->    <assexpr>
 <assexpr>	->   <orexpr> <asstail>
-<asstail>	->   ASSIGN <assexpr>| _EMPTY
+<asstail>	->   ASSIGN <assexpr>| ∈
 
 // a || b
 <orexpr> 	 ->  <andexpr> <ortail>
-<ortail> 	 ->  OR <andexpr> <ortail> | _EMPTY
+<ortail> 	 ->  OR <andexpr> <ortail> | ∈
 
 // a && b
 <andexpr>       ->   <cmpexpr> <andtail>
-<andtail>       ->  AND  <cmpexpr> <andtail> | _EMPTY
+<andtail>       ->  AND  <cmpexpr> <andtail> | ∈
 
 //a>b a>=b a<b a<=b a==b a!=b
 <cmpexpr>       ->  <aloexpr><cmptail>
-<cmptail>       ->  <cmps> <aloexpr> <cmptail> | _EMPTY
+<cmptail>       ->  <cmps> <aloexpr> <cmptail> | ∈
 <cmps>	     ->  GT |  GTE |  LT |  LTE | EQU | NOT_EQU
 
 // a+b a-b
 <aloexpr>     ->  <item> <alotail>
-<alotail>     ->   <adds> <item> <alotail> | _EMPTY
+<alotail>     ->   <adds> <item> <alotail> | ∈
 <adds>	   ->    PLUS | MINUS
 
 // a*b a/b a%b
 <item>	       ->   <factor> <itemtail>
-<itemtail>       ->    <muls> <factor> <itemtail> | _EMPTY
+<itemtail>       ->    <muls> <factor> <itemtail> | ∈
 <muls>	      ->    MUL | DIV | MOD
 
 // !a -a &a *a ++a --a
@@ -170,9 +170,9 @@
 <literal>  -> NUMBER | STRING | CHARACTER
 
 // a a[i] a(i)
-<idexpr>  ->  LEFT_BRACKET <expr> RIGHT_BRACKET  | LEFT_PARENTHESE  <realarg> RIGHT_PARENTHESE  | _EMPTY
+<idexpr>  ->  LEFT_BRACKET <expr> RIGHT_BRACKET  | LEFT_PARENTHESE  <realarg> RIGHT_PARENTHESE  | ∈
 
 // fun(i=1,a[i],"123")
-<realarg>	->   <arg> <arglist> |  _EMPTY
-<arglist>	->  COMMA <arg> <arglist> | _EMPTY
+<realarg>	->   <arg> <arglist> |  ∈
+<arglist>	->  COMMA <arg> <arglist> | ∈
 <arg> 		->  <expr>

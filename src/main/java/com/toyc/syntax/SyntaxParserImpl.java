@@ -318,54 +318,250 @@ public class SyntaxParserImpl implements SyntaxParser {
     /**
      * 解析语句
      * <statement>  -> <altexpr> SEMICOLON | <whilestat>| <forstat> | <dowhilestat> | <ifstat> | <switchstat> | BREAK SEMICOLON | CONTINE SEMICOLON | RETURN <altexpr> SEMICOLON
-     *
-     *  赋值或空语句 <altexpr> SEMICOLON
-     *  statement.type = parent.type
-     *  statement.id = parent.id
-     *  statement.code = altexpr.code
-     *
-     *  while语句 <whilestat>
-     *
-     *
-     *  return statement
-     *
+     * <p>
+     * 赋值或空语句 <altexpr> SEMICOLON
+     * statement.type = parent.type
+     * statement.id = parent.id
+     * statement.code = altexpr.code
+     * <p>
+     * while语句 <whilestat>
+     * statement.code = whilestat.code
+     * <p>
+     * for语句 <forstat>
+     * statement.code = forstat.code
+     * <p>
+     * dowhile语句 <dowhilestat>
+     * statement.code = dowhilestat.code
+     * <p>
+     * if语句 <ifstat>
+     * statement.code = if.code
+     * <p>
+     * switch语句 <switchstat>
+     * statement.code = switchstat.code
+     * <p>
+     * break语句 BREAK SEMICOLON
+     * statement.code = break.code
+     * <p>
+     * contine语句 CONTINE SEMICOLON
+     * statement.code = continue.code
+     * <p>
+     * return 语句 RETURN <altexpr> SEMICOLON
+     * statement.code = return.code
+     * <p>
+     * return statement.code
      */
     private void parseStatment() {
-        this.parseAlternativeExpr();
+        this.parseAltExpr();
         this.parseWhile();
+        this.parseFor();
+        this.parseDoWhile();
+        this.parseIf();
+        this.parseSwitch();
     }
 
     /**
      * 解析while语句
      * <whilestat> ->  WHILE  LEFT_PARENTHESE  <altexpr> RIGHT_PARENTHESE <block>
-     *
+     * whilestat.code = new list;
+     * whilestat.code.add(altexpr.code)
+     * whilestat.code.add(block.code);
+     * <p>
+     * return whilestat.code
+     */
+    private void parseWhile() {
+
+    }
+
+    /**
+     * 解析for语句
+     * <forstat> -> FOR LEFT_PARENTHESE  <forinit> SEMICOLON <altexpr> SEMICOLON <altexpr> RIGHT_PARENTHESE <block>
+     */
+    private void parseFor() {
+
+    }
+
+    /**
+     * 解析for初始化
+     * <forinit>  ->  <localdef> | <altexpr>
+     */
+    private void parseForInit() {
+
+    }
+
+    /**
+     * 解析do while语句
+     * <dowhilestat> -> DO <block> WHILE LEFT_PARENTHESE  <altexpr> RIGHT_PARENTHESE
+     */
+    private void parseDoWhile() {
+
+    }
+
+    /**
+     * 解析if
+     * <ifstat>	 ->  IF LEFT_PARENTHESE  <expr> RIGHT_PARENTHESE  <block> <elsestat>
+     */
+    private void parseIf() {
+        this.parseElse();
+    }
+
+    /**
+     * 解析else
+     * <elsestat>		-> 	ELSE <block> | ∈
+     */
+    private void parseElse() {
+
+    }
+
+    /**
+     * 解析switch
+     * <switchstat>	-> 	SWITCH  LEFT_PARENTHESE  <expr> RIGHT_PARENTHESE  LEFT_BRACE <casestat>
+     */
+    private void parseSwitch() {
+
+    }
+
+    /**
+     * 解析case
+     * <casestat> ->  CASE <caselabel> COLON <subprogram><casestat> | DEFAULT COLON
+     */
+    private void parseCase() {
+        this.parseLiteral();
+    }
+
+
+    /**
+     * 解析可为空表达式
+     * <altexpr>  ->  <expr> |  ∈
+     * <p>
+     * expr.type = parent.type
+     * expr.id = parent.id
+     * return expr.code
+     */
+    private void parseAltExpr() {
+        this.parseExpr();
+    }
+
+    /**
+     * 解析表达式
+     * <expr> -> <assexpr>
+     */
+    private void parseExpr() {
+        this.parseAssignExpr();
+    }
+
+    /**
+     * 解析赋值表达式, 赋值表达式优化级最低
+     * <assexpr>  -> <orexpr> <asstail>
+     */
+    private void parseAssignExpr() {
+        this.parseAssignTail();
+    }
+
+    /**
+     * 解析赋值右值
+     * <asstail>  ->   ASSIGN <assexpr>| ∈
+     */
+    private void parseAssignTail() {
+        this.parseOrExpr();
+    }
+
+    /**
+     * 解析Or表达式
+     * <orexpr>  ->  <andexpr> <ortail>
+     * */
+    private void parseOrExpr() {
+        this.parseAndExpr();
+    }
+
+    /**
+     * 解析Or表达式右部
+     * <ortail>  ->  OR <andexpr> <ortail> | ∈
+     * */
+    private void parseOrTail(){
+
+    }
+
+    /**
+     * 解析And表达式
+     * <andexpr>  ->   <cmpexpr> <andtail>
+     * */
+    private void parseAndExpr(){
+        this.parseAndTail();
+    }
+
+    /**
+     * 解析And表达式右部
+     * <andtail>       ->  AND  <cmpexpr> <andtail> | ∈
+     * */
+    private void parseAndTail(){
+        this.parseCompareExpr();
+    }
+
+    /**
+     * 解析关系表达式
+     * <cmpexpr>  ->  <aloexpr><cmptail>
+     * */
+    private void parseCompareExpr(){
+        this.parseCompareTail();
+    }
+
+    /**
+     * 解析关系表达式右部
+     * <cmptail>  ->  <cmps> <aloexpr> <cmptail> | ∈
+     * */
+    private void parseCompareTail(){
+        this.parseComparetor();
+        this.parseArithmeticExpr();
+    }
+
+    /**
+     *  解析关系运算符
+     * <cmps>->  GT |  GTE |  LT |  LTE | EQU | NOT_EQU
      *
      * */
-    private void parseWhile(){
+    private void parseComparetor(){
 
     }
 
+    /**
+     *  解析算术运算表达式
+     * <aloexpr>  ->  <item> <alotail>
+     *
+     * */
+    private void parseArithmeticExpr(){
+        this.parseArithmeticExprTail();
+    }
 
-    private void parseAlternativeExpr(){
+    /**
+     *  解析算术运算表达式右部
+     *  <alotail>  ->  <adds> <item> <alotail> | ∈
+     * */
+    private void parseArithmeticExprTail(){
 
     }
 
-    // <expr> ->  <assexpr>
-    private void parseExpr() {
+    /**
+     * 解析加或减运算符
+     * <adds>  ->  PLUS | MINUS
+     * */
+    private void parseAdd(){
 
     }
 
-    // <assexpr> ->  <orexpr> <asstail>
-    private void assignExpr() {
+    /**
+     *  解析算述运算项
+     * <item>  ->  <factor> <itemtail>
+     * 
+     * */
+    private void parseItem(){
 
     }
 
-    private void assignTail() {
-
-    }
-
-    // <orexpr> ->  <andexpr> <ortail>
-    private void orExpr() {
+    /**
+     * 解析字面量
+     * <literal>  -> NUMBER | STRING | CHARACTER
+     */
+    private void parseLiteral() {
 
     }
 
