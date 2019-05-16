@@ -468,7 +468,7 @@ public class SyntaxParserImpl implements SyntaxParser {
     /**
      * 解析Or表达式
      * <orexpr>  ->  <andexpr> <ortail>
-     * */
+     */
     private void parseOrExpr() {
         this.parseAndExpr();
     }
@@ -476,85 +476,133 @@ public class SyntaxParserImpl implements SyntaxParser {
     /**
      * 解析Or表达式右部
      * <ortail>  ->  OR <andexpr> <ortail> | ∈
-     * */
-    private void parseOrTail(){
+     */
+    private void parseOrTail() {
 
     }
 
     /**
      * 解析And表达式
      * <andexpr>  ->   <cmpexpr> <andtail>
-     * */
-    private void parseAndExpr(){
+     */
+    private void parseAndExpr() {
         this.parseAndTail();
     }
 
     /**
      * 解析And表达式右部
      * <andtail>       ->  AND  <cmpexpr> <andtail> | ∈
-     * */
-    private void parseAndTail(){
+     */
+    private void parseAndTail() {
         this.parseCompareExpr();
     }
 
     /**
      * 解析关系表达式
      * <cmpexpr>  ->  <aloexpr><cmptail>
-     * */
-    private void parseCompareExpr(){
+     */
+    private void parseCompareExpr() {
         this.parseCompareTail();
     }
 
     /**
      * 解析关系表达式右部
      * <cmptail>  ->  <cmps> <aloexpr> <cmptail> | ∈
-     * */
-    private void parseCompareTail(){
+     */
+    private void parseCompareTail() {
         this.parseComparetor();
         this.parseArithmeticExpr();
     }
 
     /**
-     *  解析关系运算符
+     * 解析关系运算符
      * <cmps>->  GT |  GTE |  LT |  LTE | EQU | NOT_EQU
-     *
-     * */
-    private void parseComparetor(){
+     */
+    private void parseComparetor() {
 
     }
 
     /**
-     *  解析算术运算表达式
+     * 解析算术运算表达式
      * <aloexpr>  ->  <item> <alotail>
-     *
-     * */
-    private void parseArithmeticExpr(){
+     */
+    private void parseArithmeticExpr() {
         this.parseArithmeticExprTail();
     }
 
     /**
-     *  解析算术运算表达式右部
-     *  <alotail>  ->  <adds> <item> <alotail> | ∈
-     * */
-    private void parseArithmeticExprTail(){
-
+     * 解析算术运算表达式右部
+     * <alotail>  ->  <adds> <item> <alotail> | ∈
+     */
+    private void parseArithmeticExprTail() {
+        this.parseAdd();
     }
 
     /**
      * 解析加或减运算符
      * <adds>  ->  PLUS | MINUS
-     * */
-    private void parseAdd(){
+     */
+    private void parseAdd() {
+        this.parseItem();
+    }
+
+    /**
+     * 解析算术运算项
+     * <item>  ->  <factor> <itemtail>
+     */
+    private void parseItem() {
+        this.parseFactor();
+        this.parseItemTail();
+    }
+
+    /**
+     * 解析算术运算项右部
+     * <itemtail>   ->  <muls> <factor> <itemtail> | ∈
+     */
+    private void parseItemTail() {
+        this.parseMuls();
+        this.parseFactor();
+    }
+
+    /**
+     * 解析项因子
+     * <factor>  ->  <lop> <factor>  | <val>
+     */
+    private void parseFactor() {
+        this.parseUnary();
+        this.parseVal();
+    }
+
+    /**
+     * 解析乘，除，取模运算符
+     * <muls>  ->  MUL | DIV | MOD
+     */
+    private void parseMuls() {
 
     }
 
     /**
-     *  解析算述运算项
-     * <item>  ->  <factor> <itemtail>
-     * 
-     * */
-    private void parseItem(){
+     * 解析单目运算符
+     * <lop> ->  NOT | MINUS | LEA | MUL | INCR | DECR
+     */
+    private void parseUnary() {
 
+    }
+
+    /**
+     * 解析表达式运算项"值"
+     * <val>  ->  <elem> <rop>
+     */
+    private void parseVal() {
+        this.parseElement();
+    }
+
+    /**
+     * 解析表达式某个运算项的元素
+     * <elem>	->  ID <idexpr> | LEFT_PARENTHESE  <expr> RIGHT_PARENTHESE  |  <literal>
+     */
+    private void parseElement() {
+        this.parseIdExpr();
     }
 
     /**
@@ -565,6 +613,41 @@ public class SyntaxParserImpl implements SyntaxParser {
 
     }
 
+    /**
+     * 解析数组元素表达式或函数调用
+     * <idexpr>  ->  LEFT_BRACKET <expr> RIGHT_BRACKET  | LEFT_PARENTHESE  <realarg> RIGHT_PARENTHESE  | ∈
+     */
+    private void parseIdExpr() {
+
+    }
+
+    /**
+     * 解析函数调用参数列表
+     * <realarg>	->   <arg> <arglist> |  ∈
+     */
+    private void parseRealArgs() {
+
+    }
+
+    /**
+     * 解析除首参外其它参数
+     * <arglist>	->  COMMA <arg> <arglist> | ∈
+     */
+    private void parseArgList() {
+
+    }
+
+    /**
+     * 解析单个函数参数
+     * <arg>  ->  <expr>
+     */
+    private void parseArg() {
+
+    }
+
+    /**
+     * 查看下一个token
+     */
     private void moveNext() {
         this.lookToken = this.lexer.next();
     }
