@@ -1,5 +1,7 @@
 package com.toyc.semantic;
 
+import com.toyc.inter.Instruction;
+
 /**
  * @Description 表示语义结点基类
  * @Author jianyong.jiang
@@ -9,18 +11,17 @@ package com.toyc.semantic;
 public abstract class AbstractRuleNode {
 
     /**
-     * 　* @description: 生成新label
+     *  生成新label
      *
      */
     public int newLabel() {
         return ++labelCount;
     }
 
-    public void emitLable(int i) {
-
-    }
-
-    public void emit(String s) {
+    /**
+     * 输出指令
+     * */
+    protected final void emit(Instruction instruction) {
 
     }
 
