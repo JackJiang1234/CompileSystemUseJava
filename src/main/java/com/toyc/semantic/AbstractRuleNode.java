@@ -1,6 +1,6 @@
 package com.toyc.semantic;
 
-import com.toyc.inter.Instruction;
+import com.toyc.inter.InterInstruction;
 
 /**
  * @Description 表示语义结点基类
@@ -21,7 +21,7 @@ public abstract class AbstractRuleNode {
     /**
      * 输出指令
      * */
-    protected final void emit(Instruction instruction) {
+    protected final void emit(InterInstruction instruction) {
 
     }
 
