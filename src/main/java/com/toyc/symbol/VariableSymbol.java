@@ -16,14 +16,6 @@ public class VariableSymbol extends AbstractSymbol {
         return type;
     }
 
-    public boolean isExtern() {
-        return isExtern;
-    }
-
-    public void setExtern(boolean extern) {
-        isExtern = extern;
-    }
-
     public Object getInitData() {
         return initData;
     }
@@ -41,6 +33,5 @@ public class VariableSymbol extends AbstractSymbol {
     }
 
     private Type type;
-    private boolean isExtern;
     private Object initData;
 }

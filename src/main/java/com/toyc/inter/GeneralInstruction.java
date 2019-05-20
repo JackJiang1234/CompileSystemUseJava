@@ -22,12 +22,12 @@ public class GeneralInstruction extends BaseInterInstruction {
      */
     @Override
     public void render(PrintStream out) {
-
+        out.format(this.getOp().getInstructionFormat(), this.result, this.arg1, this.arg2);
     }
 
     @Override
     public void visit(InterInstructionVisitor visitor) {
-
+        visitor.visit(this);
     }
 
     public VariableSymbol getResult() {

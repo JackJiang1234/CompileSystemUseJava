@@ -5,4 +5,6 @@ package com.toyc.inter;
  * */
 public interface InterInstructionVisitor {
     void visit(LabelInterInstruction label);
+
+    void visit(GeneralInstruction generalInstruction);
 }
