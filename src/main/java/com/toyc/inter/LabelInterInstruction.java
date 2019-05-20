@@ -7,7 +7,7 @@ import java.io.PrintStream;
  */
 public class LabelInterInstruction extends BaseInterInstruction {
     LabelInterInstruction(int label) {
-        super(Op.NOP);
+        super(Op.LABEL);
         this.label = label;
     }
 
