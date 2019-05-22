@@ -18,11 +18,22 @@ public class JustArg1Arg2InterInstruction extends BaseInterInstruction{
 
     @Override
     public void render(PrintStream out) {
-
+        out.format(this.getOp().getInstructionFormat(), this.arg1.getName(), this.arg2.getName()).println();
     }
 
     @Override
     public void visit(InterInstructionVisitor visitor) {
-
+        visitor.visit(this);
     }
+
+    public VariableSymbol getArg1() {
+        return arg1;
+    }
+
+    public VariableSymbol getArg2() {
+        return arg2;
+    }
+
+    private VariableSymbol arg1;
+    private VariableSymbol arg2;
 }

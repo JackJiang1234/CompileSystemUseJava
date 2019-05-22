@@ -13,4 +13,6 @@ public interface InterInstructionVisitor {
     void visit(JustArg1InterInstruction justArg1InterInstruction);
 
     void visit(JustArg1ResultInterInstruction justArg1ResultInterInstruction);
+
+    void visit(JustArg1Arg2InterInstruction justArg1Arg2InterInstruction);
 }
