@@ -47,9 +47,9 @@ public enum Op {
     //函数调用
     ARG("arg %s"),//参数传递 eg: ARG arg1 => 传递参数arg1
     PROC("%s()"),//调用过程 eg: PROC fun => 函数调用,arg1()
-    CALL("%s = %s()"),//调用函数 eg: CALL result,fun => 调用fun函数,返回值result=fun()
+    CALL("%s = %s()"),//调用函数 eg: CALL result,fun => result=fun()
     RET("return goto %s"),//直接返回 eg: RET => return
-    RETV("return %s goto %s");//带数据返回 eg:RET arg1 => return arg1
+    RETV("return %s goto %s");//带数据返回 eg:RET arg1 => return arg1 goto args2
 
     Op(String instructionFormat){
         this.instructionFormat = instructionFormat;

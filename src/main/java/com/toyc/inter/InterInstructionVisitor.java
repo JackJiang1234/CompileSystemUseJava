@@ -7,4 +7,10 @@ public interface InterInstructionVisitor {
     void visit(LabelInterInstruction label);
 
     void visit(GeneralInstruction generalInstruction);
+
+    void visit(JustOpInterInstruction justOpInterInstruction);
+
+    void visit(JustArg1InterInstruction justArg1InterInstruction);
+
+    void visit(JustArg1ResultInterInstruction justArg1ResultInterInstruction);
 }

@@ -4,7 +4,7 @@ package com.toyc.inter;
  * 表示中间指令工厂
  */
 public class InterInstructionFactory {
-    public LabelInterInstruction createLabel() {
+    public InterInstruction createLabel() {
         return new LabelInterInstruction(labCount++);
     }
 
