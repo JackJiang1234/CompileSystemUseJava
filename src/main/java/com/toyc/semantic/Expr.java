@@ -32,8 +32,8 @@ public abstract class Expr extends AbstractRuleNode{
     /**
      * 根据true或false label生成跳转指令
      * */
-    public void jumping(int trueLable, int falseLable){
-
+    public void jumping(int tLabel, int fLabel){
+        //emitJumms();
     }
 
     /**
