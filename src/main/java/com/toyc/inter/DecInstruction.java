@@ -1,16 +1,16 @@
 package com.toyc.inter;
 
-import com.toyc.semantic.Method;
 import com.toyc.symbol.VariableSymbol;
 
 import java.io.PrintStream;
 
 /**
- * 表示方法相关指令，如call
+ * 表示声明指令
  * */
-public class MethodInterInstruction extends BaseInterInstruction {
-    public MethodInterInstruction(Op op, Method m, VariableSymbol rs) {
-        super(op);
+public class DecInstruction extends BaseInterInstruction {
+    public DecInstruction(VariableSymbol var) {
+        super(Op.DEC);
+        this.var = var;
     }
 
     /**
@@ -20,11 +20,13 @@ public class MethodInterInstruction extends BaseInterInstruction {
      */
     @Override
     public void render(PrintStream out) {
-
+        out.format(this.getOp().getRenderFormat(), this.var.getName()).println();
     }
 
     @Override
     public void visit(InterInstructionVisitor visitor) {
-
+        visitor.visit(this);
     }
+
+    private VariableSymbol var;
 }

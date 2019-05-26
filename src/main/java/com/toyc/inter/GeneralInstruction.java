@@ -2,32 +2,9 @@ package com.toyc.inter;
 
 import com.toyc.symbol.VariableSymbol;
 
-import java.io.PrintStream;
-
-/**
- * 一般 四元式指令 result = arg1 op arg2
- */
-public class GeneralInstruction extends BaseInterInstruction {
+public abstract class GeneralInstruction extends Quadruple {
     public GeneralInstruction(Op op, VariableSymbol result, VariableSymbol arg1, VariableSymbol arg2) {
-        super(op);
-        this.result = result;
-        this.arg1 = arg1;
-        this.arg2 = arg2;
-    }
-
-    /**
-     * 打印中间指令
-     *
-     * @param out
-     */
-    @Override
-    public void render(PrintStream out) {
-        out.format(this.getOp().getInstructionFormat(), this.result, this.arg1, this.arg2);
-    }
-
-    @Override
-    public void visit(InterInstructionVisitor visitor) {
-        visitor.visit(this);
+        super(op, result.getName(), arg1.getName(), arg2.getName());
     }
 
     public VariableSymbol getResult() {

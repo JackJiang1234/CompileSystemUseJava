@@ -22,7 +22,7 @@ public enum Op {
     ASSIGN("%s = %s"),
 
     //算数运算
-    ADD("%s = %s + %s"), SUB("%s = %s - %s"), MUL("%s = %s * %s"), DIV("%s = %s / %s"), MOD("%s = %s % %s"),//加减乘除模
+    ADD("%s = %s + %s"), SUB("%s = %s - %s"), MUL("%s = %s * %s"), DIV("%s = %s / %s"), MOD("%s = %s %% %s"),//加减乘除模
     NEG("%s = -%s"), //负 eg: NEG result,arg1 => result = - arg1
 
     //比较运算
@@ -58,7 +58,7 @@ public enum Op {
     /**
      * 表示指令生成格式
      * */
-    public String getInstructionFormat(){
+    public String getRenderFormat(){
         return this.instructionFormat;
     }
 

@@ -5,7 +5,7 @@ package com.toyc.inter;
  */
 public class InterInstructionFactory {
     public InterInstruction createLabel() {
-        return new LabelInterInstruction(labCount++);
+        return new LabelInstruction(labCount++);
     }
 
     public static InterInstructionFactory getInstance() {

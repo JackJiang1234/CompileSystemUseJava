@@ -5,20 +5,15 @@ import java.io.PrintStream;
 /**
  * 表示Label输出
  */
-public class LabelInterInstruction extends BaseInterInstruction {
-    LabelInterInstruction(int label) {
-        super(Op.LABEL);
+public class LabelInstruction extends JustArg1InterInstruction {
+    public LabelInstruction(int label) {
+        super(Op.LABEL, Integer.toString(label));
         this.label = label;
     }
 
-    /**
-     * 打印中间指令
-     *
-     * @param out
-     */
-    @Override
-    public void render(PrintStream out) {
-        out.println(".L" + this.label);
+    LabelInstruction(Op op, int label) {
+        super(op, Integer.toString(label));
+        this.label = label;
     }
 
     @Override

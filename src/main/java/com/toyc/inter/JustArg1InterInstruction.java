@@ -10,24 +10,16 @@ import java.io.PrintStream;
  * @Date 2019/5/22
  * @Version 1.0.0
  */
-public class JustArg1InterInstruction extends BaseInterInstruction{
-    public JustArg1InterInstruction(Op op, VariableSymbol arg1) {
+public abstract class JustArg1InterInstruction extends BaseInterInstruction{
+    public JustArg1InterInstruction(Op op, String arg1) {
         super(op);
+        this.arg1 = arg1;
     }
 
     @Override
     public void render(PrintStream out) {
-        out.format(this.getOp().getInstructionFormat(), this.arg1).println();
+        out.format(this.getOp().getRenderFormat(), this.arg1).println();
     }
 
-    @Override
-    public void visit(InterInstructionVisitor visitor) {
-        visitor.visit(this);
-    }
-
-    public VariableSymbol getArg1() {
-        return arg1;
-    }
-
-    private VariableSymbol arg1;
+    private String arg1;
 }

@@ -8,4 +8,7 @@ package com.toyc.semantic;
  * @Version 1.0.0
  */
 public class Method {
+    public String getName() {
+        return "";
+    }
 }
