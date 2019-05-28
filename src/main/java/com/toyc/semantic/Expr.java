@@ -1,7 +1,8 @@
 package com.toyc.semantic;
 
-import com.toyc.inter.*;
-import com.toyc.lexical.token.Tag;
+import com.toyc.inter.JfInstruction;
+import com.toyc.inter.JmpInstruction;
+import com.toyc.inter.JtInstruction;
 import com.toyc.symbol.Type;
 import com.toyc.symbol.VariableSymbol;
 
@@ -29,6 +30,13 @@ public abstract class Expr extends AbstractRuleNode {
     }
 
     /**
+     * 获取表达式类型
+     * */
+    public Type getType() {
+        return this.arg.getType();
+    }
+
+    /**
      * 根据true或false label生成跳转指令
      */
     public void jumping(int tLabel, int fLabel) {
@@ -42,11 +50,9 @@ public abstract class Expr extends AbstractRuleNode {
         if (tLabel != 0 && fLabel != 0) {
             this.emit(new JtInstruction(test, tLabel));
             this.emit(new JmpInstruction(fLabel));
-        }
-        else if (tLabel != 0){
+        } else if (tLabel != 0) {
             this.emit(new JtInstruction(test, tLabel));
-        }
-        else if (fLabel != 0){
+        } else if (fLabel != 0) {
             this.emit(new JfInstruction(test, fLabel));
         }
     }
