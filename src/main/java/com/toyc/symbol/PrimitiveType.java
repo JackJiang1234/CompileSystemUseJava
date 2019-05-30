@@ -29,6 +29,9 @@ public enum PrimitiveType implements Type {
         return this.size;
     }
 
+    /**
+     * 映射tag为具体类型
+     * */
     public static Type mapTypeByTag(Tag tag) {
         if (tag.equals(Tag.INT)) {
             return PrimitiveType.INT;
@@ -39,6 +42,10 @@ public enum PrimitiveType implements Type {
         } else {
             throw new RuntimeException("error type tag:" + tag);
         }
+    }
+
+    public static boolean numeric(Type p){
+        return (p == INT || p == CHAR );
     }
 
     private String name;

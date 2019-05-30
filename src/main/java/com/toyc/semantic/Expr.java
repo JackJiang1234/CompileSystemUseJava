@@ -3,6 +3,7 @@ package com.toyc.semantic;
 import com.toyc.inter.JfInstruction;
 import com.toyc.inter.JmpInstruction;
 import com.toyc.inter.JtInstruction;
+import com.toyc.lexical.token.Tag;
 import com.toyc.symbol.Type;
 import com.toyc.symbol.VariableSymbol;
 
@@ -11,8 +12,14 @@ import com.toyc.symbol.VariableSymbol;
  */
 public abstract class Expr extends AbstractRuleNode {
 
-    Expr(VariableSymbol arg) {
-        this.arg = arg;
+    /**
+     * 生成表达式
+     * @param op 表示表达式的运算符
+     * @param t 表示表达式类型
+     * */
+    Expr(Tag op, Type t) {
+        this.op = op;
+        this.t = t;
     }
 
     /**
@@ -36,7 +43,7 @@ public abstract class Expr extends AbstractRuleNode {
      * 获取表达式类型
      * */
     public Type getType() {
-        return this.arg.getType();
+        return this.t;
     }
 
     /**
@@ -60,9 +67,6 @@ public abstract class Expr extends AbstractRuleNode {
         }
     }
 
-    public VariableSymbol getArg() {
-        return arg;
-    }
-
-    private VariableSymbol arg;
+    private Type t;
+    private Tag op;
 }
