@@ -1,5 +1,7 @@
 package com.toyc.symbol;
 
+import com.toyc.lexical.token.Tag;
+
 /**
  * @Description 表示基本类型
  * @Author jianyong.jiang
@@ -10,7 +12,6 @@ public enum PrimitiveType implements Type {
     INT("int", 4),
     CHAR("char", 1),
     BOOL("boolean", 1),
-    POINTER("pointer", 4),
     VOID("void", 0);
 
     PrimitiveType(String name, int size) {
@@ -26,6 +27,18 @@ public enum PrimitiveType implements Type {
     @Override
     public int getSize() {
         return this.size;
+    }
+
+    public static Type mapTypeByTag(Tag tag) {
+        if (tag.equals(Tag.INT)) {
+            return PrimitiveType.INT;
+        } else if (tag.equals(Tag.CHAR)) {
+            return PrimitiveType.CHAR;
+        } else if (tag.equals(Tag.VOID)) {
+            return PrimitiveType.VOID;
+        } else {
+            throw new RuntimeException("error type tag:" + tag);
+        }
     }
 
     private String name;

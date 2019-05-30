@@ -3,6 +3,7 @@ package com.toyc.syntax;
 import com.toyc.lexical.Lexer;
 import com.toyc.lexical.token.BaseToken;
 import com.toyc.lexical.token.Tag;
+import com.toyc.symbol.*;
 
 import java.util.function.Supplier;
 
@@ -16,8 +17,9 @@ import java.util.function.Supplier;
 public class SyntaxParserImpl implements SyntaxParser {
 
     public SyntaxParserImpl(Lexer lexer) {
+        this.scope = new GlobalScope();
         this.lexer = lexer;
-        this.moveNext();
+        this.nextToken();
     }
 
     public void parse() {
@@ -45,8 +47,8 @@ public class SyntaxParserImpl implements SyntaxParser {
      * return defcontent.code
      */
     private void parseSegment() {
-        parseType();
-        parseDefContent();
+        Type t = parseType();
+        parseDefContent(t);
     }
 
     /**
@@ -54,8 +56,11 @@ public class SyntaxParserImpl implements SyntaxParser {
      * <type> -> INT ｜ CHAR  |  VOID
      * return type
      */
-    private void parseType() {
+    private Type parseType() {
         this.matchFailException(() -> this.lookToken.isTypeToken(), "expected <type>, but it's " + this.lookToken.getLiteral());
+        Tag tag = this.lookToken.getTag();
+        this.nextToken();
+        return PrimitiveType.mapTypeByTag(tag);
     }
 
     /**
@@ -76,11 +81,14 @@ public class SyntaxParserImpl implements SyntaxParser {
      * <p>
      * return defcontent.code
      */
-    private void parseDefContent() {
+    private void parseDefContent(Type t) {
         if (this.match(Tag.MUL)) {
             this.matchFailException(Tag.ID, false, "parse <def> error, expected the token ID, but it's " + this.lookToken.getLiteral());
+
+            BaseToken token = this.lookToken;
+            VariableSymbol variableSymbol = new VariableSymbol(token.getLiteral(), t, true);
             this.parseInit();
-            this.parseDefList();
+            this.parseDefList() ;
         }
         if (this.match(Tag.ID, false)) {
             this.parseIdTail();
@@ -150,7 +158,7 @@ public class SyntaxParserImpl implements SyntaxParser {
         if (this.match(Tag.LEFT_BRACKET)) {
             this.matchFailException(Tag.NUMBER, false, "parse <varrdef> error. expected the NUMBER.");
 
-            this.moveNext();
+            this.nextToken();
             this.matchFailException(Tag.RIGHT_BRACKET, "parse <varrdef> error. expected the RIGHT_BRACKET.");
 
         } else {
@@ -648,7 +656,7 @@ public class SyntaxParserImpl implements SyntaxParser {
     /**
      * 查看下一个token
      */
-    private void moveNext() {
+    private void nextToken() {
         this.lookToken = this.lexer.next();
     }
 
@@ -659,7 +667,7 @@ public class SyntaxParserImpl implements SyntaxParser {
     private boolean match(Tag tag, boolean matchMoveToNext) {
         boolean isMatched = this.lookToken.match(tag);
         if (isMatched && matchMoveToNext) {
-            this.moveNext();
+            this.nextToken();
         }
         return isMatched;
     }
@@ -684,4 +692,5 @@ public class SyntaxParserImpl implements SyntaxParser {
 
     private Lexer lexer;
     private BaseToken lookToken;
+    private Scope scope;
 }

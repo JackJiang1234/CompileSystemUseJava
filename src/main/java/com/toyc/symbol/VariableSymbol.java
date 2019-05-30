@@ -8,8 +8,13 @@ package com.toyc.symbol;
  */
 public class VariableSymbol extends AbstractSymbol {
     public VariableSymbol(String name, Type type) {
+        this(name, type, false);
+    }
+
+    public VariableSymbol(String name, Type type, boolean isPointer){
         super(name);
         this.type = type;
+        this.isPointer = isPointer;
     }
 
     public Type getType() {
@@ -21,7 +26,7 @@ public class VariableSymbol extends AbstractSymbol {
     }
 
     public boolean isPointer(){
-        return this.type.equals(PrimitiveType.POINTER);
+        return this.isPointer;
     }
 
     public boolean isArray(){
@@ -34,4 +39,5 @@ public class VariableSymbol extends AbstractSymbol {
 
     private Type type;
     private Object initData;
+    private boolean isPointer;
 }

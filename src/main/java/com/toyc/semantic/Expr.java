@@ -42,7 +42,9 @@ public abstract class Expr extends AbstractRuleNode {
     /**
      * 根据true或false label生成跳转指令
      */
-    public abstract void jumping(int tLabel, int fLabel);
+    public void jumping(int tLabel, int fLabel){
+
+    }
 
     /**
      * t和f的label数值和test生成跳转指令

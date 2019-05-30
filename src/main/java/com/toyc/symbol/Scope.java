@@ -7,11 +7,11 @@ package com.toyc.symbol;
  * @Version 1.0.0
  */
 public interface Scope {
-    public String getScopeName();
+    String getScopeName();
 
-    public Scope getEnclosingScope();
+    Scope getEnclosingScope();
 
-    public void define(AbstractSymbol sym);
+    void define(AbstractSymbol sym);
 
-    public AbstractSymbol resolve(String name);
+    AbstractSymbol resolve(String name);
 }
