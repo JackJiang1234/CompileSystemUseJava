@@ -4,6 +4,9 @@ import com.toyc.lexical.Lexer;
 import com.toyc.lexical.token.BaseToken;
 import com.toyc.lexical.token.Tag;
 import com.toyc.semantic.Expr;
+import com.toyc.semantic.Seq;
+import com.toyc.semantic.Seqs;
+import com.toyc.semantic.Stmt;
 import com.toyc.symbol.GlobalScope;
 import com.toyc.symbol.PrimitiveType;
 import com.toyc.symbol.Scope;
@@ -37,10 +40,12 @@ public class SyntaxParserImpl implements SyntaxParser {
      * prgram.code = segment.code + segment.code + ...
      * return program.code
      */
-    private void parseProgram() {
-        if (lookToken.notEnd()) {
-            parseSegment();
+    private Stmt parseProgram() {
+        Seqs seqs = new Seqs();
+        while (lookToken.notEnd()) {
+            seqs.add(parseSegment());
         }
+        return seqs;
     }
 
     /**
@@ -50,9 +55,9 @@ public class SyntaxParserImpl implements SyntaxParser {
      * defcontent.type = type.type
      * return defcontent.code
      */
-    private void parseSegment() {
+    private Stmt parseSegment() {
         Type t = parseType();
-        parseDefContent(t);
+        return parseDefContent(t);
     }
 
     /**
@@ -85,7 +90,7 @@ public class SyntaxParserImpl implements SyntaxParser {
      * <p>
      * return defcontent.code
      */
-    private void parseDefContent(Type t) {
+    private Stmt parseDefContent(Type t) {
         if (this.match(Tag.MUL)) {
             this.matchFailException(Tag.ID, false, "parse <def> error, expected the token ID, but it's " + this.lookToken.getLiteral());
             BaseToken token = this.lookToken;

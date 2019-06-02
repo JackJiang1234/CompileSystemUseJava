@@ -11,16 +11,22 @@ import com.toyc.inter.InterInstruction;
 public abstract class AbstractRuleNode {
 
     /**
-     *  生成新label
-     *
+     * 生成新label
      */
     public int newLabel() {
         return ++labelCount;
     }
 
     /**
-     * 输出指令
+     * 输出label
      * */
+    public void emitLabel(int label) {
+
+    }
+
+    /**
+     * 输出指令
+     */
     protected final void emit(InterInstruction instruction) {
 
     }
