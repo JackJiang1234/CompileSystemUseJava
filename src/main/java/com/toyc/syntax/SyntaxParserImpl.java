@@ -7,10 +7,7 @@ import com.toyc.semantic.Expr;
 import com.toyc.semantic.Seq;
 import com.toyc.semantic.Seqs;
 import com.toyc.semantic.Stmt;
-import com.toyc.symbol.GlobalScope;
-import com.toyc.symbol.PrimitiveType;
-import com.toyc.symbol.Scope;
-import com.toyc.symbol.Type;
+import com.toyc.symbol.*;
 
 import java.util.function.Supplier;
 
@@ -95,7 +92,11 @@ public class SyntaxParserImpl implements SyntaxParser {
             this.matchFailException(Tag.ID, false, "parse <def> error, expected the token ID, but it's " + this.lookToken.getLiteral());
             BaseToken token = this.lookToken;
             Expr expr = this.parseInit();
-            if (expr != null) {
+            if (expr == null) {
+                //只定义未初始化
+                this.scope.define(new VariableSymbol(token.getLiteral(), t));
+            } else {
+                //有初始化 int i = a = b = c;
 
             }
             this.parseDefList();
@@ -237,11 +238,11 @@ public class SyntaxParserImpl implements SyntaxParser {
 
     /**
      * 变量初始初始化
+     * <init> -> ASSIGN <expr> | ∈
      */
-    // <init> -> ASSIGN <expr> | EMPTY
     private Expr parseInit() {
         if (this.match(Tag.ASSIGN)) {
-            this.parseExpr();
+            return this.parseExpr();
         }
         return null;
     }
@@ -467,16 +468,17 @@ public class SyntaxParserImpl implements SyntaxParser {
      * 解析表达式
      * <expr> -> <assexpr>
      */
-    private void parseExpr() {
-        this.parseAssignExpr();
+    private Expr parseExpr() {
+        return this.parseAssignExpr();
     }
 
     /**
      * 解析赋值表达式, 赋值表达式优化级最低
      * <assexpr>  -> <orexpr> <asstail>
      */
-    private void parseAssignExpr() {
-        this.parseAssignTail();
+    private Expr parseAssignExpr() {
+        //Expr expr = this.parseOrExpr();
+        return null;
     }
 
     /**
