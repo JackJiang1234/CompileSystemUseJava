@@ -3,10 +3,7 @@ package com.toyc.syntax;
 import com.toyc.lexical.Lexer;
 import com.toyc.lexical.token.BaseToken;
 import com.toyc.lexical.token.Tag;
-import com.toyc.semantic.Expr;
-import com.toyc.semantic.Seq;
-import com.toyc.semantic.Seqs;
-import com.toyc.semantic.Stmt;
+import com.toyc.semantic.*;
 import com.toyc.symbol.*;
 
 import java.util.function.Supplier;
@@ -92,12 +89,11 @@ public class SyntaxParserImpl implements SyntaxParser {
             this.matchFailException(Tag.ID, false, "parse <def> error, expected the token ID, but it's " + this.lookToken.getLiteral());
             BaseToken token = this.lookToken;
             Expr expr = this.parseInit();
-            if (expr == null) {
-                //只定义未初始化
-                this.scope.define(new VariableSymbol(token.getLiteral(), t));
-            } else {
-                //有初始化 int i = a = b = c;
-
+            VariableSymbol varDefine = new VariableSymbol(token.getLiteral(), t, true);
+            this.scope.define(varDefine);
+            if (expr != null) {
+                //有初始化 int x = expr;
+                Assign assign = new Assign(new VariableSymbol(token.getLiteral(), t, true), expr);
             }
             this.parseDefList();
         }

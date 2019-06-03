@@ -7,8 +7,8 @@ import com.toyc.symbol.VariableSymbol;
 /**
  * 表示赋值语句
  */
-public class Set extends Stmt {
-    public Set(VariableSymbol id, Expr x) {
+public class Assign extends Stmt {
+    public Assign(VariableSymbol id, Expr x) {
         this.id = id;
         expr = x;
         if (check(id.getType(), expr.getType()) == null) {
