@@ -85,20 +85,27 @@ public class SyntaxParserImpl implements SyntaxParser {
      * return defcontent.code
      */
     private Stmt parseDefContent(Type t) {
+        Seqs seqs = new Seqs();
         if (this.match(Tag.MUL)) {
             this.matchFailException(Tag.ID, false, "parse <def> error, expected the token ID, but it's " + this.lookToken.getLiteral());
-            BaseToken token = this.lookToken;
+
+            BaseToken id = this.lookToken;
+            this.match(Tag.ID);
             Expr expr = this.parseInit();
-            VariableSymbol varDefine = new VariableSymbol(token.getLiteral(), t, true);
+            VariableSymbol varDefine = new VariableSymbol(id.getLiteral(), t, true);
             this.scope.define(varDefine);
             if (expr != null) {
                 //有初始化 int x = expr;
-                Assign assign = new Assign(new VariableSymbol(token.getLiteral(), t, true), expr);
+                seqs.add(new Assign(varDefine, expr));
             }
+
             this.parseDefList();
+
+            return seqs;
         }
         if (this.match(Tag.ID, false)) {
             this.parseIdTail();
+            return seqs;
         }
         throw new SyntaxParsingException(this.prepareMessage("parse <def> error, expected the token MUL or ID, but it's " + this.lookToken.getLiteral()));
     }
